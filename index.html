@@ -84,7 +84,8 @@
     <!-- CARRUSEL INFINITO -->
 <section class="infinite-carousel">
     <div class="carousel-track">
-        <div class="carousel-group">
+        <div class="carousel-group" id="carouselBase">
+
             <img src="assets/images/carru7.jpg" alt="">
             <img src="assets/images/carru6.jpeg" alt="">
             <img src="assets/images/carru5.jpeg" alt="">
@@ -373,5 +374,20 @@
         </a>
     </div>
     <script src="assets/js/main.js" defer></script>
+    <script>
+function fixCarousel() {
+    const track = document.querySelector('.carousel-track');
+    const base = document.getElementById('carouselBase');
+
+    if (!track || !base) return;
+
+    const width = base.scrollWidth;
+    track.style.setProperty('--move', `-${width}px`);
+}
+
+window.addEventListener('load', fixCarousel);
+window.addEventListener('resize', fixCarousel);
+</script>
+
 </body>
 </html>

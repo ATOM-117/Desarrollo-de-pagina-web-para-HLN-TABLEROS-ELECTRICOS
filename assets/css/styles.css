@@ -2006,9 +2006,10 @@ body {
 .carousel-track {
     display: flex;
     width: max-content;
-    animation: scrollCarousel 30s linear infinite;
+    animation: scrollCarousel 35s linear infinite;
     will-change: transform;
 }
+
 
 
 .carousel-group {
@@ -2036,7 +2037,7 @@ body {
         transform: translateX(0);
     }
     to {
-        transform: translateX(calc(-50% - clamp(1rem, 2vw, 2rem)));
+        transform: translateX(var(--move));
     }
 }
 
