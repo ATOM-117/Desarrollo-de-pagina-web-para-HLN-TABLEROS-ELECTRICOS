@@ -2007,12 +2007,15 @@ body {
     display: flex;
     width: max-content;
     animation: scrollCarousel 30s linear infinite;
+    will-change: transform;
 }
+
 
 .carousel-group {
     display: flex;
     gap: clamp(1rem, 2vw, 2rem);
 }
+
 
 .carousel-group img {
     height: clamp(200px, 30vw, 290px);
@@ -2020,7 +2023,9 @@ body {
     border-radius: var(--border-radius-lg);
     box-shadow: 0 12px 30px rgba(0,0,0,.18);
     transition: transform .3s ease;
+    flex-shrink: 0;
 }
+
 
 .carousel-group img:hover {
     transform: scale(1.05);
@@ -2031,9 +2036,10 @@ body {
         transform: translateX(0);
     }
     to {
-        transform: translateX(-50%);
+        transform: translateX(calc(-50% - clamp(1rem, 2vw, 2rem)));
     }
 }
+
 
 .carousel-track:hover {
     animation-play-state: paused;
@@ -2043,6 +2049,20 @@ body {
     .infinite-carousel {
         padding: 2rem 0;
     }
+}
+.carousel-group {
+    display: flex;
+    gap: clamp(1rem, 2vw, 2rem);
+    padding-right: clamp(1rem, 2vw, 2rem); /* 👈 evita choque final */
+}
+
+.carousel-group img {
+    height: clamp(200px, 30vw, 290px);
+    width: auto;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 12px 30px rgba(0,0,0,.18);
+    transition: transform .3s ease;
+    flex-shrink: 0; /* 👈 importante */
 }
 
 /* ============================================
