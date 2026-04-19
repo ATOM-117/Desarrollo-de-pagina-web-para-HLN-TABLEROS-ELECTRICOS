@@ -9,8 +9,13 @@
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-    <!-- NAVEGACIÓN -->
-    <nav class="navbar">
+
+    <!-- =============================================
+         NAVEGACIÓN
+         Sticky, siempre visible, fuera del flujo
+         de scroll de las secciones.
+    ============================================= -->
+    <nav class="navbar" id="navbar">
         <div class="container">
             <div class="navbar-brand">
                 <img src="assets/images/HLN LOGO TRANSPARENTE.png" alt="HLN Ingeniería Logo" class="navbar-logo">
@@ -25,7 +30,7 @@
             <div class="partner-badge">
                 <img src="assets/images/providers/Legrand-Partner-Program.jpg" alt="Legrand Partner Program" class="partner-logo">
             </div>
-            <div class="hamburger">
+            <div class="hamburger" aria-label="Abrir menú" role="button" tabindex="0">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -33,325 +38,508 @@
         </div>
     </nav>
 
-    <!-- HERO / INICIO -->
-    <section id="inicio" class="hero" style="background-image: url('assets/images/tableros-hero.jpg'); background-size: cover; background-position: center;">
-        <div class="hero-overlay"></div>
-        <div class="container hero-container">
-            <div class="hero-content">
-                <h2 class="fade-in-up">Líderes en Soluciones de Ingeniería Eléctrica y Comunicaciones</h2>
-                <p class="fade-in-up" style="animation-delay: 0.2s;">HLN Desarrollo e Ingeniería de Proyectos S.A.C.  Más de 10 años brindando innovación y seguridad en tableros eléctricos, transformadores y bandejas portacables.</p>
-                <div class="hero-buttons">
-                    <a href="#proyectos" class="cta-button primary fade-in-up" style="animation-delay: 0.4s;">Ver Proyectos</a>
-                    <a href="#contacto" class="cta-button secondary fade-in-up" style="animation-delay: 0.6s;">Contáctenos</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- QUIÉNES SOMOS -->
-    <section id="quienes-somos" class="quienes-somos">
-        <div class="container">
-            <div class="quienes-grid">
-                <div class="quienes-content fade-in-left">
-                    <h2 class="section-title">¿Quiénes Somos?</h2>
-                    <p>En HLN, somos una empresa con más de 10 años de experiencia en el sector eléctrico, especializada en el diseño y armado de tableros eléctricos, transformadores y bandejas portacables para el sector industrial, comercial y residencial.</p>
-                    <p>Nos distinguimos por ofrecer eficiencia y cumplimiento de los más altos estándares de ingeniería, ofreciendo soluciones seguras, confiables y adaptadas a cada necesidad. Nuestro conocimiento en tecnología nos permite optimizar la distribución y gestión de la energía eléctrica con calidad y precisión.</p>
-                    <div class="quienes-features">
-                        <div class="feature-item">
-                            <span class="feature-icon">✓</span>
-                            <span>10+ años de experiencia</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="feature-icon">✓</span>
-                            <span>+100 proyectos completados</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="feature-icon">✓</span>
-                            <span>Capacitación de personal constante</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="feature-icon">✓</span>
-                            <span>Partner Autorizado de LEGRAND</span>
+    <!-- =============================================
+         HERO / INICIO
+         Arquitectura: .section > .scene > .sticky-container
+         .scene da la altura que controla cuánto
+         tiempo dura el pin del sticky-container.
+         Aquí la scene = 100vh (sin pin extra aún).
+    ============================================= -->
+    <section id="inicio" class="section section--hero" data-scroll-section>
+        <div class="scene scene--hero">
+            <div class="sticky-container">
+                <div class="hero"
+                     style="background-image: url('assets/images/tableros-hero.jpg');">
+                    <div class="hero-overlay"></div>
+                    <div class="container hero-container">
+                        <div class="hero-content">
+                            <h2 class="fade-in-up">Líderes en Soluciones de Ingeniería Eléctrica y Comunicaciones</h2>
+                            <p class="fade-in-up" data-delay="0.2">HLN Desarrollo e Ingeniería de Proyectos S.A.C. Más de 10 años brindando innovación y seguridad en tableros eléctricos, transformadores y bandejas portacables.</p>
+                            <div class="hero-buttons">
+                                <a href="#proyectos" class="cta-button primary fade-in-up" data-delay="0.4">Ver Proyectos</a>
+                                <a href="#contacto" class="cta-button secondary fade-in-up" data-delay="0.6">Contáctenos</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="quienes-image fade-in-right">
-                    <img src="assets/images/equipo.jpeg" alt="¿Quiénes Somos HLN Ingeniería">
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- CARRUSEL INFINITO -->
-<section class="infinite-carousel">
-    <div class="carousel-track">
-        <div class="carousel-group" id="carouselBase">
-
-            <img src="assets/images/carru7.jpg" alt="">
-            <img src="assets/images/carru6.jpeg" alt="">
-            <img src="assets/images/carru5.jpeg" alt="">
-            <img src="assets/images/carru2.jpeg" alt="">
-            <img src="assets/images/carru3.jpeg" alt="">
-            <img src="assets/images/carru4.jpeg" alt="">
-            <img src="assets/images/carru8.jpeg" alt="">
-            <img src="assets/images/carru13.jpeg" alt="">
-            <img src="assets/images/carru10.jpeg" alt="">
-            <img src="assets/images/carru11.jpeg" alt="">
-            <img src="assets/images/carru12.jpeg" alt="">
-            <img src="assets/images/carru14.jpeg" alt="">
-            <img src="assets/images/carru15.jpeg" alt="">
-            <img src="assets/images/carru16.jpg" alt="">
-            <img src="assets/images/carru17.jpeg" alt="">
-            <img src="assets/images/carru18.jpeg" alt="">
-        </div>
-
-        <!-- duplicado para efecto infinito -->
-        <div class="carousel-group">
-            <img src="assets/images/carru7.jpg" alt="">
-            <img src="assets/images/carru6.jpeg" alt="">
-            <img src="assets/images/carru5.jpeg" alt="">
-            <img src="assets/images/carru2.jpeg" alt="">
-            <img src="assets/images/carru3.jpeg" alt="">
-            <img src="assets/images/carru4.jpeg" alt="">
-            <img src="assets/images/carru8.jpeg" alt="">
-            <img src="assets/images/carru13.jpeg" alt="">
-            <img src="assets/images/carru10.jpeg" alt="">
-            <img src="assets/images/carru11.jpeg" alt="">
-            <img src="assets/images/carru12.jpeg" alt="">
-            <img src="assets/images/carru14.jpeg" alt="">
-            <img src="assets/images/carru15.jpeg" alt="">
-            <img src="assets/images/carru16.jpg" alt="">
-            <img src="assets/images/carru17.jpeg" alt="">
-            <img src="assets/images/carru18.jpeg" alt="">
-        </div>
-    </div>
-</section>
-
-    <!-- NOSOTROS - POR QUÉ ELEGIR NOS -->
-    <section id="nosotros" class="por-que-elegir">
-        <div class="container">
-            <h2 class="section-title fade-in">¿Por qué elegirnos para su próximo proyecto?</h2>
-            
-            <div class="stats-grid">
-                <div class="stat-card fade-in-up">
-                    <div class="stat-number" data-target="10">0</div>
-                    <div class="stat-label">Años de experiencia</div>
-                    <p>Entregando calidad y garantía durante años</p>
-                </div>
-                
-                <div class="stat-card fade-in-up" style="animation-delay: 0.2s;">
-                    <div class="stat-number" data-target="100">0</div>
-                    <div class="stat-label">Proyectos completados</div>
-                    <p>Más de 100 proyectos exitosos entregados con calidad y cuidado</p>
-                </div>
-                
-                <div class="stat-card fade-in-up" style="animation-delay: 0.4s;">
-                    <div class="stat-number" data-target="25">0</div>
-                    <div class="stat-label">Personal Calificado</div>
-                    <p>Nuestro equipo de expertos garantiza resultados de máxima calidad.</p>
-                </div>
-                
-                <div class="stat-card fade-in-up" style="animation-delay: 0.6s;">
-                    <div class="stat-number" data-target="100" data-suffix="%">0%</div>
-                    <div class="stat-label">Satisfacción del cliente</div>
-                    <p>Todos nuestros clientes están satisfechos con nuestro trabajo y servicio.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-<!-- BLOQUE VIDEOS -->
-<section class="video-strip">
-    <div class="container">
-        <h2 class="section-title light fade-in">Nuestro trabajo en acción</h2>
-
-        <div class="video-carousel-wrapper">
-            <div class="video-grid" id="videoCarousel">
-        <video muted playsinline autoplay class="video-slide"></video>
-<video muted playsinline autoplay class="video-slide"></video>
-<video muted playsinline autoplay class="video-slide"></video>
-
-</div>
-            <!-- Botones de navegación para móvil -->
-            <button class="carousel-btn prev" id="videoPrev" aria-label="Video anterior">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </button>
-            <button class="carousel-btn next" id="videoNext" aria-label="Siguiente video">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            </button>
-        </div>
-
-    </div>
-</section>
-
-
-    <!-- PROVEEDORES (Carrusel) -->
-    <section id="proveedores" class="proveedores">
-        <div class="container">
-            <h2 class="section-title fade-in">¿CON QUÉ MARCAS TRABAJAMOS?</h2>
-            <p class="section-description fade-in-up">En HLN, nos preocupamos por trabajar con la mejor calidad en tus proyectos, es por ello que también trabajamos con los mejores:</p>
-
-            <div class="providers-carousel fade-in-up" aria-label="Carrusel de proveedores">
-                <div class="providers-track">
-                    <div class="provider-item"><img src="assets/images/providers/logo1.png" alt="legrand"></div>
-                    <div class="provider-item"><img src="assets/images/providers/logo2.png" alt="abb"></div>
-                    <div class="provider-item"><img src="assets/images/providers/logo3.png" alt="Schneider electric"></div>
-                    <div class="provider-item"><img src="assets/images/providers/logo4.png" alt="Siemens"></div>
-                    <div class="provider-item"><img src="assets/images/providers/logo5.png" alt="rittal"></div>
-                    <div class="provider-item"><img src="assets/images/providers/logo6.png" alt="weg"></div>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- CLIENTES (Carrusel infinito) -->
-    <section id="clientes" class="clientes">
-        <div class="container">
-            <h3 class="fade-in">Utilizados por las principales empresas</h3>
-
-            <div class="clients-carousel fade-in-up" aria-label="Carrusel de clientes">
-                <div class="clients-track">
-                    <div class="client-item"><img src="assets/images/clients/logo2.png" alt="abril grupo inmobiliario"></div>
-                    <div class="client-item"><img src="assets/images/clients/logo1.png" alt="Grupo apm"></div>
-                    <div class="client-item"><img src="assets/images/clients/logo3.png" alt="Ingenieria y construcción monte grande"></div>
-                    <div class="client-item"><img src="assets/images/clients/logo4.png" alt="Aruma"></div>
-                    <div class="client-item"><img src="assets/images/clients/logo5.png" alt="A y A Inmobiliaria"></div>
-                    <div class="client-item"><img src="assets/images/clients/logo6.png" alt="Banco Central del Perú"></div>
-                    <div class="client-item"><img src="assets/images/clients/logo7.png" alt="Eleo arquitectura y Construcción"></div>
-                    <div class="client-item"><img src="assets/images/clients/logo8.png" alt="Engie"></div>
-                    <div class="client-item"><img src="assets/images/clients/logo9.png" alt="Faber Castell"></div>
-                    <div class="client-item"><img src="assets/images/clients/logo10.png" alt="Grupo Lay"></div>
-                    <div class="client-item"><img src="assets/images/clients/logo11.png" alt="Constructora Inarco Perú"></div>
-                    <div class="client-item"><img src="assets/images/clients/logo12.png" alt="Interbank"></div>
-                    <div class="client-item"><img src="assets/images/clients/logo13.png" alt="Pedregal The Fruit Company"></div>
-                    <div class="client-item"><img src="assets/images/clients/logo14.png" alt="Imagina"></div>
-                    <div class="client-item"><img src="assets/images/clients/logo15.png" alt="Grupo T y C"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PROYECTOS / PORTFOLIO -->
-    <section id="proyectos" class="proyectos">
-        <div class="container">
-            <h2 class="section-title fade-in">Desarrollo de Tableros Eléctricos</h2>
-            
-            <div class="proyecto-tabs fade-in-up">
-                <button class="tab-button active" data-tab="planos">Planos Mecánicos</button>
-                <button class="tab-button" data-tab="proceso">Proceso</button>
-                <button class="tab-button" data-tab="resultado">Resultado Final</button>
-            </div>
-        
-            <!-- DETALLE DEL PROYECTO (aparece al hacer click en las pestañas) -->
-            <div class="proyecto-detail" id="proyecto-detail" style="display:none;">
-                <div class="detail-inner">
-                        <div class="detail-image" id="detail-image" aria-hidden="true">
-                            <img id="detail-image-img" src="" alt="Imagen del proyecto" aria-hidden="false">
+    <!-- =============================================
+         QUIÉNES SOMOS
+         Sección de altura mínima 100vh.
+         El contenido interno se centrará
+         verticalmente por defecto.
+    ============================================= -->
+    <section id="quienes-somos" class="section section--about" data-scroll-section>
+        <div class="scene">
+            <div class="sticky-container">
+                <div class="quienes-somos">
+                    <div class="container">
+                        <div class="quienes-grid">
+                            <div class="quienes-content fade-in-left">
+                                <h2 class="section-title">¿Quiénes Somos?</h2>
+                                <p>En HLN, somos una empresa con más de 10 años de experiencia en el sector eléctrico, especializada en el diseño y armado de tableros eléctricos, transformadores y bandejas portacables para el sector industrial, comercial y residencial.</p>
+                                <p>Nos distinguimos por ofrecer eficiencia y cumplimiento de los más altos estándares de ingeniería, ofreciendo soluciones seguras, confiables y adaptadas a cada necesidad. Nuestro conocimiento en tecnología nos permite optimizar la distribución y gestión de la energía eléctrica con calidad y precisión.</p>
+                                <div class="quienes-features">
+                                    <div class="feature-item">
+                                        <span class="feature-icon">✓</span>
+                                        <span>10+ años de experiencia</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <span class="feature-icon">✓</span>
+                                        <span>+100 proyectos completados</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <span class="feature-icon">✓</span>
+                                        <span>Capacitación de personal constante</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <span class="feature-icon">✓</span>
+                                        <span>Partner Autorizado de LEGRAND</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quienes-image fade-in-right">
+                                <img src="assets/images/equipo.jpeg" alt="Equipo HLN Ingeniería">
+                            </div>
                         </div>
-                    <div class="detail-text">
-                        <h3 id="detail-title">Planos Técnicos Detallados</h3>
-                        <p id="detail-desc">Descripción del proyecto seleccionado. Aquí aparecerá información detallada junto a una imagen ilustrativa con una animación elegante.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- EQUIPOS ELÉCTRICOS -->
-    <section id="equipos" class="equipos">
-        <div class="container">
-            <h2 class="section-title fade-in">Equipos Eléctricos</h2>
-            
-            <div class="equipo-tabs fade-in-up">
-                <button class="tab-button active" data-tab="domestico">Autoportante</button>
-                <button class="tab-button" data-tab="adosado">Adosado</button>
-                <button class="tab-button" data-tab="autosoportado">Autosoportado</button>
-                <button class="tab-button" data-tab="empotrables">Empotrables</button>
-                <button class="tab-button" data-tab="transformadores">Transformadores</button>
-
-            </div>
-        
-            <!-- DETALLE DEL EQUIPO (aparece al hacer click en las pestañas) -->
-            <div class="equipo-detail" id="equipo-detail" style="display:none;">
-                <div class="detail-inner">
-                    <div class="detail-image" id="equipo-detail-image" aria-hidden="true">
-                        <img id="equipo-detail-image-img" src="" alt="Imagen del equipo" aria-hidden="false">
+    <!-- =============================================
+         CARRUSEL INFINITO DE IMÁGENES
+         Sección compacta (no 100vh):
+         los carruseles horizontales no necesitan
+         altura de viewport, fluyen naturalmente.
+    ============================================= -->
+    <section class="section section--carousel section--compact" data-scroll-section>
+        <div class="scene scene--compact">
+            <div class="infinite-carousel">
+                <div class="carousel-track">
+                    <div class="carousel-group" id="carouselBase">
+                        <img src="assets/images/carru7.jpg"   alt="Trabajo HLN 1">
+                        <img src="assets/images/carru6.jpeg"  alt="Trabajo HLN 2">
+                        <img src="assets/images/carru5.jpeg"  alt="Trabajo HLN 3">
+                        <img src="assets/images/carru2.jpeg"  alt="Trabajo HLN 4">
+                        <img src="assets/images/carru3.jpeg"  alt="Trabajo HLN 5">
+                        <img src="assets/images/carru4.jpeg"  alt="Trabajo HLN 6">
+                        <img src="assets/images/carru8.jpeg"  alt="Trabajo HLN 7">
+                        <img src="assets/images/carru13.jpeg" alt="Trabajo HLN 8">
+                        <img src="assets/images/carru10.jpeg" alt="Trabajo HLN 9">
+                        <img src="assets/images/carru11.jpeg" alt="Trabajo HLN 10">
+                        <img src="assets/images/carru12.jpeg" alt="Trabajo HLN 11">
+                        <img src="assets/images/carru14.jpeg" alt="Trabajo HLN 12">
+                        <img src="assets/images/carru15.jpeg" alt="Trabajo HLN 13">
+                        <img src="assets/images/carru16.jpg"  alt="Trabajo HLN 14">
+                        <img src="assets/images/carru17.jpeg" alt="Trabajo HLN 15">
+                        <img src="assets/images/carru18.jpeg" alt="Trabajo HLN 16">
                     </div>
-                    <div class="detail-text">
-                        <h3 id="equipo-detail-title">Doméstico</h3>
-                        <p id="equipo-detail-desc">Ofrecemos tableros domésticos en cajas de plástico resistente, diseñados para la protección y distribución eléctrica en viviendas. Son duraderos y personalizables según la cantidad de equipos a instalar, garantizando una solución segura y funcional.</p>
+                    <!-- Duplicado para loop infinito -->
+                    <div class="carousel-group" aria-hidden="true">
+                        <img src="assets/images/carru7.jpg"   alt="">
+                        <img src="assets/images/carru6.jpeg"  alt="">
+                        <img src="assets/images/carru5.jpeg"  alt="">
+                        <img src="assets/images/carru2.jpeg"  alt="">
+                        <img src="assets/images/carru3.jpeg"  alt="">
+                        <img src="assets/images/carru4.jpeg"  alt="">
+                        <img src="assets/images/carru8.jpeg"  alt="">
+                        <img src="assets/images/carru13.jpeg" alt="">
+                        <img src="assets/images/carru10.jpeg" alt="">
+                        <img src="assets/images/carru11.jpeg" alt="">
+                        <img src="assets/images/carru12.jpeg" alt="">
+                        <img src="assets/images/carru14.jpeg" alt="">
+                        <img src="assets/images/carru15.jpeg" alt="">
+                        <img src="assets/images/carru16.jpg"  alt="">
+                        <img src="assets/images/carru17.jpeg" alt="">
+                        <img src="assets/images/carru18.jpeg" alt="">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CONTACTO -->
-    <section id="contacto" class="contacto">
-        <div class="container">
-            <div class="contacto-wrapper">
-                <div class="contacto-info fade-in-left">
-                    <h2>Contáctanos para más información</h2>
-                    <p>Estamos listos para ayudarle con sus proyectos de ingeniería eléctrica.</p>
-                    
-                    <div class="info-item">
-                        <strong>📍 Dirección:</strong>
-                        <p>Lamas 407, La Victoria - Perú</p>
-                    </div>
-                    
-                    <div class="info-item">
-                        <strong>📞 Teléfono:</strong>
-                        <p><a href="https://wa.me/51915236931" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">+51 915 236 931</a></p>
-                    </div>
-                    
-                    <div class="info-item">
-                        <strong>📧 Email:</strong>
-                        <p>hlnproyectossac@gmail.com</p>
+    <!-- =============================================
+         NOSOTROS — STATS
+         100vh mínimo para que el contenido
+         tenga espacio de respiración.
+    ============================================= -->
+    <section id="nosotros" class="section section--stats" data-scroll-section>
+        <div class="scene">
+            <div class="sticky-container">
+                <div class="por-que-elegir">
+                    <div class="container">
+                        <h2 class="section-title fade-in">¿Por qué elegirnos para su próximo proyecto?</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card fade-in-up" data-delay="0">
+                                <div class="stat-number" data-target="10">0</div>
+                                <div class="stat-label">Años de experiencia</div>
+                                <p>Entregando calidad y garantía durante años</p>
+                            </div>
+                            <div class="stat-card fade-in-up" data-delay="0.15">
+                                <div class="stat-number" data-target="100">0</div>
+                                <div class="stat-label">Proyectos completados</div>
+                                <p>Más de 100 proyectos exitosos entregados con calidad y cuidado</p>
+                            </div>
+                            <div class="stat-card fade-in-up" data-delay="0.3">
+                                <div class="stat-number" data-target="25">0</div>
+                                <div class="stat-label">Personal Calificado</div>
+                                <p>Nuestro equipo de expertos garantiza resultados de máxima calidad.</p>
+                            </div>
+                            <div class="stat-card fade-in-up" data-delay="0.45">
+                                <div class="stat-number" data-target="100" data-suffix="%">0%</div>
+                                <div class="stat-label">Satisfacción del cliente</div>
+                                <p>Todos nuestros clientes están satisfechos con nuestro trabajo y servicio.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                <form id="contactForm" class="contacto-form fade-in-right">
-                    <div class="form-group">
-                        <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
-                        <span class="error-message" id="nombre-error"></span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" placeholder="Correo" required>
-                        <span class="error-message" id="email-error"></span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <textarea id="mensaje" name="mensaje" placeholder="Mensale" rows="4" required></textarea>
-                        <span class="error-message" id="mensaje-error"></span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="terminos" name="terminos" required>
-                            Acepto términos y política de privacidad
-                        </label>
-                        <span class="error-message" id="terminos-error"></span>
-                    </div>
-                    
-                    <button type="submit" class="submit-button">Enviar</button>
-                    <div id="form-message" class="form-message"></div>
-                </form>
-            </div>
-        </div>
-
-        <!-- MAPA DE UBICACIÓN -->
-        <div class="container">
-            <div class="mapa-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.5429287659303!2d-77.0063652!3d-12.0759447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8c0c0c0c0c1%3A0x0!2sLamas%20407%2C%20La%20Victoria%2C%20Lima%2C%20Per%C3%BA!5e0!3m2!1ses!2s!4v1707396000000" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </section>
 
+    <!-- =============================================
+         VIDEOS
+         Sección compacta con fondo oscuro.
+    ============================================= -->
+    <section class="section section--videos section--compact" data-scroll-section>
+        <div class="scene scene--compact">
+            <div class="video-strip">
+                <div class="container">
+                    <h2 class="section-title light fade-in">Nuestro trabajo en acción</h2>
+                    <div class="video-carousel-wrapper">
+                        <div class="video-grid" id="videoCarousel">
+                            <video muted playsinline autoplay class="video-slide"></video>
+                            <video muted playsinline autoplay class="video-slide"></video>
+                            <video muted playsinline autoplay class="video-slide"></video>
+                        </div>
+                        <button class="carousel-btn prev" id="videoPrev" aria-label="Video anterior">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" aria-hidden="true">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </button>
+                        <button class="carousel-btn next" id="videoNext" aria-label="Siguiente video">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" aria-hidden="true">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- FOOTER -->
+    <!-- =============================================
+         PROVEEDORES
+    ============================================= -->
+    <section id="proveedores" class="section section--providers section--compact" data-scroll-section>
+        <div class="scene scene--compact">
+            <div class="proveedores">
+                <div class="container">
+                    <h2 class="section-title fade-in">¿Con qué marcas trabajamos?</h2>
+                    <p class="section-description fade-in-up">En HLN, nos preocupamos por trabajar con la mejor calidad en tus proyectos, es por ello que también trabajamos con los mejores:</p>
+                    <div class="providers-carousel fade-in-up" aria-label="Carrusel de proveedores">
+                        <div class="providers-track">
+                            <div class="provider-item"><img src="assets/images/providers/logo1.png" alt="Legrand"></div>
+                            <div class="provider-item"><img src="assets/images/providers/logo2.png" alt="ABB"></div>
+                            <div class="provider-item"><img src="assets/images/providers/logo3.png" alt="Schneider Electric"></div>
+                            <div class="provider-item"><img src="assets/images/providers/logo4.png" alt="Siemens"></div>
+                            <div class="provider-item"><img src="assets/images/providers/logo5.png" alt="Rittal"></div>
+                            <div class="provider-item"><img src="assets/images/providers/logo6.png" alt="WEG"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         CLIENTES
+    ============================================= -->
+    <section id="clientes" class="section section--clients section--compact" data-scroll-section>
+        <div class="scene scene--compact">
+            <div class="clientes">
+                <div class="container">
+                    <h3 class="fade-in">Utilizados por las principales empresas</h3>
+                    <div class="clients-carousel fade-in-up" aria-label="Carrusel de clientes">
+                        <div class="clients-track">
+                            <div class="client-item"><img src="assets/images/clients/logo2.png"  alt="Abril Grupo Inmobiliario"></div>
+                            <div class="client-item"><img src="assets/images/clients/logo1.png"  alt="Grupo APM"></div>
+                            <div class="client-item"><img src="assets/images/clients/logo3.png"  alt="Ingeniería y Construcción Monte Grande"></div>
+                            <div class="client-item"><img src="assets/images/clients/logo4.png"  alt="Aruma"></div>
+                            <div class="client-item"><img src="assets/images/clients/logo5.png"  alt="A y A Inmobiliaria"></div>
+                            <div class="client-item"><img src="assets/images/clients/logo6.png"  alt="Banco Central del Perú"></div>
+                            <div class="client-item"><img src="assets/images/clients/logo7.png"  alt="Eleo Arquitectura y Construcción"></div>
+                            <div class="client-item"><img src="assets/images/clients/logo8.png"  alt="Engie"></div>
+                            <div class="client-item"><img src="assets/images/clients/logo9.png"  alt="Faber Castell"></div>
+                            <div class="client-item"><img src="assets/images/clients/logo10.png" alt="Grupo Lay"></div>
+                            <div class="client-item"><img src="assets/images/clients/logo11.png" alt="Constructora Inarco Perú"></div>
+                            <div class="client-item"><img src="assets/images/clients/logo12.png" alt="Interbank"></div>
+                            <div class="client-item"><img src="assets/images/clients/logo13.png" alt="Pedregal The Fruit Company"></div>
+                            <div class="client-item"><img src="assets/images/clients/logo14.png" alt="Imagina"></div>
+                            <div class="client-item"><img src="assets/images/clients/logo15.png" alt="Grupo T y C"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         PROYECTOS — TABS
+         100vh mínimo, contenido interactivo.
+    ============================================= -->
+    <section id="proyectos" class="section section--projects" data-scroll-section>
+        <div class="scene">
+            <div class="sticky-container">
+                <div class="proyectos">
+                    <div class="container">
+                        <h2 class="section-title fade-in">Desarrollo de Tableros Eléctricos</h2>
+                        <div class="proyecto-tabs fade-in-up">
+                            <button class="tab-button active" data-tab="planos">Planos Mecánicos</button>
+                            <button class="tab-button" data-tab="proceso">Proceso</button>
+                            <button class="tab-button" data-tab="resultado">Resultado Final</button>
+                        </div>
+                        <div class="proyecto-detail" id="proyecto-detail" style="display:none;">
+                            <div class="detail-inner">
+                                <div class="detail-image" id="detail-image">
+                                    <img id="detail-image-img" src="" alt="Imagen del proyecto">
+                                </div>
+                                <div class="detail-text">
+                                    <h3 id="detail-title"></h3>
+                                    <p id="detail-desc"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         EQUIPOS ELÉCTRICOS — TABS
+         100vh mínimo.
+    ============================================= -->
+    <section id="equipos" class="section section--equipment" data-scroll-section>
+        <div class="scene">
+            <div class="sticky-container">
+                <div class="equipos">
+                    <div class="container">
+                        <h2 class="section-title fade-in">Equipos Eléctricos</h2>
+                        <div class="equipo-tabs fade-in-up">
+                            <button class="tab-button active" data-tab="domestico">Autoportante</button>
+                            <button class="tab-button" data-tab="adosado">Adosado</button>
+                            <button class="tab-button" data-tab="autosoportado">Autosoportado</button>
+                            <button class="tab-button" data-tab="empotrables">Empotrables</button>
+                            <button class="tab-button" data-tab="transformadores">Transformadores</button>
+                        </div>
+                        <div class="equipo-detail" id="equipo-detail" style="display:none;">
+                            <div class="detail-inner">
+                                <div class="detail-image" id="equipo-detail-image">
+                                    <img id="equipo-detail-image-img" src="" alt="Imagen del equipo">
+                                </div>
+                                <div class="detail-text">
+                                    <h3 id="equipo-detail-title"></h3>
+                                    <p id="equipo-detail-desc"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         TABLERO ELÉCTRICO — 3 FASES
+         Layout:
+           ┌──────────────────────────────────┐
+           │  "Así fabricamos nuestros..."    │ ← título fijo arriba
+           ├──────────────────────────────────┤
+           │  [imagen 16:9]   ┌─────────────┐ │
+           │   centrada       │  card texto  │ │ ← card flotante derecha
+           │                  └─────────────┘ │
+           └──────────────────────────────────┘
+    ============================================= -->
+    <section id="tablero" class="section section--tablero" data-scroll-section
+             aria-label="Proceso de construcción del tablero eléctrico HLN">
+        <div class="scene scene--tablero">
+            <div class="sticky-container">
+                <div class="tablero-scene">
+
+                    <!-- Título superior fijo -->
+                    <header class="tbl-header">
+                        <span class="tbl-header__tag">Ingeniería de precisión</span>
+                        <h2 class="tbl-header__title">Así fabricamos nuestros tableros</h2>
+                    </header>
+
+                    <!-- Zona central: imagen + card al costado -->
+                    <div class="tbl-body">
+
+                        <!-- Imagen (las 3 apiladas) -->
+                        <div class="tbl-stage">
+                            <img class="tbl-img tbl-img--1"
+                                 src="assets/images/vista1.png"
+                                 alt="Gabinete exterior del tablero HLN">
+                            <img class="tbl-img tbl-img--2"
+                                 src="assets/images/vista2.png"
+                                 alt="Mandil interior con IG DRX 50A">
+                            <img class="tbl-img tbl-img--3"
+                                 src="assets/images/vista3.png"
+                                 alt="Interior del tablero con barras de cobre">
+                        </div>
+
+                        <!-- Card flotante al costado derecho -->
+                        <div class="tbl-card">
+
+                            <div class="tbl-msg tbl-msg--1">
+                                <div class="tbl-msg__num">01 / 03</div>
+                                <h3 class="tbl-msg__title">Gabinete de acero</h3>
+                                <p class="tbl-msg__body">Estructura en chapa de acero galvanizado de 2mm con tratamiento anticorrosión. Marco y puerta con junta de goma, protección IP54. Certificación IEC 61439.</p>
+                                <ul class="tbl-msg__list">
+                                    <li>Acero galvanizado 2mm</li>
+                                    <li>Anticorrosión + IP54</li>
+                                    <li>IEC 61439</li>
+                                </ul>
+                            </div>
+
+                            <div class="tbl-msg tbl-msg--2">
+                                <div class="tbl-msg__num">02 / 03</div>
+                                <h3 class="tbl-msg__title">Mandil y señalética</h3>
+                                <p class="tbl-msg__body">Mandil de aluminio anodizado con rótulos grabados en láser. IG DRX 50A, selectores rotativos 1-0-2 y lámparas LED montados con torque calibrado.</p>
+                                <ul class="tbl-msg__list">
+                                    <li>Aluminio anodizado láser</li>
+                                    <li>IG DRX 50A Legrand</li>
+                                    <li>Torque calibrado</li>
+                                </ul>
+                            </div>
+
+                            <div class="tbl-msg tbl-msg--3">
+                                <div class="tbl-msg__num">03 / 03</div>
+                                <h3 class="tbl-msg__title">Interruptores y barras</h3>
+                                <p class="tbl-msg__body">Interruptores termomagnéticos torqueados según ficha técnica. Barras de cobre electrolítico por fase. Canaleta 40×80mm y marquillado completo.</p>
+                                <ul class="tbl-msg__list">
+                                    <li>Torque por ficha técnica</li>
+                                    <li>Barras cobre electrolítico</li>
+                                    <li>Canaleta 40×80mm</li>
+                                </ul>
+                            </div>
+
+                            <!-- Barra de progreso dentro del card -->
+                            <div class="tbl-progress">
+                                <div class="tbl-progress__fill"></div>
+                            </div>
+
+                        </div><!-- /tbl-card -->
+
+                    </div><!-- /tbl-body -->
+
+                    <!-- Scroll hint -->
+                    <div class="tbl-hint">
+                        <span>Scroll para ver el proceso</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+
+                </div><!-- /tablero-scene -->
+            </div><!-- /sticky-container -->
+        </div><!-- /scene -->
+    </section>
+
+    <!-- =============================================
+         CONTACTO
+         100vh mínimo con mapa incluido.
+    ============================================= -->
+    <section id="contacto" class="section section--contact" data-scroll-section>
+        <div class="scene">
+            <div class="sticky-container">
+                <div class="contacto">
+                    <div class="container">
+                        <div class="contacto-wrapper">
+                            <div class="contacto-info fade-in-left">
+                                <h2>Contáctanos para más información</h2>
+                                <p>Estamos listos para ayudarle con sus proyectos de ingeniería eléctrica.</p>
+                                <div class="info-item">
+                                    <strong>📍 Dirección:</strong>
+                                    <p>Lamas 407, La Victoria - Perú</p>
+                                </div>
+                                <div class="info-item">
+                                    <strong>📞 Teléfono:</strong>
+                                    <p>
+                                        <a href="https://wa.me/51915236931"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           class="contacto-link">
+                                            +51 915 236 931
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="info-item">
+                                    <strong>📧 Email:</strong>
+                                    <p>hlnproyectossac@gmail.com</p>
+                                </div>
+                            </div>
+
+                            <form id="contactForm" class="contacto-form fade-in-right" novalidate>
+                                <div class="form-group">
+                                    <input type="text" id="nombre" name="nombre"
+                                           placeholder="Nombre" required autocomplete="name">
+                                    <span class="error-message" id="nombre-error" role="alert"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" id="email" name="email"
+                                           placeholder="Correo" required autocomplete="email">
+                                    <span class="error-message" id="email-error" role="alert"></span>
+                                </div>
+                                <div class="form-group">
+                                    <textarea id="mensaje" name="mensaje"
+                                              placeholder="Mensaje" rows="4" required></textarea>
+                                    <span class="error-message" id="mensaje-error" role="alert"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" id="terminos" name="terminos" required>
+                                        Acepto términos y política de privacidad
+                                    </label>
+                                    <span class="error-message" id="terminos-error" role="alert"></span>
+                                </div>
+                                <button type="submit" class="submit-button">Enviar</button>
+                                <div id="form-message" class="form-message" role="status" aria-live="polite"></div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Mapa fuera del grid de contacto para ocupar ancho completo -->
+                    <div class="container">
+                        <div class="mapa-container">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.5429287659303!2d-77.0063652!3d-12.0759447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8c0c0c0c0c1%3A0x0!2sLamas%20407%2C%20La%20Victoria%2C%20Lima%2C%20Per%C3%BA!5e0!3m2!1ses!2s!4v1707396000000"
+                                width="100%" height="300"
+                                style="border:0;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="Ubicación HLN Ingeniería">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         FOOTER
+         Fuera del sistema de secciones scroll,
+         fluye naturalmente al final.
+    ============================================= -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2026 - HLN Departamento de Ingeniería. Todos los derechos reservados.</p>
@@ -363,31 +551,119 @@
         </div>
     </footer>
 
-    <!-- Botón flotante WhatsApp -->
+    <!-- =============================================
+         WIDGET FLOTANTE — FOTO PLC
+         Imagen 960×1280 (ratio 3:4, retrato).
+         Al clic: modal con la foto ampliada.
+    ============================================= -->
+    <div class="panel-float" id="panelFloat" aria-label="Ver proyecto PLC HLN">
+
+        <button class="panel-float__btn" id="panelFloatBtn"
+                aria-expanded="false"
+                aria-controls="panelModal"
+                title="Ver proyecto de automatización PLC">
+            <div class="panel-float__thumb" aria-hidden="true">
+                <svg class="panel-float__play" width="18" height="18"
+                     viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                     aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+            </div>
+            <span class="panel-float__label">Proyecto<br>PLC</span>
+        </button>
+
+        <div class="panel-modal" id="panelModal"
+             role="dialog"
+             aria-label="Proyecto PLC HLN Ingeniería"
+             aria-modal="true"
+             hidden>
+            <div class="panel-modal__inner">
+                <button class="panel-modal__close" id="panelModalClose"
+                        aria-label="Cerrar">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                         stroke="white" stroke-width="2.5" aria-hidden="true">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6"  y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+                <div class="panel-modal__header">
+                    <span class="panel-modal__tag">HLN Ingeniería</span>
+                    <p class="panel-modal__title">Programación PLC en campo</p>
+                </div>
+                <img class="panel-modal__img"
+                     src="assets/images/plc_proyecto.png"
+                     alt="Programación PLC en campo — tablero con variadores y laptop ASUS"
+                     loading="lazy">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- =============================================
+         BOTÓN FLOTANTE WHATSAPP
+    ============================================= -->
     <div class="whatsapp-float" id="whatsappFloat">
-        <a href="https://wa.me/51915236931?text=hola%20hln%20necesito%20mas%20informaci%C3%B3n" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
-            <!-- SVG icon -->
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <a href="https://wa.me/51915236931?text=hola%20hln%20necesito%20mas%20informaci%C3%B3n"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Contactar por WhatsApp">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M20.52 3.48A11.93 11.93 0 0012 0C5.37 0 .02 5.35 0 12c.01 2.12.55 4.2 1.58 6.03L0 24l6.23-1.62A11.95 11.95 0 0012 24c6.63 0 12-5.37 12-12 0-3.2-1.25-6.2-3.48-8.52z" fill="#25D366"/>
                 <path d="M17.96 14.17c-.32-.16-1.88-.93-2.17-1.04-.29-.11-.5-.16-.71.16-.21.32-.81 1.04-.99 1.25-.18.21-.36.24-.68.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.9-1.78-2.22-.18-.32-.02-.49.14-.65.14-.14.32-.36.48-.54.16-.18.21-.32.32-.53.11-.21.05-.41-.02-.57-.07-.16-.71-1.7-.98-2.33-.26-.61-.53-.53-.71-.54l-.61-.01c-.21 0-.55.08-.84.41-.29.32-1.1 1.07-1.1 2.6 0 1.53 1.13 3.02 1.29 3.23.16.21 2.23 3.4 5.4 4.77 3.17 1.36 3.17.91 3.74.85.57-.06 1.88-.77 2.15-1.51.27-.74.27-1.38.19-1.51-.08-.13-.29-.21-.61-.37z" fill="#fff"/>
             </svg>
         </a>
     </div>
+
+    <!--
+         GSAP + ScrollTrigger
+         SIN defer en los CDN: deben estar disponibles
+         en el scope global antes de que scroll-scenes.js
+         (que sí tiene defer) los use.
+         El orden de declaración garantiza el orden de carga.
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- UI: tabs, carruseles, formulario -->
     <script src="assets/js/main.js" defer></script>
+
+    <!-- Motor de animaciones: carga con defer después del DOM.
+         initScrollScenes() se llama al final de este mismo script,
+         no desde un inline separado, para garantizar que la función
+         ya exista cuando se invoca. -->
+    <script src="assets/js/scroll-scenes.js" defer></script>
+
+    <!-- Inicialización: DOMContentLoaded garantiza DOM listo.
+         GSAP ya está disponible (cargó sin defer arriba).
+         scroll-scenes.js ya está cargado (mismo defer batch).
+         scroll-behavior: smooth se desactiva para que GSAP
+         controle el scroll sin interferencia. -->
     <script>
-function fixCarousel() {
-    const track = document.querySelector('.carousel-track');
-    const base = document.getElementById('carouselBase');
+        document.addEventListener('DOMContentLoaded', function () {
+            // Desactivar scroll-behavior:smooth del CSS —
+            // interfiere con el scrubbing de GSAP ScrollTrigger.
+            document.documentElement.style.scrollBehavior = 'auto';
 
-    if (!track || !base) return;
-
-    const width = base.scrollWidth;
-    track.style.setProperty('--move', `-${width}px`);
-}
-
-window.addEventListener('load', fixCarousel);
-window.addEventListener('resize', fixCarousel);
-</script>
+            // Esperar al siguiente frame para que los scripts
+            // defer (scroll-scenes.js) hayan ejecutado ya.
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    if (typeof initScrollScenes === 'function') {
+                        initScrollScenes();
+                    } else {
+                        // Fallback: si por alguna razón defer aún no terminó,
+                        // esperar el evento load completo.
+                        window.addEventListener('load', function () {
+                            if (typeof initScrollScenes === 'function') {
+                                initScrollScenes();
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>

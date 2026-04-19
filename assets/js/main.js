@@ -1,471 +1,11 @@
 // ============================================
-// VALIDACIÓN Y FORMULARIO
+// MAIN.JS — HLN Ingeniería
+// Refactorizado: un solo DOMContentLoaded,
+// sin duplicados, errores de formulario corregidos.
 // ============================================
 
-const contactForm = document.getElementById('contactForm');
-const formMessage = document.getElementById('form-message');
-const submitBtn = document.querySelector('.submit-button');
-
-/**
- * Validación en tiempo real de campos
- */
-function validateField(fieldName, value) {
-    const errors = {};
-    
-    switch(fieldName) {
-        case 'nombre':
-            if (!value || value.trim().length < 3) {
-                errors.nombre = 'El nombre debe tener al menos 3 caracteres';
-            }
-            break;
-            
-        case 'email':
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!value || !emailRegex.test(value)) {
-                errors.email = 'Email inválido';
-            }
-            break;
-            
-        case 'asunto':
-            if (!value || value.trim().length < 5) {
-                errors.asunto = 'El asunto debe tener al menos 5 caracteres';
-            }
-            break;
-            
-        case 'mensaje':
-            if (!value || value.trim().length < 10) {
-                errors.mensaje = 'El mensaje debe tener al menos 10 caracteres';
-            }
-            break;
-            
-        case 'terminos':
-            if (!document.getElementById('terminos').checked) {
-                errors.terminos = 'Debes aceptar los términos';
-            }
-            break;
-    }
-    
-    return errors;
-}
-
-/**
- * Mostrar/ocultar errores en campos
- */
-function showFieldError(fieldName, hasError, message = '') {
-    const field = document.getElementById(fieldName);
-    const errorElement = document.getElementById(`${fieldName}-error`);
-    const formGroup = field.parentElement;
-    
-    if (!field) return;
-    
-    if (hasError) {
-        formGroup.classList.add('error');
-        if (errorElement && message) {
-            errorElement.textContent = message;
-            errorElement.classList.add('show');
-        }
-    } else {
-        formGroup.classList.remove('error');
-        if (errorElement) {
-            errorElement.textContent = '';
-            errorElement.classList.remove('show');
-        }
-    }
-}
-
-/**
- * Validación al abandonar campo (blur)
- */
-function setupFieldValidation() {
-    const fields = ['nombre', 'email', 'asunto', 'mensaje', 'terminos'];
-    
-    fields.forEach(field => {
-        const element = document.getElementById(field);
-        if (element) {
-            element.addEventListener('blur', () => {
-                const value = element.value;
-                const errors = validateField(field, value);
-                const hasError = Object.keys(errors).length > 0;
-                showFieldError(field, hasError, errors[field] || '');
-            });
-        }
-    });
-}
-
-/**
- * Validación completa del formulario
- */
-function validateForm() {
-    const fields = {
-        nombre: document.getElementById('nombre').value,
-        email: document.getElementById('email').value,
-        asunto: document.getElementById('asunto').value,
-        mensaje: document.getElementById('mensaje').value,
-        terminos: document.getElementById('terminos').checked
-    };
-    
-    let allErrors = {};
-    let isValid = true;
-    
-    Object.keys(fields).forEach(field => {
-        const errors = validateField(field, fields[field]);
-        if (Object.keys(errors).length > 0) {
-            allErrors = { ...allErrors, ...errors };
-            isValid = false;
-            showFieldError(field, true, errors[field]);
-        } else {
-            showFieldError(field, false);
-        }
-    });
-    
-    return isValid;
-}
-
-/**
- * Envío del formulario
- */
-async function handleFormSubmit(e) {
-    e.preventDefault();
-    
-    // Validar formulario
-    if (!validateForm()) {
-        showMessage('Por favor, completa todos los campos correctamente', 'error');
-        return;
-    }
-    
-    // Desabilitar botón durante envío
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Enviando...';
-    
-    try {
-        const formData = new FormData(contactForm);
-        
-        const response = await fetch('backend/handlers/form-handler.php', {
-            method: 'POST',
-            body: formData
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            showMessage(data.message, 'success');
-            contactForm.reset();
-            // Limpiar errores
-            document.querySelectorAll('.form-group.error').forEach(group => {
-                group.classList.remove('error');
-            });
-            document.querySelectorAll('.error-message').forEach(msg => {
-                msg.classList.remove('show');
-            });
-        } else {
-            showMessage(data.message, 'error');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        showMessage('Error al enviar el formulario. Intenta nuevamente.', 'error');
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Enviar';
-    }
-}
-
-/**
- * Mostrar mensaje de resultado
- */
-function showMessage(message, type) {
-    formMessage.textContent = message;
-    formMessage.className = `form-message ${type}`;
-    
-    // Auto-ocultar después de 5 segundos
-    setTimeout(() => {
-        if (type === 'success') {
-            formMessage.className = 'form-message';
-        }
-    }, 5000);
-    
-    // Scroll al mensaje
-    formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
 // ============================================
-// NAVEGACIÓN MÓVIL
-// ============================================
-
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-
-if (hamburger) {
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
-    
-    // Cerrar menú al hacer clic en un link
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-        });
-    });
-}
-
-// ============================================
-// ANIMACIONES AL SCROLL - INTERSECTION OBSERVER
-// ============================================
-
-/**
- * Sistema mejorado de animaciones con Intersection Observer
- * Las animaciones se disparan cuando el elemento entra en el viewport
- */
-
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const animationObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            // Obtener clase de animación del elemento
-            const animations = entry.target.className.match(/fade-in(?:-\w+)?/g);
-            
-            if (animations) {
-                // Aplicar la animación
-                entry.target.style.animationPlayState = 'running';
-                
-                // Dejar de observar después de animar
-                animationObserver.unobserve(entry.target);
-            }
-        }
-    });
-}, observerOptions);
-
-/**
- * Observar todos los elementos con clases de animación
- */
-document.addEventListener('DOMContentLoaded', () => {
-    // Seleccionar elementos a animar
-    const elementsToAnimate = document.querySelectorAll('.fade-in, .fade-in-up, .fade-in-left, .fade-in-right');
-    
-    elementsToAnimate.forEach(element => {
-        animationObserver.observe(element);
-    });
-});
-
-// ============================================
-// TABS DE PROYECTOS
-// ============================================
-
-document.querySelectorAll('.tab-button').forEach(button => {
-    button.addEventListener('click', function() {
-        // Remover clase active de todos los botones
-        document.querySelectorAll('.tab-button').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        
-        // Agregar clase active al botón clickeado
-        this.classList.add('active');
-        
-        // Mostrar detalle correspondiente con animaciones
-        const tab = this.getAttribute('data-tab');
-        showProjectDetail(tab);
-    });
-});
-
-const projects = {
-    planos: {
-        title: 'Planos Técnicos Detallados',
-        desc: 'Realizamos planos técnicos detallados para requerimientos de precisión y cumplimiento de normas. Entregamos documentación lista para fabricación y validación.',
-        image: 'assets/images/plano.jpeg',
-    },
-    proceso: {
-        title: 'Montaje y Cableado',
-        desc: 'Montaje, cableado y verificación de cada tablero eléctrico con controles de calidad estrictos y pruebas funcionales.',
-        image: 'assets/images/fabricacion.jpeg'
-    },
-    resultado: {
-        title: 'Entrega y Puesta en Marcha',
-        desc: 'Entrega final de tableros listos para operación, con pruebas realizadas y documentación técnica completa.',
-        image: 'assets/images/carru9.jpg'
-    }
-};
-
-function showProjectDetail(key) {
-    const detail = document.getElementById('proyecto-detail');
-    const img = document.getElementById('detail-image');
-    const imgTag = document.getElementById('detail-image-img');
-    const title = document.getElementById('detail-title');
-    const desc = document.getElementById('detail-desc');
-    const inner = document.querySelector('.detail-inner');
-
-    if (!projects[key]) return;
-
-    // Set content
-    title.textContent = projects[key].title;
-    desc.textContent = projects[key].desc;
-    // Background fallback
-    img.style.backgroundImage = `url('${projects[key].image}')`;
-    img.style.backgroundSize = 'cover';
-    img.style.backgroundPosition = 'center';
-    // Prefer using an <img> tag for reliable rendering on mobile
-    if (imgTag) {
-        imgTag.src = projects[key].image;
-        imgTag.alt = projects[key].title;
-    }
-
-    // Orientation: proceso = image right (reverse)
-    if (key === 'proceso') {
-        inner.classList.add('reverse');
-    } else {
-        inner.classList.remove('reverse');
-    }
-
-    // Prepare animations
-    img.classList.remove('animate-left','animate-right');
-    title.classList.remove('animate-wow');
-    desc.classList.remove('animate-wow');
-
-    // Force reflow
-    void img.offsetWidth;
-
-    // Add animations
-    if (key === 'proceso') {
-        img.classList.add('animate-right');
-    } else {
-        img.classList.add('animate-left');
-    }
-    title.classList.add('animate-wow');
-    desc.classList.add('animate-wow');
-
-    // Show container
-    detail.style.display = 'block';
-
-    // Smooth scroll to detail
-    detail.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-// Mostrar por defecto la primera pestaña al cargar
-document.addEventListener('DOMContentLoaded', () => {
-    const defaultBtn = document.querySelector('.tab-button.active') || document.querySelector('.tab-button[data-tab="planos"]');
-    if (defaultBtn) {
-        showProjectDetail(defaultBtn.getAttribute('data-tab'));
-    }
-});
-
-// ============================================
-// SMOOTH SCROLL PARA LINKS INTERNOS
-// ============================================
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href !== '#' && document.querySelector(href)) {
-            e.preventDefault();
-            document.querySelector(href).scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-
-// ============================================
-// TABS DE EQUIPOS ELÉCTRICOS
-// ============================================
-
-document.querySelectorAll('.equipo-tabs .tab-button').forEach(button => {
-    button.addEventListener('click', function() {
-        // Remover clase active de todos los botones
-        document.querySelectorAll('.equipo-tabs .tab-button').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        
-        // Agregar clase active al botón clickeado
-        this.classList.add('active');
-        
-        // Mostrar detalle correspondiente con animaciones
-        const tab = this.getAttribute('data-tab');
-        showEquipmentDetail(tab);
-    });
-});
-
-const equipments = {
-    domestico: {
-        title: 'Autoportante',
-        desc: 'Los tableros autoportantes son estructuras de libre apoyo diseñadas para soportar componentes de gran peso sin necesidad de anclaje a muros. Destacan por su diseño modular y robusto, ideal para centros de control y distribución de alta potencia en entornos industriales.',
-        image: 'assets/images/autoportante.jpeg',
-    },
-    adosado: {
-        title: 'Adosado',
-        desc: 'Los productos de HLN cumplen con las normas vigentes. Están diseñados para facilitar inspecciones, pruebas y mantenimiento, e incluyen una placa base para el montaje del sistema de barras de interruptores.',
-        image: 'assets/images/ados.jpeg'
-    },
-    autosoportado: {
-        title: 'Autosoportado',
-        desc: 'Ofrecemos tableros autosoportados diseñados para instalaciones industriales y comerciales de alta demanda. Montados sobre una base sólida que brinda estabilidad, están fabricados en planchas galvanizadas y cuentan con puertas con cerraduras, ventilación adecuada y perforaciones pre troqueladas para el ingreso y salida de cables.',
-        image: 'assets/images/auto.jpeg'
-    },
-    empotrables: {
-        title: 'Empotrables',
-        desc: 'Ofrecemos tableros empotrables para llaves termomagnéticas, ideales para centralizar líneas de distribución y circuitos en instalaciones residenciales, industriales y pequeñas comerciales de baja carga. Fabricados en planchas galvanizadas, incluyen perforaciones pre troqueladas de cables y se fijan a la pared.',
-        image: 'assets/images/empo.jpeg'
-    },
-    transformadores: {
-    title: 'Transformadores',
-    desc: 'Ofrecemos transformadores eléctricos para aplicaciones industriales y comerciales, diseñados para garantizar una distribución eficiente y segura de la energía. Fabricados bajo estándares de calidad, incluyen protección térmica, aislamiento reforzado y configuraciones personalizadas según la necesidad del proyecto.',
-    image: 'assets/images/trafo.jpeg'
-}
-    
-};
-
-function showEquipmentDetail(key) {
-    const detail = document.getElementById('equipo-detail');
-    const img = document.getElementById('equipo-detail-image');
-    const imgTag = document.getElementById('equipo-detail-image-img');
-    const title = document.getElementById('equipo-detail-title');
-    const desc = document.getElementById('equipo-detail-desc');
-
-    if (!equipments[key]) return;
-
-    // Set content
-    title.textContent = equipments[key].title;
-    desc.textContent = equipments[key].desc;
-    // Background fallback
-    img.style.backgroundImage = `url('${equipments[key].image}')`;
-    img.style.backgroundSize = 'cover';
-    img.style.backgroundPosition = 'center';
-    // Set <img> src for reliable mobile rendering
-    if (imgTag) {
-        imgTag.src = equipments[key].image;
-        imgTag.alt = equipments[key].title;
-    }
-
-    // Prepare animations
-    img.classList.remove('animate-left','animate-right');
-    title.classList.remove('animate-wow');
-    desc.classList.remove('animate-wow');
-
-    // Force reflow
-    void img.offsetWidth;
-
-    // Add animations
-    img.classList.add('animate-left');
-    title.classList.add('animate-wow');
-    desc.classList.add('animate-wow');
-
-    // Show container
-    detail.style.display = 'block';
-
-    // Smooth scroll to detail
-    detail.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-// Mostrar por defecto la primera pestaña al cargar
-document.addEventListener('DOMContentLoaded', () => {
-    const defaultBtn = document.querySelector('.equipo-tabs .tab-button.active') || document.querySelector('.equipo-tabs .tab-button[data-tab="domestico"]');
-    if (defaultBtn) {
-        showEquipmentDetail(defaultBtn.getAttribute('data-tab'));
-    }
-});
-// ============================================
-// VIEWPORT HEIGHT DINÁMICO (Framer style)
+// VIEWPORT HEIGHT DINÁMICO
 // ============================================
 
 function setDynamicVH() {
@@ -474,51 +14,416 @@ function setDynamicVH() {
 }
 
 setDynamicVH();
-window.addEventListener('resize', setDynamicVH);
+window.addEventListener('resize', setDynamicVH, { passive: true });
+
 // ============================================
-// SLIDER QUIÉNES SOMOS
+// ANIMACIONES AL SCROLL — INTERSECTION OBSERVER
+// Sistema unificado: agrega clase .show al entrar
+// en viewport. Las transiciones están definidas en CSS.
+// ============================================
+
+function initScrollAnimations() {
+    // Excluir elementos del hero: GSAP los controla en scroll-scenes.js
+    // Si se seleccionaran aquí también, IntersectionObserver y GSAP
+    // competirían por opacity/transform en los mismos nodos.
+    const elements = document.querySelectorAll(
+        '.fade-in:not(.section--hero *), ' +
+        '.fade-in-up:not(.section--hero *), ' +
+        '.fade-in-left:not(.section--hero *), ' +
+        '.fade-in-right:not(.section--hero *)'
+    );
+
+    if (!elements.length) return;
+
+    // Aplicar transition-delay desde atributo data-delay
+    elements.forEach(el => {
+        const delay = parseFloat(el.getAttribute('data-delay') || 0);
+        if (delay > 0) {
+            el.style.transitionDelay = `${delay}s`;
+        }
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -80px 0px'
+    });
+
+    elements.forEach(el => observer.observe(el));
+}
+
+// ============================================
+// ANIMACIÓN DE CONTADORES (números)
+// ============================================
+
+function initCountUp() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    if (!statNumbers.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.hasAttribute('data-animated')) {
+                entry.target.setAttribute('data-animated', 'true');
+
+                const target   = parseInt(entry.target.getAttribute('data-target'), 10);
+                const suffix   = entry.target.getAttribute('data-suffix') || '';
+                const duration = 2000;
+                const start    = Date.now();
+
+                function animate() {
+                    const progress = Math.min((Date.now() - start) / duration, 1);
+                    entry.target.textContent = Math.floor(progress * target) + suffix;
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        entry.target.textContent = target + suffix;
+                    }
+                }
+
+                animate();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.5,
+        rootMargin: '0px 0px -80px 0px'
+    });
+
+    statNumbers.forEach(el => observer.observe(el));
+}
+
+// ============================================
+// NAVEGACIÓN MÓVIL — HAMBURGER
+// ============================================
+
+function initMobileNav() {
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks  = document.querySelector('.nav-links');
+
+    if (!hamburger || !navLinks) return;
+
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+    });
+}
+
+// ============================================
+// SMOOTH SCROLL PARA ANCHORS INTERNOS
+// ============================================
+
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href   = this.getAttribute('href');
+            const target = href !== '#' && document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+}
+
+// ============================================
+// CARRUSEL INFINITO — CLIENTES
+// ============================================
+
+function initClientsCarousel() {
+    const track = document.querySelector('.clients-track');
+    if (!track) return;
+
+    // Duplicar contenido una sola vez
+    if (!track.dataset.inited) {
+        track.innerHTML += track.innerHTML;
+        track.dataset.inited = '1';
+    }
+
+    function recalculate() {
+        const originalWidth = Math.floor(track.scrollWidth / 2) || 0;
+        track.style.setProperty('--scroll-distance', originalWidth + 'px');
+        const duration = Math.max(5, Math.round(originalWidth / 200));
+        track.style.setProperty('--scroll-duration', duration + 's');
+    }
+
+    recalculate();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(recalculate, 200);
+    }, { passive: true });
+}
+
+// ============================================
+// CARRUSEL INFINITO — PROVEEDORES
+// ============================================
+
+function initProvidersCarousel() {
+    const track = document.querySelector('.providers-track');
+    if (!track) return;
+
+    if (!track.dataset.inited) {
+        track.innerHTML += track.innerHTML;
+        track.dataset.inited = '1';
+    }
+
+    function recalculate() {
+        const originalWidth = Math.floor(track.scrollWidth / 2) || 0;
+        track.style.setProperty('--providers-distance', originalWidth + 'px');
+        const duration = Math.max(10, Math.round(originalWidth / 150));
+        track.style.setProperty('--providers-duration', duration + 's');
+    }
+
+    recalculate();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(recalculate, 200);
+    }, { passive: true });
+}
+
+// ============================================
+// CARRUSEL INFINITO — IMÁGENES (fix --move)
+// ============================================
+
+function initImageCarousel() {
+    const track = document.querySelector('.carousel-track');
+    const base  = document.getElementById('carouselBase');
+    if (!track || !base) return;
+
+    function recalculate() {
+        track.style.setProperty('--move', `-${base.scrollWidth}px`);
+    }
+
+    recalculate();
+    window.addEventListener('resize', recalculate, { passive: true });
+}
+
+// ============================================
+// TABS — PROYECTOS
+// ============================================
+
+const projects = {
+    planos: {
+        title: 'Planos Técnicos Detallados',
+        desc:  'Realizamos planos técnicos detallados para requerimientos de precisión y cumplimiento de normas. Entregamos documentación lista para fabricación y validación.',
+        image: 'assets/images/plano.jpeg'
+    },
+    proceso: {
+        title: 'Montaje y Cableado',
+        desc:  'Montaje, cableado y verificación de cada tablero eléctrico con controles de calidad estrictos y pruebas funcionales.',
+        image: 'assets/images/fabricacion.jpeg'
+    },
+    resultado: {
+        title: 'Entrega y Puesta en Marcha',
+        desc:  'Entrega final de tableros listos para operación, con pruebas realizadas y documentación técnica completa.',
+        image: 'assets/images/carru9.jpg'
+    }
+};
+
+function showProjectDetail(key) {
+    const detail = document.getElementById('proyecto-detail');
+    const imgWrap = document.getElementById('detail-image');
+    const imgTag  = document.getElementById('detail-image-img');
+    const title   = document.getElementById('detail-title');
+    const desc    = document.getElementById('detail-desc');
+    const inner   = document.querySelector('.detail-inner');
+
+    if (!detail || !projects[key]) return;
+
+    title.textContent = projects[key].title;
+    desc.textContent  = projects[key].desc;
+
+    imgWrap.style.backgroundImage    = `url('${projects[key].image}')`;
+    imgWrap.style.backgroundSize     = 'cover';
+    imgWrap.style.backgroundPosition = 'center';
+
+    if (imgTag) {
+        imgTag.src = projects[key].image;
+        imgTag.alt = projects[key].title;
+    }
+
+    inner.classList.toggle('reverse', key === 'proceso');
+
+    // Reset y re-trigger animaciones
+    imgWrap.classList.remove('animate-left', 'animate-right');
+    title.classList.remove('animate-wow');
+    desc.classList.remove('animate-wow');
+    void imgWrap.offsetWidth; // force reflow
+
+    imgWrap.classList.add(key === 'proceso' ? 'animate-right' : 'animate-left');
+    title.classList.add('animate-wow');
+    desc.classList.add('animate-wow');
+
+    detail.style.display = 'block';
+    detail.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function initProjectTabs() {
+    document.querySelectorAll('.proyecto-tabs .tab-button').forEach(button => {
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.proyecto-tabs .tab-button')
+                    .forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            showProjectDetail(this.getAttribute('data-tab'));
+        });
+    });
+
+    // Mostrar tab activa por defecto
+    const defaultBtn = document.querySelector('.proyecto-tabs .tab-button.active')
+                    || document.querySelector('.proyecto-tabs .tab-button[data-tab="planos"]');
+    if (defaultBtn) showProjectDetail(defaultBtn.getAttribute('data-tab'));
+}
+
+// ============================================
+// TABS — EQUIPOS ELÉCTRICOS
+// ============================================
+
+const equipments = {
+    domestico: {
+        title: 'Autoportante',
+        desc:  'Los tableros autoportantes son estructuras de libre apoyo diseñadas para soportar componentes de gran peso sin necesidad de anclaje a muros. Destacan por su diseño modular y robusto, ideal para centros de control y distribución de alta potencia en entornos industriales.',
+        image: 'assets/images/autoportante.jpeg'
+    },
+    adosado: {
+        title: 'Adosado',
+        desc:  'Los productos de HLN cumplen con las normas vigentes. Están diseñados para facilitar inspecciones, pruebas y mantenimiento, e incluyen una placa base para el montaje del sistema de barras de interruptores.',
+        image: 'assets/images/ados.jpeg'
+    },
+    autosoportado: {
+        title: 'Autosoportado',
+        desc:  'Ofrecemos tableros autosoportados diseñados para instalaciones industriales y comerciales de alta demanda. Montados sobre una base sólida que brinda estabilidad, están fabricados en planchas galvanizadas y cuentan con puertas con cerraduras, ventilación adecuada y perforaciones pre troqueladas para el ingreso y salida de cables.',
+        image: 'assets/images/auto.jpeg'
+    },
+    empotrables: {
+        title: 'Empotrables',
+        desc:  'Ofrecemos tableros empotrables para llaves termomagnéticas, ideales para centralizar líneas de distribución y circuitos en instalaciones residenciales, industriales y pequeñas comerciales de baja carga. Fabricados en planchas galvanizadas, incluyen perforaciones pre troqueladas de cables y se fijan a la pared.',
+        image: 'assets/images/empo.jpeg'
+    },
+    transformadores: {
+        title: 'Transformadores',
+        desc:  'Ofrecemos transformadores eléctricos para aplicaciones industriales y comerciales, diseñados para garantizar una distribución eficiente y segura de la energía. Fabricados bajo estándares de calidad, incluyen protección térmica, aislamiento reforzado y configuraciones personalizadas según la necesidad del proyecto.',
+        image: 'assets/images/trafo.jpeg'
+    }
+};
+
+function showEquipmentDetail(key) {
+    const detail  = document.getElementById('equipo-detail');
+    const imgWrap = document.getElementById('equipo-detail-image');
+    const imgTag  = document.getElementById('equipo-detail-image-img');
+    const title   = document.getElementById('equipo-detail-title');
+    const desc    = document.getElementById('equipo-detail-desc');
+
+    if (!detail || !equipments[key]) return;
+
+    title.textContent = equipments[key].title;
+    desc.textContent  = equipments[key].desc;
+
+    imgWrap.style.backgroundImage    = `url('${equipments[key].image}')`;
+    imgWrap.style.backgroundSize     = 'cover';
+    imgWrap.style.backgroundPosition = 'center';
+
+    if (imgTag) {
+        imgTag.src = equipments[key].image;
+        imgTag.alt = equipments[key].title;
+    }
+
+    imgWrap.classList.remove('animate-left', 'animate-right');
+    title.classList.remove('animate-wow');
+    desc.classList.remove('animate-wow');
+    void imgWrap.offsetWidth;
+
+    imgWrap.classList.add('animate-left');
+    title.classList.add('animate-wow');
+    desc.classList.add('animate-wow');
+
+    detail.style.display = 'block';
+    detail.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function initEquipmentTabs() {
+    document.querySelectorAll('.equipo-tabs .tab-button').forEach(button => {
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.equipo-tabs .tab-button')
+                    .forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            showEquipmentDetail(this.getAttribute('data-tab'));
+        });
+    });
+
+    const defaultBtn = document.querySelector('.equipo-tabs .tab-button.active')
+                    || document.querySelector('.equipo-tabs .tab-button[data-tab="domestico"]');
+    if (defaultBtn) showEquipmentDetail(defaultBtn.getAttribute('data-tab'));
+}
+
+// ============================================
+// SLIDER QUIÉNES SOMOS — ROTACIÓN DE IMAGEN
 // ============================================
 
 function initQuienesImageSlider() {
-    const img = document.querySelector(".quienes-image img");
+    const img = document.querySelector('.quienes-image img');
     if (!img) return;
 
     const images = [
-        "assets/images/equipo.jpeg",
-        "assets/images/equipo2.jpeg",
-        "assets/images/equipo3.jpeg",
-        "assets/images/equipo4.jpeg"
+        'assets/images/equipo.jpeg',
+        'assets/images/equipo2.jpeg',
+        'assets/images/equipo3.jpeg',
+        'assets/images/equipo4.jpeg'
     ];
 
     let index = 0;
+    let timer = null;
 
-    setInterval(() => {
-        img.classList.add("fade-out");
-
+    function cycle() {
+        img.classList.add('fade-out');
         setTimeout(() => {
             index = (index + 1) % images.length;
             img.src = images[index];
-            img.classList.remove("fade-out");
+            img.classList.remove('fade-out');
         }, 400);
+    }
 
-    }, 5000);
+    // Pausar cuando la tab no está visible para no desincronizar
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            clearInterval(timer);
+        } else {
+            timer = setInterval(cycle, 5000);
+        }
+    });
+
+    timer = setInterval(cycle, 5000);
 }
+
 // ============================================
-// BLOQUE VIDEOS ROTATIVO INFINITO
+// BLOQUE DE VIDEOS — ROTACIÓN AUTOMÁTICA
 // ============================================
 
 function initVideoStrip() {
-    const videos = document.querySelectorAll(".video-grid video");
+    const videos = document.querySelectorAll('.video-grid video');
     if (!videos.length) return;
 
     const sources = [
-        "assets/images/videos/video1.mp4",
-        "assets/images/videos/video3.mp4",
-        "assets/images/videos/video2.mp4",
-        "assets/images/videos/video4.mp4",
-        "assets/images/videos/video5.mp4",
-        "assets/images/videos/video6.mp4",
-        "assets/images/videos/video7.mp4"
+        'assets/images/videos/video1.mp4',
+        'assets/images/videos/video3.mp4',
+        'assets/images/videos/video2.mp4',
+        'assets/images/videos/video4.mp4',
+        'assets/images/videos/video5.mp4',
+        'assets/images/videos/video6.mp4',
+        'assets/images/videos/video7.mp4'
     ];
 
     let index = 0;
@@ -527,15 +432,13 @@ function initVideoStrip() {
         const src = sources[index % sources.length];
         index++;
 
-        videoEl.classList.add("fade-out");
-
+        videoEl.classList.add('fade-out');
         setTimeout(() => {
             videoEl.pause();
             videoEl.src = src;
             videoEl.load();
-
             videoEl.onloadeddata = () => {
-                videoEl.classList.remove("fade-out");
+                videoEl.classList.remove('fade-out');
                 videoEl.currentTime = 0;
                 videoEl.play().catch(() => {});
             };
@@ -544,223 +447,16 @@ function initVideoStrip() {
 
     videos.forEach(video => {
         loadAndPlay(video);
-
-        video.addEventListener("ended", () => {
-            loadAndPlay(video);
-        });
+        video.addEventListener('ended', () => loadAndPlay(video));
     });
 }
 
-
-
 // ============================================
-// INICIALIZACIÓN
-// ============================================
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Setup validación de formulario
-    setupFieldValidation();
-    
-    // Agregar listener al submit
-    if (contactForm) {
-        contactForm.addEventListener('submit', handleFormSubmit);
-    }
-    
-    // Log de inicialización
-    console.log('✅ Página HLN Ingeniería iniciada correctamente');
-});
-
-// ============================================
-// MANEJO DE ERRORES GLOBAL
-// ============================================
-
-window.addEventListener('error', (event) => {
-    console.error('Error global:', event.error);
-});
-
-window.addEventListener('unhandledrejection', (event) => {
-    console.error('Promesa rechazada:', event.reason);
-});
-window.addEventListener("load", () => {
-    if (window.location.hash) {
-        history.replaceState(null, null, window.location.pathname);
-    }
-    window.scrollTo(0, 0);
-});
-
-/* ============================================
-   WHATSAPP FLOAT - Inicialización
-   ============================================ */
-
-/**
- * Inicializa el botón flotante de WhatsApp.
- * @param {string} number - Número en formato internacional sin + (ej: '51981768092')
- * @param {string} message - Mensaje inicial
- */
-function initWhatsAppFloat(number, message) {
-    const float = document.getElementById('whatsappFloat');
-    if (!float) return;
-    const anchor = float.querySelector('a');
-    if (!anchor) return;
-
-    const encoded = encodeURIComponent(message || 'Hola, quiero más información');
-    anchor.href = `https://wa.me/${number}?text=${encoded}`;
-
-    // Pequeña animación de aparición (fade/pulse)
-    float.style.opacity = '0';
-    float.style.transform = 'translateY(8px)';
-    setTimeout(() => {
-        float.style.transition = 'opacity 300ms ease, transform 300ms ease';
-        float.style.opacity = '1';
-        float.style.transform = 'translateY(0)';
-    }, 250);
-}
-
-/* ============================================
-   CARRUSEL DE CLIENTES - INFINITO
-   - Duplica los items para crear un loop perfecto
-   - Calcula duración basada en ancho total
-   - Pausa al hover
-   ============================================ */
-function initClientsCarousel() {
-    const track = document.querySelector('.clients-track');
-    if (!track) return;
-
-    // Duplicar contenido solo una vez para efecto infinito
-    if (!track.dataset.inited) {
-        track.innerHTML = track.innerHTML + track.innerHTML;
-        track.dataset.inited = '1';
-    }
-
-    // Calcular ancho original (la mitad del track duplicado)
-    const originalWidth = Math.floor(track.scrollWidth / 2) || 0;
-
-    // Usar desplazamiento en píxeles para evitar cortes: guardamos la distancia exacta
-    track.style.setProperty('--scroll-distance', originalWidth + 'px');
-
-    // Establecer duración en segundos (heurística: más rápida - 200px por segundo)
-    const duration = Math.max(5, Math.round(originalWidth / 200));
-    track.style.setProperty('--scroll-duration', duration + 's');
-
-    // Recalcular duración/distancia al redimensionar (sin volver a duplicar)
-    if (track._clientsResizeHandler) {
-        window.removeEventListener('resize', track._clientsResizeHandler);
-    }
-
-    track._clientsResizeHandler = () => {
-        clearTimeout(track._clientsResizeTimeout);
-        track._clientsResizeTimeout = setTimeout(() => {
-            const w = Math.floor(track.scrollWidth / 2) || 0;
-            track.style.setProperty('--scroll-distance', w + 'px');
-            const d = Math.max(5, Math.round(w / 200));
-            track.style.setProperty('--scroll-duration', d + 's');
-        }, 200);
-    };
-
-    window.addEventListener('resize', track._clientsResizeHandler, { passive: true });
-}
-
-/* ============================================
-   CARRUSEL DE PROVEEDORES - INFINITO (MÁS LENTO)
-   - Similar a clientes pero con duración mayor
-   - 6 items proveedores
-   ============================================ */
-function initProvidersCarousel() {
-    const track = document.querySelector('.providers-track');
-    if (!track) return;
-
-    // Duplicar contenido solo una vez para efecto infinito
-    if (!track.dataset.inited) {
-        track.innerHTML = track.innerHTML + track.innerHTML;
-        track.dataset.inited = '1';
-    }
-
-    // Calcular ancho original (la mitad del track duplicado)
-    const originalWidth = Math.floor(track.scrollWidth / 2) || 0;
-
-    // Usar desplazamiento en píxeles para evitar cortes
-    track.style.setProperty('--providers-distance', originalWidth + 'px');
-
-    // Establecer duración más lenta para proveedores (heurística: ~150px por segundo)
-    const duration = Math.max(10, Math.round(originalWidth / 150));
-    track.style.setProperty('--providers-duration', duration + 's');
-
-    // Recalcular duración/distancia al redimensionar (sin volver a duplicar)
-    if (track._providersResizeHandler) {
-        window.removeEventListener('resize', track._providersResizeHandler);
-    }
-
-    track._providersResizeHandler = () => {
-        clearTimeout(track._providersResizeTimeout);
-        track._providersResizeTimeout = setTimeout(() => {
-            const w = Math.floor(track.scrollWidth / 2) || 0;
-            track.style.setProperty('--providers-distance', w + 'px');
-            const d = Math.max(10, Math.round(w / 150));
-            track.style.setProperty('--providers-duration', d + 's');
-        }, 200);
-    };
-
-    window.addEventListener('resize', track._providersResizeHandler, { passive: true });
-}
-
-// ============================================
-// ANIMACIÓN DE NÚMEROS (Conteo)
-// ============================================
-
-function animateCountUp() {
-    const statNumbers = document.querySelectorAll('.stat-number');
-    
-    const observerOptions = {
-        threshold: 0.5,
-        rootMargin: '0px 0px -100px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !entry.target.hasAttribute('data-animated')) {
-                entry.target.setAttribute('data-animated', 'true');
-                const target = parseInt(entry.target.getAttribute('data-target'));
-                const suffix = entry.target.getAttribute('data-suffix') || '';
-                const duration = 2000; // 2 segundos
-                const start = Date.now();
-                
-                const animate = () => {
-                    const now = Date.now();
-                    const progress = Math.min((now - start) / duration, 1);
-                    const current = Math.floor(progress * target);
-                    
-                    entry.target.textContent = current + suffix;
-                    
-                    if (progress < 1) {
-                        requestAnimationFrame(animate);
-                    } else {
-                        entry.target.textContent = target + suffix;
-                    }
-                };
-                
-                animate();
-            }
-        });
-    }, observerOptions);
-    
-    statNumbers.forEach(number => observer.observe(number));
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    initClientsCarousel();
-    initProvidersCarousel();
-    animateCountUp();
-    initQuienesImageSlider();
-    initVideoStrip();
-});
-
-// ============================================
-// CARRUSEL DE VIDEOS - MÓVIL
+// CARRUSEL DE VIDEOS — MÓVIL
 // ============================================
 
 function initVideoCarousel() {
-    const carousel = document.getElementById('videoCarousel');
-    const slides = document.querySelectorAll('.video-slide');
+    const slides  = document.querySelectorAll('.video-slide');
     const prevBtn = document.getElementById('videoPrev');
     const nextBtn = document.getElementById('videoNext');
 
@@ -773,41 +469,252 @@ function initVideoCarousel() {
         slides[index].classList.add('active');
     }
 
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % slides.length;
-        showSlide(currentIndex);
-    }
-
-    function prevSlide() {
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        showSlide(currentIndex);
-    }
-
-    // Mostrar primer video por defecto
     showSlide(0);
 
-    // Event listeners para botones
-    nextBtn.addEventListener('click', nextSlide);
-    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % slides.length;
+        showSlide(currentIndex);
+    });
+
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        showSlide(currentIndex);
+    });
 }
 
+// ============================================
+// WHATSAPP FLOTANTE
+// ============================================
 
-// Inicializar con el número proporcionado al cargar la página
-document.addEventListener('DOMContentLoaded', () => {
-    try {
-        initWhatsAppFloat('51915236931', 'hola hln necesito mas información');
-    } catch (e) {
-        console.error('No se pudo inicializar WhatsApp float', e);
+function initWhatsAppFloat(number, message) {
+    const float  = document.getElementById('whatsappFloat');
+    if (!float) return;
+
+    const anchor = float.querySelector('a');
+    if (!anchor) return;
+
+    anchor.href = `https://wa.me/${number}?text=${encodeURIComponent(message || 'Hola, quiero más información')}`;
+
+    // Animación de entrada
+    float.style.opacity   = '0';
+    float.style.transform = 'translateY(8px)';
+    setTimeout(() => {
+        float.style.transition = 'opacity 300ms ease, transform 300ms ease';
+        float.style.opacity    = '1';
+        float.style.transform  = 'translateY(0)';
+    }, 250);
+}
+
+// ============================================
+// FORMULARIO DE CONTACTO
+// ============================================
+
+// Campos presentes en el HTML (sin 'asunto' — no existe en el form)
+const FORM_FIELDS = ['nombre', 'email', 'mensaje', 'terminos'];
+
+function validateField(fieldName, value) {
+    switch (fieldName) {
+        case 'nombre':
+            if (!value || value.trim().length < 3)
+                return 'El nombre debe tener al menos 3 caracteres';
+            break;
+        case 'email': {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!value || !emailRegex.test(value))
+                return 'Email inválido';
+            break;
+        }
+        case 'mensaje':
+            if (!value || value.trim().length < 10)
+                return 'El mensaje debe tener al menos 10 caracteres';
+            break;
+        case 'terminos':
+            if (!document.getElementById('terminos').checked)
+                return 'Debes aceptar los términos';
+            break;
     }
-    
+    return null; // sin error
+}
+
+function showFieldError(fieldName, errorMessage) {
+    const field        = document.getElementById(fieldName);
+    const errorEl      = document.getElementById(`${fieldName}-error`);
+
+    // Guard: si el campo no existe en el DOM, ignorar
+    if (!field) return;
+
+    const formGroup = field.parentElement;
+
+    if (errorMessage) {
+        formGroup.classList.add('error');
+        if (errorEl) {
+            errorEl.textContent = errorMessage;
+            errorEl.classList.add('show');
+        }
+    } else {
+        formGroup.classList.remove('error');
+        if (errorEl) {
+            errorEl.textContent = '';
+            errorEl.classList.remove('show');
+        }
+    }
+}
+
+function validateForm() {
+    let isValid = true;
+
+    FORM_FIELDS.forEach(fieldName => {
+        const el    = document.getElementById(fieldName);
+        if (!el) return; // campo no existe en DOM, saltar
+
+        const value = fieldName === 'terminos' ? el.checked : el.value;
+        const error = validateField(fieldName, value);
+
+        showFieldError(fieldName, error);
+        if (error) isValid = false;
+    });
+
+    return isValid;
+}
+
+function showFormMessage(element, message, type) {
+    element.textContent  = message;
+    element.className    = `form-message ${type}`;
+    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    if (type === 'success') {
+        setTimeout(() => {
+            element.className = 'form-message';
+        }, 5000);
+    }
+}
+
+function initContactForm() {
+    const form       = document.getElementById('contactForm');
+    const formMsg    = document.getElementById('form-message');
+    const submitBtn  = document.querySelector('.submit-button');
+
+    if (!form) return;
+
+    // Validación en tiempo real al salir de cada campo
+    FORM_FIELDS.forEach(fieldName => {
+        const el = document.getElementById(fieldName);
+        if (!el) return;
+
+        el.addEventListener('blur', () => {
+            const value = fieldName === 'terminos' ? el.checked : el.value;
+            showFieldError(fieldName, validateField(fieldName, value));
+        });
+    });
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        if (!validateForm()) {
+            showFormMessage(formMsg, 'Por favor, completa todos los campos correctamente', 'error');
+            return;
+        }
+
+        submitBtn.disabled    = true;
+        submitBtn.textContent = 'Enviando...';
+
+        try {
+            const response = await fetch('backend/handlers/form-handler.php', {
+                method: 'POST',
+                body:   new FormData(form)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                showFormMessage(formMsg, data.message, 'success');
+                form.reset();
+                document.querySelectorAll('.form-group.error').forEach(g => g.classList.remove('error'));
+                document.querySelectorAll('.error-message').forEach(m => m.classList.remove('show'));
+            } else {
+                showFormMessage(formMsg, data.message, 'error');
+            }
+        } catch (err) {
+            console.error('Error al enviar formulario:', err);
+            showFormMessage(formMsg, 'Error al enviar el formulario. Intenta nuevamente.', 'error');
+        } finally {
+            submitBtn.disabled    = false;
+            submitBtn.textContent = 'Enviar';
+        }
+    });
+}
+
+// ============================================
+// MANEJO DE ERRORES GLOBAL
+// ============================================
+
+window.addEventListener('error', (event) => {
+    console.error('Error global:', event.error);
 });
+
+window.addEventListener('unhandledrejection', (event) => {
+    console.error('Promesa rechazada:', event.reason);
+});
+
+// ============================================
+// WIDGET FLOTANTE — FOTO PLC
+// Imagen estática — sin lógica de video.
+// ============================================
+
+function initPanelFloat() {
+    const btn   = document.getElementById('panelFloatBtn');
+    const modal = document.getElementById('panelModal');
+    const close = document.getElementById('panelModalClose');
+
+    if (!btn || !modal || !close) return;
+
+    function openModal() {
+        modal.hidden = false;
+        modal.removeAttribute('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeModal() {
+        modal.setAttribute('hidden', '');
+        btn.setAttribute('aria-expanded', 'false');
+    }
+
+    btn.addEventListener('click', () => {
+        modal.hasAttribute('hidden') ? openModal() : closeModal();
+    });
+
+    close.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.hasAttribute('hidden')) closeModal();
+    });
+}
+
+// ============================================
+// INICIALIZACIÓN — UN SOLO DOMContentLoaded
+// ─────────────────────────────────────────────
+// NOTA: initScrollScenes() (GSAP) se llama desde
+// window 'load' en el HTML, no aquí, porque necesita
+// que los scripts de CDN (gsap + ScrollTrigger)
+// estén completamente cargados antes de ejecutarse.
+// ============================================
+
 document.addEventListener('DOMContentLoaded', () => {
+    initScrollAnimations();
+    initCountUp();
+    initMobileNav();
+    initSmoothScroll();
+    initImageCarousel();
     initClientsCarousel();
     initProvidersCarousel();
-    animateCountUp();
+    initProjectTabs();
+    initEquipmentTabs();
     initQuienesImageSlider();
     initVideoStrip();
     initVideoCarousel();
+    initContactForm();
+    initWhatsAppFloat('51915236931', 'Hola HLN, necesito más información');
+    initPanelFloat();
+
+    console.log('✅ HLN Ingeniería — JS iniciado correctamente');
 });
-
-
