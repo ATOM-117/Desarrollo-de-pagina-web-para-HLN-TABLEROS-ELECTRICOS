@@ -948,15 +948,14 @@ body {
     width: 100%;
     flex-direction: column;
     align-items: center;
-    padding: 0 0 2rem;
-    overflow: hidden; /* clip aquí, no en el track */
+    padding: 0 0 0.75rem; /* reducido de 2rem */
+    overflow: hidden;
 }
 
 .tbl-mobile-track {
     display: flex;
     flex-direction: row;
     width: 100%;
-    /* overflow visible para que transform funcione — el carousel-wrapper hace el clip */
     will-change: transform;
 }
 
@@ -966,8 +965,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    scroll-snap-align: start;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tbl-mobile-slide img {
@@ -975,39 +972,38 @@ body {
     aspect-ratio: 16 / 9;
     object-fit: cover;
     display: block;
-    border-radius: 0;
 }
 
 .tbl-mobile-info {
     background: rgba(4, 18, 38, 0.92);
     border-left: 3px solid var(--secondary);
-    padding: 1rem 1.2rem;
+    padding: 0.7rem 1rem; /* reducido de 1rem 1.2rem */
     color: var(--white);
 }
 
 .tbl-mobile-num {
     display: block;
-    font-size: 0.62rem;
+    font-size: 0.58rem;
     font-weight: 900;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--secondary);
     font-family: 'Courier New', monospace;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.25rem;
 }
 
 .tbl-mobile-info h3 {
-    font-size: 1rem;
+    font-size: 0.92rem;
     font-weight: 700;
     color: var(--white);
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.3rem;
 }
 
 .tbl-mobile-info p {
-    font-size: 0.8rem;
+    font-size: 0.76rem;
     color: rgba(180,210,230,.82);
-    line-height: 1.55;
-    margin-bottom: 0.5rem;
+    line-height: 1.45;
+    margin-bottom: 0.35rem;
 }
 
 .tbl-mobile-info ul {
@@ -1016,15 +1012,16 @@ body {
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.18rem;
 }
 
 .tbl-mobile-info li {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: rgba(130,185,215,.85);
     font-weight: 600;
-    padding-left: 1rem;
+    padding-left: 0.9rem;
     position: relative;
+    letter-spacing: 0.02em;
 }
 .tbl-mobile-info li::before {
     content: '▸';
@@ -1036,10 +1033,10 @@ body {
 /* Botones prev/next */
 .tbl-mobile-btn {
     position: absolute;
-    top: calc(50% - 2.5rem); /* centrado vertical en la imagen */
+    top: calc((100vw * 9/16) / 2); /* centrado en la imagen */
     transform: translateY(-50%);
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: rgba(0,0,0,.55);
     border: 1px solid rgba(255,255,255,.2);
@@ -1057,12 +1054,13 @@ body {
 /* Dots */
 .tbl-mobile-dots {
     display: flex;
-    gap: 6px;
-    margin-top: 0.75rem;
+    gap: 5px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
 }
 .tbl-mobile-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: rgba(255,255,255,.25);
     transition: background 200ms ease, transform 200ms ease;
@@ -1858,24 +1856,19 @@ body {
     border: 1px solid rgba(0,153,204,.25);
     box-shadow: 0 20px 60px rgba(0,0,0,.55);
     transform-origin: bottom left;
-    /* Estado por defecto: cerrado */
+    /* Por defecto: cerrado (opacity 0, desplazado) */
     opacity: 0;
     transform: scale(0.9) translateY(10px);
     pointer-events: none;
+    /* Transición activa siempre */
     transition: opacity 0.22s ease, transform 0.22s ease;
+    /* display:none mientras está hidden — gestionado por JS */
 }
 
-/* Estado abierto */
 .panel-modal.is-open {
     opacity: 1;
     transform: scale(1) translateY(0);
     pointer-events: auto;
-}
-
-/* Cuando está hidden (JS lo pone) no renderizar en absoluto */
-.panel-modal[hidden] {
-    display: none !important;
-    transition: none;
 }
 
 .panel-modal__inner {

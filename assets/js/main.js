@@ -720,7 +720,6 @@ function initTblMobileCarousel() {
 
 // ============================================
 // WIDGET FLOTANTE — FOTO PLC
-// Imagen estática — sin lógica de video.
 // ============================================
 
 function initPanelFloat() {
@@ -730,37 +729,44 @@ function initPanelFloat() {
 
     if (!btn || !modal || !close) return;
 
-    let isOpen = false;
+    // Gestión puramente por clases — sin atributo hidden
+    // El HTML tiene hidden solo para el estado inicial del CSS.
+    // JS lo quita una vez y nunca más lo vuelve a poner.
+    let visible = false;
 
-    function openModal() {
-        isOpen = true;
-        // Paso 1: remover hidden para que aparezca en el DOM (opacity:0 por CSS)
-        modal.removeAttribute('hidden');
-        // Paso 2: forzar un frame de render para que el browser registre opacity:0
+    // Asegurarse de que el modal empiece oculto visualmente
+    modal.style.display = 'none';
+    modal.removeAttribute('hidden'); // ya no usamos hidden
+
+    function open() {
+        if (visible) return;
+        visible = true;
+        // 1. Hacer visible en el DOM (opacity:0 por CSS)
+        modal.style.display = '';
+        // 2. Doble rAF: garantiza 2 frames de render antes de transición
+        //    Necesario en Safari, Firefox y Chromium en GitHub Pages
         requestAnimationFrame(() => {
-            // Paso 3: agregar is-open dispara la transición a opacity:1
-            modal.classList.add('is-open');
+            requestAnimationFrame(() => {
+                modal.classList.add('is-open');
+            });
         });
         btn.setAttribute('aria-expanded', 'true');
     }
 
-    function closeModal() {
-        isOpen = false;
+    function close_() {
+        if (!visible) return;
+        visible = false;
         modal.classList.remove('is-open');
         btn.setAttribute('aria-expanded', 'false');
-        // Esperar a que termine la transición CSS (220ms) antes de display:none
+        // Ocultar del DOM tras la transición (220ms + margen)
         setTimeout(() => {
-            if (!isOpen) modal.setAttribute('hidden', '');
-        }, 230);
+            if (!visible) modal.style.display = 'none';
+        }, 280);
     }
 
-    btn.addEventListener('click', () => {
-        isOpen ? closeModal() : openModal();
-    });
-    close.addEventListener('click', closeModal);
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && isOpen) closeModal();
-    });
+    btn.addEventListener('click',  () => visible ? close_() : open());
+    close.addEventListener('click', close_);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close_(); });
 }
 
 // ============================================
