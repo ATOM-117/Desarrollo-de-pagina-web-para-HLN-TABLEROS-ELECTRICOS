@@ -149,6 +149,29 @@ function initScrollScenes() {
 // GitHub Pages con latencia de red.
 // DOMContentLoaded NO es suficiente para CDNs.
 // ============================================
-window.addEventListener('load', function() {
-    initScrollScenes();
+function waitForGSAP(callback) {
+    const maxAttempts = 50; // 5 segundos aprox
+    let attempts = 0;
+
+    function check() {
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            callback();
+        } else {
+            attempts++;
+            if (attempts < maxAttempts) {
+                setTimeout(check, 100);
+            } else {
+                console.error('❌ GSAP no cargó después de varios intentos');
+            }
+        }
+    }
+
+    check();
+}
+
+// 🚀 Inicialización ROBUSTA
+window.addEventListener('DOMContentLoaded', () => {
+    waitForGSAP(() => {
+        initScrollScenes();
+    });
 });

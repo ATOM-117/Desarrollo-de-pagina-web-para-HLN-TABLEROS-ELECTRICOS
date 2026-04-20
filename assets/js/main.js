@@ -789,8 +789,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initVideoStrip();
     initVideoCarousel();
     initContactForm();
-    initWhatsAppFloat('51915236931', 'Hola, me comunico con HLN Ingeniería. Estoy interesado en conocer sus servicios de tableros eléctricos e ingeniería de proyectos. ¿Podrían brindarme información para una posible licitación o cotización?');
+    initWhatsAppFloat('51915236931', 'Hola...');
     initTblMobileCarousel();
+
+    // 🔥 ESTA LÍNEA FALTABA
+    initPanelFloat();
 
     console.log('✅ HLN Ingeniería — JS iniciado correctamente');
 });
