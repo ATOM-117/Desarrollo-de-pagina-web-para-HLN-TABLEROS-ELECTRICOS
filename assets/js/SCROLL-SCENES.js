@@ -99,13 +99,10 @@ function initScene_Tablero() {
         return;
     }
 
-    // En móvil: sin GSAP. El CSS media query ya maneja el layout.
-    // Los elementos son visibles directamente sin animación.
+    // En móvil: sin GSAP. El CSS media query maneja todo el layout.
+    // Las imágenes se muestran apiladas en columna, los mensajes fluyen.
+    // No aplicamos ningún gsap.set() para no pisar el CSS.
     if (window.innerWidth < 768) {
-        gsap.set(img1, { opacity: 1 });
-        gsap.set(img2, { opacity: 0 });
-        gsap.set(img3, { opacity: 0 });
-        if (fill) fill.style.width = '100%';
         return;
     }
 

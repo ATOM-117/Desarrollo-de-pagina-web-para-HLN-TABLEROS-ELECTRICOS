@@ -23,24 +23,21 @@ window.addEventListener('resize', setDynamicVH, { passive: true });
 // ============================================
 
 function initScrollAnimations() {
-    // Excluir elementos del hero: GSAP los controla en scroll-scenes.js
-    // Si se seleccionaran aquí también, IntersectionObserver y GSAP
-    // competirían por opacity/transform en los mismos nodos.
-    const elements = document.querySelectorAll(
-        '.fade-in:not(.section--hero *), ' +
-        '.fade-in-up:not(.section--hero *), ' +
-        '.fade-in-left:not(.section--hero *), ' +
-        '.fade-in-right:not(.section--hero *)'
-    );
+    // En desktop: excluir elementos del hero (GSAP los controla).
+    // En móvil: incluirlos también porque GSAP no corre,
+    // así el IntersectionObserver los hace visibles al entrar en viewport.
+    const isDesktop = window.innerWidth >= 768;
 
+    const selector = isDesktop
+        ? '.fade-in:not(.section--hero *), .fade-in-up:not(.section--hero *), .fade-in-left:not(.section--hero *), .fade-in-right:not(.section--hero *)'
+        : '.fade-in, .fade-in-up, .fade-in-left, .fade-in-right';
+
+    const elements = document.querySelectorAll(selector);
     if (!elements.length) return;
 
-    // Aplicar transition-delay desde atributo data-delay
     elements.forEach(el => {
         const delay = parseFloat(el.getAttribute('data-delay') || 0);
-        if (delay > 0) {
-            el.style.transitionDelay = `${delay}s`;
-        }
+        if (delay > 0) el.style.transitionDelay = `${delay}s`;
     });
 
     const observer = new IntersectionObserver((entries) => {
@@ -51,8 +48,8 @@ function initScrollAnimations() {
             }
         });
     }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -80px 0px'
+        threshold: 0.08,
+        rootMargin: '0px 0px -40px 0px'
     });
 
     elements.forEach(el => observer.observe(el));
@@ -590,9 +587,9 @@ function showFormMessage(element, message, type) {
 }
 
 function initContactForm() {
-    const form       = document.getElementById('contactForm');
-    const formMsg    = document.getElementById('form-message');
-    const submitBtn  = document.querySelector('.submit-button');
+    const form      = document.getElementById('contactForm');
+    const formMsg   = document.getElementById('form-message');
+    const submitBtn = document.querySelector('.submit-button');
 
     if (!form) return;
 
@@ -600,7 +597,6 @@ function initContactForm() {
     FORM_FIELDS.forEach(fieldName => {
         const el = document.getElementById(fieldName);
         if (!el) return;
-
         el.addEventListener('blur', () => {
             const value = fieldName === 'terminos' ? el.checked : el.value;
             showFieldError(fieldName, validateField(fieldName, value));
@@ -611,36 +607,59 @@ function initContactForm() {
         e.preventDefault();
 
         if (!validateForm()) {
-            showFormMessage(formMsg, 'Por favor, completa todos los campos correctamente', 'error');
+            showFormMessage(formMsg, 'Por favor, completa todos los campos correctamente.', 'error');
             return;
         }
 
         submitBtn.disabled    = true;
         submitBtn.textContent = 'Enviando...';
 
-        try {
-            const response = await fetch('backend/handlers/form-handler.php', {
-                method: 'POST',
-                body:   new FormData(form)
-            });
+        const nombre  = document.getElementById('nombre').value.trim();
+        const email   = document.getElementById('email').value.trim();
+        const mensaje = document.getElementById('mensaje').value.trim();
 
-            const data = await response.json();
+        // ── Envío vía Formspree ──────────────────────
+        // Formspree reenvía el formulario a administracion@hln.com.pe.
+        // INSTRUCCIONES para activar:
+        //   1. Ir a https://formspree.io y crear cuenta gratuita
+        //   2. Crear nuevo form → poner email: administracion@hln.com.pe
+        //   3. Reemplazar 'YOUR_FORM_ID' por el ID que Formspree asigna
+        //      (ejemplo: 'xpzgkwqr')
+        const FORMSPREE_ID = 'YOUR_FORM_ID'; // ← reemplazar con el ID real
 
-            if (data.success) {
-                showFormMessage(formMsg, data.message, 'success');
-                form.reset();
-                document.querySelectorAll('.form-group.error').forEach(g => g.classList.remove('error'));
-                document.querySelectorAll('.error-message').forEach(m => m.classList.remove('show'));
-            } else {
-                showFormMessage(formMsg, data.message, 'error');
+        if (FORMSPREE_ID !== 'YOUR_FORM_ID') {
+            // Formspree configurado: enviar via API
+            try {
+                const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ nombre, email, mensaje }),
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    showFormMessage(formMsg, '¡Mensaje enviado! Nos pondremos en contacto a la brevedad.', 'success');
+                    form.reset();
+                    document.querySelectorAll('.form-group.error').forEach(g => g.classList.remove('error'));
+                    document.querySelectorAll('.error-message').forEach(m => m.classList.remove('show'));
+                } else {
+                    throw new Error(data?.errors?.[0]?.message || 'Error de envío');
+                }
+            } catch (err) {
+                showFormMessage(formMsg, 'Error al enviar. Por favor escríbenos a administracion@hln.com.pe', 'error');
             }
-        } catch (err) {
-            console.error('Error al enviar formulario:', err);
-            showFormMessage(formMsg, 'Error al enviar el formulario. Intenta nuevamente.', 'error');
-        } finally {
-            submitBtn.disabled    = false;
-            submitBtn.textContent = 'Enviar';
+        } else {
+            // Fallback mailto: abre el cliente de correo del usuario
+            // con los datos pre-completados hacia administracion@hln.com.pe
+            const subject = encodeURIComponent(`Consulta de ${nombre} — HLN Ingeniería`);
+            const body    = encodeURIComponent(
+                `Nombre: ${nombre}\nCorreo: ${email}\n\nMensaje:\n${mensaje}`
+            );
+            window.location.href = `mailto:administracion@hln.com.pe?subject=${subject}&body=${body}`;
+            showFormMessage(formMsg, 'Se abrirá tu cliente de correo para enviar el mensaje.', 'success');
         }
+
+        submitBtn.disabled    = false;
+        submitBtn.textContent = 'Enviar';
     });
 }
 
@@ -713,7 +732,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initVideoStrip();
     initVideoCarousel();
     initContactForm();
-    initWhatsAppFloat('51915236931', 'Hola HLN, necesito más información');
+    initWhatsAppFloat('51915236931', 'Hola, me comunico con HLN Ingeniería. Estoy interesado en conocer sus servicios de tableros eléctricos e ingeniería de proyectos. ¿Podrían brindarme información para una posible licitación o cotización?');
     initPanelFloat();
 
     console.log('✅ HLN Ingeniería — JS iniciado correctamente');

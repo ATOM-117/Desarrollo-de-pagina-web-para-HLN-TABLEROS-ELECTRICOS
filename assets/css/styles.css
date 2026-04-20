@@ -1974,12 +1974,16 @@ body {
     /* Hero */
     .section--hero .sticky-container { height: auto; overflow: visible; }
     .scene--hero   { height: auto; min-height: 100svh; }
-    .hero          { min-height: 100svh; padding: 5rem 1.2rem 3rem; }
+    .hero          { min-height: 100svh; padding: 5rem 1.2rem 3rem; background-position: right center; }
     .hero-container { text-align: center; margin: 0 auto; max-width: 100%; }
     .hero-content h2  { font-size: clamp(1.4rem, 5.5vw, 2rem); }
     .hero-content p   { font-size: clamp(0.88rem, 3.5vw, 1rem); }
     .hero-buttons     { flex-direction: column; align-items: center; }
     .cta-button       { width: 100%; text-align: center; padding: 12px var(--spacing-lg); }
+    /* En móvil GSAP no corre → forzar visibilidad de elementos del hero */
+    .section--hero .hero-content h2,
+    .section--hero .hero-content p,
+    .section--hero .hero-buttons { opacity: 1; transform: none; }
 
     /* Tablero: sin pin, layout columna */
     .section--tablero .sticky-container { height: auto; overflow: visible; }
@@ -1993,17 +1997,40 @@ body {
         gap: 1rem;
         align-items: start;
     }
-    .tbl-stage  { width: 100%; max-height: none; }
+    .tbl-stage  {
+        width: 100%;
+        max-height: none;
+        height: auto;
+        /* En móvil apilamos las 3 imágenes en columna */
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    /* Las imágenes en móvil fluyen normalmente (no absolutas) */
+    .tbl-img {
+        position: relative;
+        inset: unset;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        filter: drop-shadow(0 6px 16px rgba(0,0,0,.6));
+    }
     .tbl-card   { position: relative; max-height: none; width: 100%; }
     .tbl-card::before { display: none; }
-    /* Mensajes en móvil: todos apilados, visible sin GSAP */
+    /* Mensajes en móvil: todos visibles apilados (GSAP no corre) */
     .tbl-msg {
         position: relative;
         inset: unset;
-        display: none;
+        display: flex;
+        opacity: 1;
+        transform: none;
     }
-    .tbl-msg--1 { display: flex; opacity: 1; transform: none; }
+    /* Las imágenes 2 y 3 se muestran con opacidad reducida en móvil
+       para indicar que son vistas adicionales */
+    .tbl-img--2, .tbl-img--3 { opacity: 0.85; }
     .tbl-progress { position: relative; width: 100%; height: 3px; margin-top: 0.5rem; }
+    .tbl-progress__fill { width: 100%; }
     .tbl-hint { display: none; }
 
     /* Quiénes somos */
