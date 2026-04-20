@@ -731,24 +731,38 @@ function initPanelFloat() {
     if (!btn || !modal || !close) return;
 
     function openModal() {
-        modal.hidden = false;
+        // 1. Remover hidden para que sea visible en el DOM
         modal.removeAttribute('hidden');
+        // 2. Forzar reflow para que la transición CSS arranque desde opacity:0
+        modal.offsetHeight; // eslint-disable-line no-unused-expressions
+        // 3. Agregar clase que activa la transición a opacity:1
+        modal.classList.add('is-open');
         btn.setAttribute('aria-expanded', 'true');
     }
 
     function closeModal() {
-        modal.setAttribute('hidden', '');
+        modal.classList.remove('is-open');
         btn.setAttribute('aria-expanded', 'false');
+        // Esperar a que termine la transición antes de ocultar del DOM
+        setTimeout(() => {
+            if (!modal.classList.contains('is-open')) {
+                modal.setAttribute('hidden', '');
+            }
+        }, 260);
     }
 
     btn.addEventListener('click', () => {
-        modal.hasAttribute('hidden') ? openModal() : closeModal();
+        if (modal.hasAttribute('hidden') || !modal.classList.contains('is-open')) {
+            openModal();
+        } else {
+            closeModal();
+        }
     });
 
     close.addEventListener('click', closeModal);
 
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !modal.hasAttribute('hidden')) closeModal();
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
     });
 }
 

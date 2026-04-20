@@ -917,14 +917,8 @@ body {
         position: relative;
     }
 
-    .tbl-msg {
-        position: relative;
-        inset: unset;
-    }
-
-    .tbl-card::before {
-        display: none;
-    }
+    /* NO cambiamos position de tbl-msg aquí — GSAP lo necesita absolute en desktop.
+       Solo ajustamos el card para que acepte altura auto. */
 }
 
 /* ── Responsive — móvil ──────────────────── */
@@ -955,15 +949,15 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 0 0 2rem;
-    overflow: hidden;
+    overflow: hidden; /* clip aquí, no en el track */
 }
 
 .tbl-mobile-track {
     display: flex;
+    flex-direction: row;
     width: 100%;
-    overflow-x: hidden;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
+    /* overflow visible para que transform funcione — el carousel-wrapper hace el clip */
+    will-change: transform;
 }
 
 .tbl-mobile-slide {
@@ -1863,13 +1857,18 @@ body {
     background: #06101e;
     border: 1px solid rgba(0,153,204,.25);
     box-shadow: 0 20px 60px rgba(0,0,0,.55);
-    animation: pf-open 0.28s ease both;
     transform-origin: bottom left;
+    /* Transición suave en lugar de animation (más confiable) */
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+    pointer-events: none;
 }
 
-@keyframes pf-open {
-    from { opacity: 0; transform: scale(0.88) translateY(10px); }
-    to   { opacity: 1; transform: scale(1)    translateY(0); }
+.panel-modal.is-open {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
 }
 
 .panel-modal[hidden] {
