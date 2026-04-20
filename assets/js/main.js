@@ -231,7 +231,7 @@ const projects = {
     }
 };
 
-function showProjectDetail(key) {
+function showProjectDetail(key, skipScroll) {
     const detail = document.getElementById('proyecto-detail');
     const imgWrap = document.getElementById('detail-image');
     const imgTag  = document.getElementById('detail-image-img');
@@ -255,18 +255,20 @@ function showProjectDetail(key) {
 
     inner.classList.toggle('reverse', key === 'proceso');
 
-    // Reset y re-trigger animaciones
     imgWrap.classList.remove('animate-left', 'animate-right');
     title.classList.remove('animate-wow');
     desc.classList.remove('animate-wow');
-    void imgWrap.offsetWidth; // force reflow
+    void imgWrap.offsetWidth;
 
     imgWrap.classList.add(key === 'proceso' ? 'animate-right' : 'animate-left');
     title.classList.add('animate-wow');
     desc.classList.add('animate-wow');
 
     detail.style.display = 'block';
-    detail.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Solo hacer scroll si el usuario hizo clic (no en la carga inicial)
+    if (!skipScroll) {
+        detail.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
 }
 
 function initProjectTabs() {
@@ -275,14 +277,14 @@ function initProjectTabs() {
             document.querySelectorAll('.proyecto-tabs .tab-button')
                     .forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
-            showProjectDetail(this.getAttribute('data-tab'));
+            showProjectDetail(this.getAttribute('data-tab'), false); // scroll SÍ al clic
         });
     });
 
-    // Mostrar tab activa por defecto
+    // Carga inicial: mostrar tab activa SIN scroll
     const defaultBtn = document.querySelector('.proyecto-tabs .tab-button.active')
                     || document.querySelector('.proyecto-tabs .tab-button[data-tab="planos"]');
-    if (defaultBtn) showProjectDetail(defaultBtn.getAttribute('data-tab'));
+    if (defaultBtn) showProjectDetail(defaultBtn.getAttribute('data-tab'), true);
 }
 
 // ============================================
@@ -317,7 +319,7 @@ const equipments = {
     }
 };
 
-function showEquipmentDetail(key) {
+function showEquipmentDetail(key, skipScroll) {
     const detail  = document.getElementById('equipo-detail');
     const imgWrap = document.getElementById('equipo-detail-image');
     const imgTag  = document.getElementById('equipo-detail-image-img');
@@ -348,7 +350,9 @@ function showEquipmentDetail(key) {
     desc.classList.add('animate-wow');
 
     detail.style.display = 'block';
-    detail.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (!skipScroll) {
+        detail.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
 }
 
 function initEquipmentTabs() {
@@ -357,13 +361,14 @@ function initEquipmentTabs() {
             document.querySelectorAll('.equipo-tabs .tab-button')
                     .forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
-            showEquipmentDetail(this.getAttribute('data-tab'));
+            showEquipmentDetail(this.getAttribute('data-tab'), false); // scroll SÍ al clic
         });
     });
 
+    // Carga inicial: SIN scroll
     const defaultBtn = document.querySelector('.equipo-tabs .tab-button.active')
                     || document.querySelector('.equipo-tabs .tab-button[data-tab="domestico"]');
-    if (defaultBtn) showEquipmentDetail(defaultBtn.getAttribute('data-tab'));
+    if (defaultBtn) showEquipmentDetail(defaultBtn.getAttribute('data-tab'), true);
 }
 
 // ============================================
@@ -676,6 +681,44 @@ window.addEventListener('unhandledrejection', (event) => {
 });
 
 // ============================================
+// CARRUSEL MÓVIL — TABLERO (3 fases)
+// ============================================
+
+function initTblMobileCarousel() {
+    const track  = document.getElementById('tblMobileTrack');
+    const prev   = document.getElementById('tblPrev');
+    const next   = document.getElementById('tblNext');
+    const dots   = document.querySelectorAll('.tbl-mobile-dot');
+
+    if (!track || !prev || !next) return;
+
+    const slides = track.querySelectorAll('.tbl-mobile-slide');
+    let current = 0;
+
+    function goTo(idx) {
+        current = Math.max(0, Math.min(idx, slides.length - 1));
+        track.style.transform = `translateX(-${current * 100}%)`;
+        dots.forEach((d, i) => d.classList.toggle('tbl-mobile-dot--active', i === current));
+    }
+
+    // CSS transition en el track
+    track.style.transition = 'transform 0.38s cubic-bezier(0.4,0,0.2,1)';
+
+    prev.addEventListener('click', () => goTo(current - 1));
+    next.addEventListener('click', () => goTo(current + 1));
+
+    // Swipe táctil
+    let startX = 0;
+    track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+    }, { passive: true });
+
+    goTo(0);
+}
+
+// ============================================
 // WIDGET FLOTANTE — FOTO PLC
 // Imagen estática — sin lógica de video.
 // ============================================
@@ -733,7 +776,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initVideoCarousel();
     initContactForm();
     initWhatsAppFloat('51915236931', 'Hola, me comunico con HLN Ingeniería. Estoy interesado en conocer sus servicios de tableros eléctricos e ingeniería de proyectos. ¿Podrían brindarme información para una posible licitación o cotización?');
-    initPanelFloat();
+    initTblMobileCarousel();
 
     console.log('✅ HLN Ingeniería — JS iniciado correctamente');
 });

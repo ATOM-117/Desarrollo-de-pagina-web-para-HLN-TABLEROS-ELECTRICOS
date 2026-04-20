@@ -944,6 +944,141 @@ body {
 }
 
 /* ============================================
+   TABLERO MÓVIL — CARRUSEL HORIZONTAL
+   Oculto en desktop, visible solo en móvil.
+   ============================================ */
+
+.tbl-mobile-carousel {
+    display: none; /* oculto en desktop */
+    position: relative;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 2rem;
+    overflow: hidden;
+}
+
+.tbl-mobile-track {
+    display: flex;
+    width: 100%;
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.tbl-mobile-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    scroll-snap-align: start;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tbl-mobile-slide img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+}
+
+.tbl-mobile-info {
+    background: rgba(4, 18, 38, 0.92);
+    border-left: 3px solid var(--secondary);
+    padding: 1rem 1.2rem;
+    color: var(--white);
+}
+
+.tbl-mobile-num {
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    font-family: 'Courier New', monospace;
+    margin-bottom: 0.35rem;
+}
+
+.tbl-mobile-info h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+}
+
+.tbl-mobile-info p {
+    font-size: 0.8rem;
+    color: rgba(180,210,230,.82);
+    line-height: 1.55;
+    margin-bottom: 0.5rem;
+}
+
+.tbl-mobile-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.tbl-mobile-info li {
+    font-size: 0.75rem;
+    color: rgba(130,185,215,.85);
+    font-weight: 600;
+    padding-left: 1rem;
+    position: relative;
+}
+.tbl-mobile-info li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--secondary);
+}
+
+/* Botones prev/next */
+.tbl-mobile-btn {
+    position: absolute;
+    top: calc(50% - 2.5rem); /* centrado vertical en la imagen */
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.55);
+    border: 1px solid rgba(255,255,255,.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 150ms ease;
+    z-index: 5;
+}
+.tbl-mobile-btn:hover { background: rgba(0,0,0,.8); }
+.tbl-mobile-btn--prev { left: 8px; }
+.tbl-mobile-btn--next { right: 8px; }
+
+/* Dots */
+.tbl-mobile-dots {
+    display: flex;
+    gap: 6px;
+    margin-top: 0.75rem;
+}
+.tbl-mobile-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.25);
+    transition: background 200ms ease, transform 200ms ease;
+}
+.tbl-mobile-dot--active {
+    background: var(--secondary);
+    transform: scale(1.3);
+}
+
+/* ============================================
    QUIÉNES SOMOS
    ============================================ */
 
@@ -1985,52 +2120,9 @@ body {
     .section--hero .hero-content p,
     .section--hero .hero-buttons { opacity: 1; transform: none; }
 
-    /* Tablero: sin pin, layout columna */
-    .section--tablero .sticky-container { height: auto; overflow: visible; }
-    .scene--tablero { height: auto; min-height: unset; }
-    .tablero-scene  { height: auto; min-height: unset; padding-bottom: 2rem; }
-    .tbl-header     { padding: 1.5rem 1.2rem 0.8rem; }
-    .tbl-header__title { font-size: clamp(1.2rem, 5vw, 1.7rem); }
-    .tbl-body {
-        grid-template-columns: 1fr;
-        padding: 0 1rem 1.5rem;
-        gap: 1rem;
-        align-items: start;
-    }
-    .tbl-stage  {
-        width: 100%;
-        max-height: none;
-        height: auto;
-        /* En móvil apilamos las 3 imágenes en columna */
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    /* Las imágenes en móvil fluyen normalmente (no absolutas) */
-    .tbl-img {
-        position: relative;
-        inset: unset;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-        filter: drop-shadow(0 6px 16px rgba(0,0,0,.6));
-    }
-    .tbl-card   { position: relative; max-height: none; width: 100%; }
-    .tbl-card::before { display: none; }
-    /* Mensajes en móvil: todos visibles apilados (GSAP no corre) */
-    .tbl-msg {
-        position: relative;
-        inset: unset;
-        display: flex;
-        opacity: 1;
-        transform: none;
-    }
-    /* Las imágenes 2 y 3 se muestran con opacidad reducida en móvil
-       para indicar que son vistas adicionales */
-    .tbl-img--2, .tbl-img--3 { opacity: 0.85; }
-    .tbl-progress { position: relative; width: 100%; height: 3px; margin-top: 0.5rem; }
-    .tbl-progress__fill { width: 100%; }
+    /* Tablero: ocultar desktop en móvil, mostrar carrusel */
+    .tbl-body         { display: none; }
+    .tbl-mobile-carousel { display: flex; }
     .tbl-hint { display: none; }
 
     /* Quiénes somos */
@@ -2049,6 +2141,7 @@ body {
     .proyecto-tabs, .equipo-tabs { gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
     .tab-button  { padding: 8px 14px; font-size: 0.82rem; }
     .detail-inner { flex-direction: column; }
+    .detail-inner.reverse { flex-direction: column; } /* imagen arriba siempre en móvil */
     .detail-image { width: 100%; height: 200px; }
     .detail-text  { width: 100%; padding: var(--spacing-md); }
 

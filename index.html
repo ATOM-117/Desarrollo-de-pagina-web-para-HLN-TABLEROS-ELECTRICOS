@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="HLN Ingeniería - Soluciones profesionales en tableros eléctricos y comunicaciones">
+    <meta name="description" content="HLN Desarrollo e Ingeniería de Proyectos S.A.C. — Especialistas en diseño, fabricación y armado de tableros eléctricos, automatización industrial, transformadores y bandejas portacables para el sector industrial, comercial y residencial en Perú. Más de 10 años de experiencia. Partner autorizado Legrand.">
     <title>HLN Ingeniería - Tableros Eléctricos y Soluciones Industriales</title>
     <link rel="icon" type="image/png" href="assets/images/HLN LOGO B&W TRANSPARENTE.png">
     <link rel="stylesheet" href="assets/css/styles.css">
+    <!-- Forzar inicio en el top de la página, sin importar hash en la URL -->
+    <script>if (history.scrollRestoration) history.scrollRestoration = 'manual';</script>
 </head>
 <body>
 
@@ -378,25 +380,14 @@
                         <h2 class="tbl-header__title">Así fabricamos nuestros tableros</h2>
                     </header>
 
-                    <!-- Zona central: imagen + card al costado -->
+                    <!-- DESKTOP: imagen + card al costado (igual que antes) -->
                     <div class="tbl-body">
-
-                        <!-- Imagen (las 3 apiladas) -->
                         <div class="tbl-stage">
-                            <img class="tbl-img tbl-img--1"
-                                 src="assets/images/vista1.png"
-                                 alt="Gabinete exterior del tablero HLN">
-                            <img class="tbl-img tbl-img--2"
-                                 src="assets/images/vista2.png"
-                                 alt="Mandil interior con IG DRX 50A">
-                            <img class="tbl-img tbl-img--3"
-                                 src="assets/images/vista3.png"
-                                 alt="Interior del tablero con barras de cobre">
+                            <img class="tbl-img tbl-img--1" src="assets/images/vista1.png" alt="Gabinete exterior del tablero HLN">
+                            <img class="tbl-img tbl-img--2" src="assets/images/vista2.png" alt="Mandil interior con IG DRX 50A">
+                            <img class="tbl-img tbl-img--3" src="assets/images/vista3.png" alt="Interior del tablero con barras de cobre">
                         </div>
-
-                        <!-- Card flotante al costado derecho -->
                         <div class="tbl-card">
-
                             <div class="tbl-msg tbl-msg--1">
                                 <div class="tbl-msg__num">01 / 03</div>
                                 <h3 class="tbl-msg__title">Gabinete de acero</h3>
@@ -407,7 +398,6 @@
                                     <li>IEC 61439</li>
                                 </ul>
                             </div>
-
                             <div class="tbl-msg tbl-msg--2">
                                 <div class="tbl-msg__num">02 / 03</div>
                                 <h3 class="tbl-msg__title">Mandil y señalética</h3>
@@ -418,7 +408,6 @@
                                     <li>Torque calibrado</li>
                                 </ul>
                             </div>
-
                             <div class="tbl-msg tbl-msg--3">
                                 <div class="tbl-msg__num">03 / 03</div>
                                 <h3 class="tbl-msg__title">Interruptores y barras</h3>
@@ -429,28 +418,82 @@
                                     <li>Canaleta 40×80mm</li>
                                 </ul>
                             </div>
-
-                            <!-- Barra de progreso dentro del card -->
-                            <div class="tbl-progress">
-                                <div class="tbl-progress__fill"></div>
-                            </div>
-
-                        </div><!-- /tbl-card -->
-
-                    </div><!-- /tbl-body -->
-
-                    <!-- Scroll hint -->
-                    <div class="tbl-hint">
-                        <span>Scroll para ver el proceso</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+                            <div class="tbl-progress"><div class="tbl-progress__fill"></div></div>
+                        </div>
                     </div>
 
-                </div><!-- /tablero-scene -->
-            </div><!-- /sticky-container -->
-        </div><!-- /scene -->
+                    <!-- MÓVIL: carrusel horizontal deslizable (3 tarjetas) -->
+                    <div class="tbl-mobile-carousel" aria-label="Proceso de fabricación">
+                        <div class="tbl-mobile-track" id="tblMobileTrack">
+
+                            <div class="tbl-mobile-slide">
+                                <img src="assets/images/vista1.png" alt="Gabinete exterior">
+                                <div class="tbl-mobile-info">
+                                    <span class="tbl-mobile-num">01 / 03</span>
+                                    <h3>Gabinete de acero</h3>
+                                    <p>Chapa galvanizada 2mm, anticorrosión, IP54. Certificación IEC 61439.</p>
+                                    <ul>
+                                        <li>Acero galvanizado 2mm</li>
+                                        <li>Anticorrosión + IP54</li>
+                                        <li>IEC 61439</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="tbl-mobile-slide">
+                                <img src="assets/images/vista2.png" alt="Mandil interior">
+                                <div class="tbl-mobile-info">
+                                    <span class="tbl-mobile-num">02 / 03</span>
+                                    <h3>Mandil y señalética</h3>
+                                    <p>Aluminio anodizado láser. IG DRX 50A Legrand. Torque calibrado.</p>
+                                    <ul>
+                                        <li>Aluminio anodizado láser</li>
+                                        <li>IG DRX 50A Legrand</li>
+                                        <li>Torque calibrado</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="tbl-mobile-slide">
+                                <img src="assets/images/vista3.png" alt="Interior con barras">
+                                <div class="tbl-mobile-info">
+                                    <span class="tbl-mobile-num">03 / 03</span>
+                                    <h3>Interruptores y barras</h3>
+                                    <p>Breakers torqueados. Barras cobre electrolítico. Canaleta 40×80mm.</p>
+                                    <ul>
+                                        <li>Torque por ficha técnica</li>
+                                        <li>Barras cobre electrolítico</li>
+                                        <li>Canaleta 40×80mm</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Botones de navegación -->
+                        <button class="tbl-mobile-btn tbl-mobile-btn--prev" id="tblPrev" aria-label="Fase anterior">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                        </button>
+                        <button class="tbl-mobile-btn tbl-mobile-btn--next" id="tblNext" aria-label="Siguiente fase">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+
+                        <!-- Dots de posición -->
+                        <div class="tbl-mobile-dots">
+                            <span class="tbl-mobile-dot tbl-mobile-dot--active"></span>
+                            <span class="tbl-mobile-dot"></span>
+                            <span class="tbl-mobile-dot"></span>
+                        </div>
+                    </div>
+
+                    <div class="tbl-hint">
+                        <span>Scroll para ver el proceso</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- =============================================
@@ -641,19 +684,16 @@
          controle el scroll sin interferencia. -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Desactivar scroll-behavior:smooth del CSS —
-            // interfiere con el scrubbing de GSAP ScrollTrigger.
+            // Garantizar que la página siempre inicia en el top
+            window.scrollTo(0, 0);
+
             document.documentElement.style.scrollBehavior = 'auto';
 
-            // Esperar al siguiente frame para que los scripts
-            // defer (scroll-scenes.js) hayan ejecutado ya.
             requestAnimationFrame(function () {
                 requestAnimationFrame(function () {
                     if (typeof initScrollScenes === 'function') {
                         initScrollScenes();
                     } else {
-                        // Fallback: si por alguna razón defer aún no terminó,
-                        // esperar el evento load completo.
                         window.addEventListener('load', function () {
                             if (typeof initScrollScenes === 'function') {
                                 initScrollScenes();
