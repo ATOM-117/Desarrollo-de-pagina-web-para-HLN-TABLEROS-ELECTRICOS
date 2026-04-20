@@ -1856,16 +1856,15 @@ body {
     border: 1px solid rgba(0,153,204,.25);
     box-shadow: 0 20px 60px rgba(0,0,0,.55);
     transform-origin: bottom left;
-    /* Por defecto: cerrado (opacity 0, desplazado) */
+    display: none; /* JS controla apertura */
     opacity: 0;
     transform: scale(0.9) translateY(10px);
     pointer-events: none;
-    /* Transición activa siempre */
     transition: opacity 0.22s ease, transform 0.22s ease;
-    /* display:none mientras está hidden — gestionado por JS */
 }
 
 .panel-modal.is-open {
+    display: block; /* asegura que el display inline del JS no sea necesario */
     opacity: 1;
     transform: scale(1) translateY(0);
     pointer-events: auto;
@@ -2115,7 +2114,11 @@ body {
     .section--hero .hero-content p,
     .section--hero .hero-buttons { opacity: 1; transform: none; }
 
-    /* Tablero: ocultar desktop en móvil, mostrar carrusel */
+    /* Tablero: ocultar desktop en móvil, mostrar carrusel.
+       CRÍTICO: colapsar heights para que no haya espacio vacío azul */
+    .section--tablero .sticky-container { height: auto; overflow: visible; }
+    .scene--tablero   { height: auto !important; min-height: unset; }
+    .tablero-scene    { height: auto; min-height: unset; padding-bottom: 0.5rem; }
     .tbl-body         { display: none; }
     .tbl-mobile-carousel { display: flex; }
     .tbl-hint { display: none; }

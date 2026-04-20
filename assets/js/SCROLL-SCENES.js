@@ -142,12 +142,13 @@ function initScrollScenes() {
     console.log('[scroll-scenes] Motor OK');
 }
 
-// Auto-inicializar cuando el DOM esté listo.
-// Como este script tiene defer, el DOM ya está parseado cuando ejecuta.
-// DOMContentLoaded puede ya haber disparado, así que chequeamos readyState.
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initScrollScenes);
-} else {
-    // DOM ya listo (caso defer en algunos browsers)
+// ============================================
+// INICIALIZACIÓN — espera window.load
+// window.load garantiza que GSAP (CDN externo)
+// ya está disponible, tanto en local como en
+// GitHub Pages con latencia de red.
+// DOMContentLoaded NO es suficiente para CDNs.
+// ============================================
+window.addEventListener('load', function() {
     initScrollScenes();
-}
+});

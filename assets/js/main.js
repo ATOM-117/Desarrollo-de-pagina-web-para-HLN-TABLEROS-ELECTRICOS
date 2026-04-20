@@ -729,44 +729,41 @@ function initPanelFloat() {
 
     if (!btn || !modal || !close) return;
 
-    // Gestión puramente por clases — sin atributo hidden
-    // El HTML tiene hidden solo para el estado inicial del CSS.
-    // JS lo quita una vez y nunca más lo vuelve a poner.
-    let visible = false;
+    let open = false;
 
-    // Asegurarse de que el modal empiece oculto visualmente
-    modal.style.display = 'none';
-    modal.removeAttribute('hidden'); // ya no usamos hidden
-
-    function open() {
-        if (visible) return;
-        visible = true;
-        // 1. Hacer visible en el DOM (opacity:0 por CSS)
-        modal.style.display = '';
-        // 2. Doble rAF: garantiza 2 frames de render antes de transición
-        //    Necesario en Safari, Firefox y Chromium en GitHub Pages
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                modal.classList.add('is-open');
+    btn.addEventListener('click', function() {
+        if (open) {
+            // Cerrar
+            open = false;
+            modal.classList.remove('is-open');
+            setTimeout(function() { modal.style.display = 'none'; }, 250);
+        } else {
+            // Abrir
+            open = true;
+            modal.style.display = 'block';
+            // doble rAF para que el browser pinte display:block antes de transición
+            requestAnimationFrame(function() {
+                requestAnimationFrame(function() {
+                    modal.classList.add('is-open');
+                });
             });
-        });
-        btn.setAttribute('aria-expanded', 'true');
-    }
+        }
+    });
 
-    function close_() {
-        if (!visible) return;
-        visible = false;
+    close.addEventListener('click', function() {
+        if (!open) return;
+        open = false;
         modal.classList.remove('is-open');
-        btn.setAttribute('aria-expanded', 'false');
-        // Ocultar del DOM tras la transición (220ms + margen)
-        setTimeout(() => {
-            if (!visible) modal.style.display = 'none';
-        }, 280);
-    }
+        setTimeout(function() { modal.style.display = 'none'; }, 250);
+    });
 
-    btn.addEventListener('click',  () => visible ? close_() : open());
-    close.addEventListener('click', close_);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') close_(); });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && open) {
+            open = false;
+            modal.classList.remove('is-open');
+            setTimeout(function() { modal.style.display = 'none'; }, 250);
+        }
+    });
 }
 
 // ============================================
