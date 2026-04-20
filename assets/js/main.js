@@ -730,39 +730,36 @@ function initPanelFloat() {
 
     if (!btn || !modal || !close) return;
 
+    let isOpen = false;
+
     function openModal() {
-        // 1. Remover hidden para que sea visible en el DOM
+        isOpen = true;
+        // Paso 1: remover hidden para que aparezca en el DOM (opacity:0 por CSS)
         modal.removeAttribute('hidden');
-        // 2. Forzar reflow para que la transición CSS arranque desde opacity:0
-        modal.offsetHeight; // eslint-disable-line no-unused-expressions
-        // 3. Agregar clase que activa la transición a opacity:1
-        modal.classList.add('is-open');
+        // Paso 2: forzar un frame de render para que el browser registre opacity:0
+        requestAnimationFrame(() => {
+            // Paso 3: agregar is-open dispara la transición a opacity:1
+            modal.classList.add('is-open');
+        });
         btn.setAttribute('aria-expanded', 'true');
     }
 
     function closeModal() {
+        isOpen = false;
         modal.classList.remove('is-open');
         btn.setAttribute('aria-expanded', 'false');
-        // Esperar a que termine la transición antes de ocultar del DOM
+        // Esperar a que termine la transición CSS (220ms) antes de display:none
         setTimeout(() => {
-            if (!modal.classList.contains('is-open')) {
-                modal.setAttribute('hidden', '');
-            }
-        }, 260);
+            if (!isOpen) modal.setAttribute('hidden', '');
+        }, 230);
     }
 
     btn.addEventListener('click', () => {
-        if (modal.hasAttribute('hidden') || !modal.classList.contains('is-open')) {
-            openModal();
-        } else {
-            closeModal();
-        }
+        isOpen ? closeModal() : openModal();
     });
-
     close.addEventListener('click', closeModal);
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && isOpen) closeModal();
     });
 }
 

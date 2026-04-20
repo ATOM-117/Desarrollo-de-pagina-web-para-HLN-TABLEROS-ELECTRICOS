@@ -671,38 +671,13 @@
     <!-- UI: tabs, carruseles, formulario -->
     <script src="assets/js/main.js" defer></script>
 
-    <!-- Motor de animaciones: carga con defer después del DOM.
-         initScrollScenes() se llama al final de este mismo script,
-         no desde un inline separado, para garantizar que la función
-         ya exista cuando se invoca. -->
+    <!-- Motor de animaciones GSAP — se auto-inicializa -->
     <script src="assets/js/scroll-scenes.js" defer></script>
 
-    <!-- Inicialización: DOMContentLoaded garantiza DOM listo.
-         GSAP ya está disponible (cargó sin defer arriba).
-         scroll-scenes.js ya está cargado (mismo defer batch).
-         scroll-behavior: smooth se desactiva para que GSAP
-         controle el scroll sin interferencia. -->
+    <!-- Scroll siempre al top al cargar -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Garantizar que la página siempre inicia en el top
-            window.scrollTo(0, 0);
-
-            document.documentElement.style.scrollBehavior = 'auto';
-
-            requestAnimationFrame(function () {
-                requestAnimationFrame(function () {
-                    if (typeof initScrollScenes === 'function') {
-                        initScrollScenes();
-                    } else {
-                        window.addEventListener('load', function () {
-                            if (typeof initScrollScenes === 'function') {
-                                initScrollScenes();
-                            }
-                        });
-                    }
-                });
-            });
-        });
+        if (history.scrollRestoration) history.scrollRestoration = 'manual';
+        window.addEventListener('load', function() { window.scrollTo(0, 0); });
     </script>
 
 </body>

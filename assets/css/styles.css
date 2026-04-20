@@ -1858,21 +1858,24 @@ body {
     border: 1px solid rgba(0,153,204,.25);
     box-shadow: 0 20px 60px rgba(0,0,0,.55);
     transform-origin: bottom left;
-    /* Transición suave en lugar de animation (más confiable) */
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    /* Estado por defecto: cerrado */
     opacity: 0;
-    transform: scale(0.92) translateY(8px);
+    transform: scale(0.9) translateY(10px);
     pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
 }
 
+/* Estado abierto */
 .panel-modal.is-open {
     opacity: 1;
     transform: scale(1) translateY(0);
     pointer-events: auto;
 }
 
+/* Cuando está hidden (JS lo pone) no renderizar en absoluto */
 .panel-modal[hidden] {
-    display: none;
+    display: none !important;
+    transition: none;
 }
 
 .panel-modal__inner {
