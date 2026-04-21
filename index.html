@@ -679,20 +679,20 @@
          Cargándolos síncronos aquí se garantiza el orden
          tanto en local como en GitHub Pages / CDN con latencia.
     -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
-    <!-- UI: tabs, carruseles, formulario -->
-    <script src="assets/js/main.js" defer></script>
+<!-- UI: tabs, carruseles, formulario -->
+<script src="assets/js/main.js?v=1.0.2" defer></script>
 
-    <!-- Motor de animaciones GSAP — se auto-inicializa al final del archivo -->
-    <script src="assets/js/scroll-scenes.js" defer></script>
+<!-- Motor de animaciones GSAP -->
+<script src="assets/js/scroll-scenes.js?v=1.0.2" defer></script>
 
-    <!-- Scroll siempre al top al cargar -->
-    <script>
-        if (history.scrollRestoration) history.scrollRestoration = 'manual';
-        window.addEventListener('load', function() { window.scrollTo(0, 0); });
-    </script>
+<!-- Scroll siempre al top al cargar -->
+<script>
+    if (history.scrollRestoration) history.scrollRestoration = 'manual';
+    window.addEventListener('load', function() { window.scrollTo(0, 0); });
+</script>
 
 </body>
 <!-- GSAP primero -->
