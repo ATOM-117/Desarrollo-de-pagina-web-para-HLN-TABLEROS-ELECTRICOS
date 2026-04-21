@@ -789,7 +789,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initVideoStrip();
     initVideoCarousel();
     initContactForm();
-    initWhatsAppFloat('51915236931', 'Hola...');
+    initWhatsAppFloat(
+  '51915236931',
+  'Hola, soy [Nombre]. Tengo un proyecto o licitación y me gustaría cotizar con ustedes. ¿Podrían brindarme asesoría?'
+);
     initTblMobileCarousel();
 
     // 🔥 ESTA LÍNEA FALTABA
