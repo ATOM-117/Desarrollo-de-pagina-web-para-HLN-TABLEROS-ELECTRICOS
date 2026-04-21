@@ -791,7 +791,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initContactForm();
     initWhatsAppFloat(
   '51915236931',
-  'Hola, soy [Nombre]. Tengo un proyecto o licitación y me gustaría cotizar con ustedes. ¿Podrían brindarme asesoría?'
+  'Hola, vi su página web y estoy interesado en sus servicios. Me gustaría cotizar un proyecto/licitación y recibir asesoría. Gracias.'
 );
     initTblMobileCarousel();
 
