@@ -495,7 +495,7 @@ function initWhatsAppFloat(number, message) {
     const anchor = float.querySelector('a');
     if (!anchor) return;
 
-    anchor.href = `https://wa.me/${number}?text=${encodeURIComponent(message || 'Hola, quiero más información')}`;
+    anchor.href = `https://wa.me/${number}?text=${encodeURIComponent(message || 'Hola, vi su página web y estoy interesado en sus servicios. Me gustaría cotizar un proyecto/licitación y recibir asesoría. Gracias.')}`;
 
     // Animación de entrada
     float.style.opacity   = '0';
