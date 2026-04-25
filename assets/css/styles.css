@@ -2349,9 +2349,8 @@ body {
 
 /* ============================================
    WIDGET FLOTANTE — MODELO 3D TABLERO
-   Reemplaza el panel-float del PLC.
-   Posicionado en esquina inferior izquierda
-   (igual que el anterior, opuesto al WhatsApp).
+   Tamaño equivalente al botón WhatsApp (64px).
+   Sin etiqueta, sin fondo — solo el modelo.
    ============================================ */
 
 .model3d-float {
@@ -2359,149 +2358,75 @@ body {
     bottom: 24px;
     left: 24px;
     z-index: 999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
     pointer-events: auto;
 }
 
-/* Etiqueta superior */
+/* Etiqueta: oculta */
 .model3d-float__label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(0, 26, 51, 0.88);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    padding: 4px 10px 4px 6px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    display: none;
 }
 
-.model3d-float__tag {
-    background: #0066cc;
-    color: #fff;
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    padding: 2px 6px;
-    border-radius: 10px;
-    text-transform: uppercase;
-}
-
-.model3d-float__text {
-    color: #e0eaf5;
-    font-size: 0.7rem;
-    font-weight: 500;
-    line-height: 1.3;
-    text-align: left;
-}
-
-/* Contenedor del model-viewer */
+/* model-viewer: circular, mismo tamaño que el botón WhatsApp */
 .model3d-float__viewer {
-    width: 180px;
-    height: 220px;
-    /* Fondo oscuro azulado necesario para que el canvas WebGL sea visible */
-    background: linear-gradient(160deg, #0a1628 0%, #0d1f3c 60%, #0a2a4a 100%);
-    border-radius: 16px;
+    width: 64px;
+    height: 64px;
+    background: transparent;
+    border-radius: 50%;
     overflow: hidden;
     display: block;
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.55),
-        0 2px 8px rgba(0, 102, 204, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(0, 102, 204, 0.3);
-    /* Animación float vertical */
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
     animation: model3dFloat 3.5s ease-in-out infinite;
+    cursor: grab;
 }
 
-/* Partes internas del shadow DOM de model-viewer */
+.model3d-float__viewer:active {
+    cursor: grabbing;
+}
+
+/* Ocultar botón AR interno */
 .model3d-float__viewer::part(default-ar-button) {
     display: none;
 }
 
-/* Canvas interno: transparente para mostrar el gradiente del contenedor */
+/* Canvas: fondo transparente */
 .model3d-float__viewer::part(canvas) {
     background: transparent;
 }
 
-/* Float animation */
+/* Animación float vertical suave */
 @keyframes model3dFloat {
-    0%,  100% { transform: translateY(0px);   }
-    50%        { transform: translateY(-8px);  }
+    0%,  100% { transform: translateY(0px);  }
+    50%        { transform: translateY(-6px); }
 }
 
-/* Barra de progreso de carga */
-.model3d-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: rgba(0, 26, 51, 0.5);
-}
-
-.model3d-progress__bar {
-    height: 100%;
-    background: #0066cc;
-    width: 0%;
-    transition: width 0.3s ease;
-}
-
-/* Responsive: más pequeño en móvil muy estrecho */
-@media (max-width: 400px) {
-    .model3d-float {
-        bottom: 16px;
-        left: 12px;
-    }
-
-    .model3d-float__viewer {
-        width: 140px;
-        height: 175px;
-    }
-}
-
-/* En desktop grande se puede hacer un poco mayor */
-@media (min-width: 1024px) {
-    .model3d-float__viewer {
-        width: 210px;
-        height: 260px;
-    }
-}
-
-/* Estado de carga: spinner animado sobre el gradiente */
-.model3d-float__viewer:not([data-loaded]) .model3d-loading {
-    display: flex;
-}
-
+/* Spinner de carga */
 .model3d-loading {
-    display: none;
+    display: flex;
     position: absolute;
     inset: 0;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    gap: 8px;
     pointer-events: none;
 }
 
 .model3d-loading__spinner {
-    width: 28px;
-    height: 28px;
-    border: 2px solid rgba(0, 102, 204, 0.25);
-    border-top-color: #0066cc;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #fff;
     border-radius: 50%;
     animation: spin3d 0.8s linear infinite;
 }
 
-.model3d-loading__text {
-    color: rgba(180, 210, 255, 0.6);
-    font-size: 0.6rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-}
+.model3d-loading__text { display: none; }
 
 @keyframes spin3d {
     to { transform: rotate(360deg); }
+}
+
+@media (max-width: 400px) {
+    .model3d-float {
+        bottom: 16px;
+        left: 14px;
+    }
 }
