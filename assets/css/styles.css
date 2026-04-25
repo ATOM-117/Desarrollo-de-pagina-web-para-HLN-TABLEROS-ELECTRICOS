@@ -1560,7 +1560,7 @@ body {
 
 .contacto-wrapper {
     display: grid;
-    grid-template-columns: 1fr 180px 1fr;
+    grid-template-columns: 1.4fr 180px 1fr;
     gap: var(--spacing-xl);
     align-items: center;
     position: relative;
