@@ -1560,7 +1560,7 @@ body {
 
 .contacto-wrapper {
     display: grid;
-    grid-template-columns: 1fr 260px 1fr;
+    grid-template-columns: 1fr 200px 1fr;
     gap: var(--spacing-xl);
     align-items: center;
     min-height: 380px;
@@ -2373,8 +2373,8 @@ body {
 }
 
 .contacto-model3d model-viewer {
-    width: 260px;
-    height: 340px;
+    width: 200px;
+    height: 270px;
     --poster-color: transparent;
     --progress-bar-color: transparent;
     background: transparent !important;
