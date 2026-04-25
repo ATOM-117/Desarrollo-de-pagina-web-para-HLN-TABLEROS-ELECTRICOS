@@ -1560,10 +1560,9 @@ body {
 
 .contacto-wrapper {
     display: grid;
-    grid-template-columns: 1fr 200px 1fr;
-    gap: var(--spacing-xl);
-    align-items: center;
-    min-height: 380px;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
 }
 
 .contacto-info h2 {
@@ -2362,19 +2361,19 @@ body {
 }
 
 /* ============================================
-   MODELO 3D — COLUMNA CENTRAL EN CONTACTO
+   MODELO 3D — DENTRO DE COLUMNA IZQUIERDA
+   Aparece centrado debajo de los datos de contacto.
    ============================================ */
 
 .contacto-model3d {
     display: flex;
-    align-items: center;
     justify-content: center;
-    height: 100%;
+    margin-top: var(--spacing-lg);
 }
 
 .contacto-model3d model-viewer {
-    width: 200px;
-    height: 270px;
+    width: 160px;
+    height: 210px;
     --poster-color: transparent;
     --progress-bar-color: transparent;
     background: transparent !important;
