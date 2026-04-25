@@ -1131,8 +1131,18 @@ body {
     flex-shrink: 0;
 }
 
+.quienes-image {
+    height: 480px;          /* altura fija — nunca cambia sin importar la imagen */
+    overflow: hidden;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
 .quienes-image img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;      /* recorta la imagen para llenar el espacio */
+    object-position: center top; /* enfoca la parte superior (caras) */
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-lg);
     transition: opacity 0.8s ease, transform 0.8s ease;
