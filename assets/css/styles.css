@@ -1560,8 +1560,9 @@ body {
 
 .contacto-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-2xl);
+    grid-template-columns: 1fr 220px 1fr;
+    gap: var(--spacing-xl);
+    align-items: center;
 }
 
 .contacto-info h2 {
@@ -2348,20 +2349,19 @@ body {
 }
 
 /* ============================================
-   MODELO 3D — EMBEBIDO EN SECCIÓN CONTACTO
-   Aparece debajo de los datos de contacto,
-   dentro de la columna izquierda azul.
+   MODELO 3D — COLUMNA CENTRAL EN CONTACTO
    ============================================ */
 
 .contacto-model3d {
-    margin-top: var(--spacing-lg);
     display: flex;
+    align-items: center;
     justify-content: center;
+    height: 100%;
 }
 
 .contacto-model3d model-viewer {
     width: 220px;
-    height: 280px;
+    height: 300px;
     --poster-color: transparent;
     --progress-bar-color: transparent;
     background: transparent !important;
@@ -2387,13 +2387,16 @@ body {
 
 @keyframes model3dFloat {
     0%,  100% { transform: translateY(0px);  }
-    50%        { transform: translateY(-8px); }
+    50%        { transform: translateY(-10px); }
 }
 
-/* En móvil se centra y se hace más pequeño */
+/* Móvil: colapsa a 1 columna, modelo centrado */
 @media (max-width: 767px) {
+    .contacto-model3d {
+        order: -1; /* aparece primero en móvil */
+    }
     .contacto-model3d model-viewer {
         width: 160px;
-        height: 200px;
+        height: 210px;
     }
 }
