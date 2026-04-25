@@ -1563,6 +1563,8 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-2xl);
     align-items: start;
+    position: relative;
+    padding-bottom: 180px; /* espacio para el modelo absoluto */
 }
 
 .contacto-info h2 {
@@ -2366,14 +2368,14 @@ body {
    ============================================ */
 
 .contacto-model3d {
-    display: flex;
-    justify-content: flex-start;
-    margin-top: var(--spacing-lg);
+    position: absolute;
+    bottom: -20px;
+    left: 0;
 }
 
 .contacto-model3d model-viewer {
-    width: 180px;
-    height: 230px;
+    width: 160px;
+    height: 210px;
     --poster-color: transparent;
     --progress-bar-color: transparent;
     background: transparent !important;
@@ -2381,7 +2383,6 @@ body {
     filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
     animation: model3dFloat 3.5s ease-in-out infinite;
     cursor: grab;
-    margin-left: -10px; /* compensar padding interno de model-viewer */
 }
 
 .contacto-model3d model-viewer:active {
