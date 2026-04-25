@@ -1560,11 +1560,10 @@ body {
 
 .contacto-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-2xl);
-    align-items: start;
+    grid-template-columns: 1fr 180px 1fr;
+    gap: var(--spacing-xl);
+    align-items: center;
     position: relative;
-    padding-bottom: 180px; /* espacio para el modelo absoluto */
 }
 
 .contacto-info h2 {
@@ -2161,6 +2160,8 @@ body {
     /* Contacto */
     .contacto { min-height: unset; padding: 3rem 0; }
     .contacto-wrapper { grid-template-columns: 1fr; gap: var(--spacing-lg); }
+    .contacto-model3d { order: 2; }
+    .contacto-model3d model-viewer { min-height: 200px; max-height: 220px; }
 
     /* Tipografías */
     .section-title { font-size: clamp(1.5rem, 4vw, 2rem); margin-bottom: var(--spacing-lg); }
@@ -2368,14 +2369,17 @@ body {
    ============================================ */
 
 .contacto-model3d {
-    position: absolute;
-    bottom: -20px;
-    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch; /* ocupa toda la altura del grid */
 }
 
 .contacto-model3d model-viewer {
-    width: 160px;
-    height: 210px;
+    width: 180px;
+    height: 100%;
+    min-height: 300px;
+    max-height: 420px;
     --poster-color: transparent;
     --progress-bar-color: transparent;
     background: transparent !important;
