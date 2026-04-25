@@ -2384,7 +2384,18 @@ body {
 
 .model3d-float__viewer:active {
     cursor: grabbing;
-    animation-play-state: paused; /* pausa el float mientras el usuario arrastra */
+    animation-play-state: paused;
+}
+
+/* Ocultar botón AR y barra de progreso internos */
+.model3d-float__viewer::part(default-ar-button),
+.model3d-float__viewer::part(default-progress-bar) {
+    display: none;
+}
+
+/* Canvas sin fondo */
+.model3d-float__viewer::part(canvas) {
+    background: transparent !important;
 }
 
 /* Animación float vertical suave */
