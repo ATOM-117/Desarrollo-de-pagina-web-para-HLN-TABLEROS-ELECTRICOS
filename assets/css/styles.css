@@ -2355,8 +2355,8 @@ body {
 
 .model3d-float {
     position: fixed;
-    bottom: 24px;
-    left: 24px;
+    bottom: 92px;   /* 20px base + 56px whatsapp + 16px gap */
+    right: 20px;    /* mismo right que el botón WhatsApp */
     z-index: 999;
     pointer-events: auto;
 }
@@ -2366,11 +2366,10 @@ body {
     display: none;
 }
 
-/* model-viewer: pequeño, sin fondo, solo el modelo girando */
+/* model-viewer: más grande, sin fondo, interactivo */
 .model3d-float__viewer {
-    width: 90px;
-    height: 110px;
-    /* Variables internas de model-viewer para quitar fondo */
+    width: 130px;
+    height: 160px;
     --poster-color: transparent;
     --progress-bar-color: transparent;
     --progress-mask: transparent;
@@ -2378,19 +2377,14 @@ body {
     border-radius: 0;
     overflow: visible;
     display: block;
-    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.6));
+    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55));
     animation: model3dFloat 3.5s ease-in-out infinite;
+    cursor: grab;
 }
 
-/* Ocultar botón AR y barra de progreso internos */
-.model3d-float__viewer::part(default-ar-button),
-.model3d-float__viewer::part(default-progress-bar) {
-    display: none;
-}
-
-/* Canvas: fondo transparente */
-.model3d-float__viewer::part(canvas) {
-    background: transparent !important;
+.model3d-float__viewer:active {
+    cursor: grabbing;
+    animation-play-state: paused; /* pausa el float mientras el usuario arrastra */
 }
 
 /* Animación float vertical suave */
