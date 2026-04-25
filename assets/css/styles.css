@@ -1482,7 +1482,7 @@ body {
 /* Detalle de proyecto / equipo */
 .proyecto-detail,
 .equipo-detail {
-    margin-top: var(--spacing-2xl);
+    margin-top: var(--spacing-sm);
     padding: var(--spacing-lg);
     background: transparent;
 }
@@ -1537,6 +1537,7 @@ body {
     color: var(--dark);
     line-height: 1.7;
     font-size: clamp(0.9rem, 2vw, 1rem);
+    text-align: justify;
 }
 
 /* Tarjetas de proyecto con imagen de fondo */
