@@ -1180,7 +1180,7 @@ body {
 }
 
 .carousel-group img {
-    height: clamp(300px, 40vw, 460px);
+    height: clamp(240px, 34vw, 360px);
     width: auto;
     border-radius: var(--border-radius-lg);
     box-shadow: 0 12px 30px rgba(0,0,0,.18);
