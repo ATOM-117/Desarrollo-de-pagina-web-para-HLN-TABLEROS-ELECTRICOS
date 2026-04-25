@@ -1591,13 +1591,54 @@ body {
 .contacto-info    { grid-column: 1; grid-row: 2; }
 .contacto-form    { grid-column: 3; grid-row: 2; }
 
+.contacto-hero {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--spacing-lg) 0 var(--spacing-md);
+    position: relative;
+}
+
+/* Líneas decorativas + etiqueta superior */
+.contacto-hero__tag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.contacto-hero__line {
+    display: block;
+    width: clamp(40px, 6vw, 80px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+}
+
+.contacto-hero__label {
+    font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+    font-weight: 800;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    font-family: 'Courier New', monospace;
+}
+
 .contacto-titulo {
     grid-column: 1 / -1;
     text-align: center;
-    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
     color: var(--white);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
     animation: titleGlow 3s ease-in-out infinite;
+}
+
+.contacto-hero__sub {
+    font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+    color: rgba(255,255,255,.65);
+    text-align: center;
+    margin: 0 auto;
+    max-width: 560px;
 }
 
 @keyframes titleGlow {
