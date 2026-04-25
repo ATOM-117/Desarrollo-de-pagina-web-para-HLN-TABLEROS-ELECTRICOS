@@ -825,6 +825,7 @@ body {
     font-size: clamp(0.7rem, 1.05vw, 0.82rem);
     color: rgba(175,210,230,.82);
     line-height: 1.6;
+    text-align: justify;
 }
 
 .tbl-msg__list {
