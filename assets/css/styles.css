@@ -2348,90 +2348,52 @@ body {
 }
 
 /* ============================================
-   WIDGET FLOTANTE — MODELO 3D TABLERO
-   Tamaño equivalente al botón WhatsApp (64px).
-   Sin etiqueta, sin fondo — solo el modelo.
+   MODELO 3D — EMBEBIDO EN SECCIÓN CONTACTO
+   Aparece debajo de los datos de contacto,
+   dentro de la columna izquierda azul.
    ============================================ */
 
-.model3d-float {
-    position: fixed;
-    bottom: 92px;   /* 20px base + 56px whatsapp + 16px gap */
-    right: 20px;    /* mismo right que el botón WhatsApp */
-    z-index: 999;
-    pointer-events: auto;
+.contacto-model3d {
+    margin-top: var(--spacing-lg);
+    display: flex;
+    justify-content: center;
 }
 
-/* Etiqueta: oculta */
-.model3d-float__label {
-    display: none;
-}
-
-/* model-viewer: más grande, sin fondo, interactivo */
-.model3d-float__viewer {
-    width: 130px;
-    height: 160px;
+.contacto-model3d model-viewer {
+    width: 220px;
+    height: 280px;
     --poster-color: transparent;
     --progress-bar-color: transparent;
-    --progress-mask: transparent;
     background: transparent !important;
-    border-radius: 0;
-    overflow: visible;
     display: block;
-    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55));
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
     animation: model3dFloat 3.5s ease-in-out infinite;
     cursor: grab;
 }
 
-.model3d-float__viewer:active {
+.contacto-model3d model-viewer:active {
     cursor: grabbing;
     animation-play-state: paused;
 }
 
-/* Ocultar botón AR y barra de progreso internos */
-.model3d-float__viewer::part(default-ar-button),
-.model3d-float__viewer::part(default-progress-bar) {
+.contacto-model3d model-viewer::part(default-ar-button),
+.contacto-model3d model-viewer::part(default-progress-bar) {
     display: none;
 }
 
-/* Canvas sin fondo */
-.model3d-float__viewer::part(canvas) {
+.contacto-model3d model-viewer::part(canvas) {
     background: transparent !important;
 }
 
-/* Animación float vertical suave */
 @keyframes model3dFloat {
     0%,  100% { transform: translateY(0px);  }
-    50%        { transform: translateY(-6px); }
+    50%        { transform: translateY(-8px); }
 }
 
-/* Spinner de carga */
-.model3d-loading {
-    display: flex;
-    position: absolute;
-    inset: 0;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-}
-
-.model3d-loading__spinner {
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin3d 0.8s linear infinite;
-}
-
-.model3d-loading__text { display: none; }
-
-@keyframes spin3d {
-    to { transform: rotate(360deg); }
-}
-
-@media (max-width: 400px) {
-    .model3d-float {
-        bottom: 16px;
-        left: 14px;
+/* En móvil se centra y se hace más pequeño */
+@media (max-width: 767px) {
+    .contacto-model3d model-viewer {
+        width: 160px;
+        height: 200px;
     }
 }

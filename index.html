@@ -544,6 +544,31 @@
                                     <strong>📧 Email:</strong>
                                     <p>Administracion@hln.com.pe</p>
                                 </div>
+
+                                <!-- Modelo 3D embebido en la sección de contacto -->
+                                <div class="contacto-model3d">
+                                    <model-viewer
+                                        id="tableroViewerContact"
+                                        src=""
+                                        alt="Modelo 3D tablero eléctrico HLN"
+                                        auto-rotate
+                                        auto-rotate-delay="500"
+                                        rotation-per-second="20deg"
+                                        camera-controls
+                                        touch-action="none"
+                                        environment-image="neutral"
+                                        shadow-intensity="1.2"
+                                        shadow-softness="0.5"
+                                        exposure="1.3"
+                                        camera-orbit="0deg 85deg 120%"
+                                        field-of-view="25deg"
+                                        loading="lazy"
+                                        reveal="auto"
+                                        style="--poster-color: transparent; background: transparent;"
+                                        aria-label="Modelo 3D interactivo del tablero eléctrico">
+                                    </model-viewer>
+                                </div>
+
                             </div>
 
                             <form id="contactForm" class="contacto-form fade-in-right" novalidate>
@@ -610,57 +635,28 @@
         </div>
     </footer>
 
-    <!-- =============================================
-         WIDGET FLOTANTE — MODELO 3D TABLERO
-         model-viewer Web Component.
-         Reemplaza el panel PLC anterior.
-    ============================================= -->
-    <div class="model3d-float" id="model3dFloat" aria-label="Modelo 3D Tablero Eléctrico HLN">
-        <model-viewer
-            id="tableroViewer"
-            src=""
-            alt="Modelo 3D de tablero eléctrico HLN Ingeniería"
-            auto-rotate
-            auto-rotate-delay="500"
-            rotation-per-second="20deg"
-            camera-controls
-            touch-action="none"
-            environment-image="neutral"
-            shadow-intensity="1.2"
-            shadow-softness="0.5"
-            exposure="1.3"
-            camera-orbit="0deg 85deg 120%"
-            field-of-view="25deg"
-            loading="eager"
-            reveal="auto"
-            class="model3d-float__viewer"
-            style="--poster-color: transparent; background: transparent;"
-            aria-label="Modelo 3D interactivo del tablero eléctrico">
-        </model-viewer>
-
-        <!-- Script: asigna src con ruta absoluta para evitar problemas en GitHub Pages -->
-        <script>
-            (function() {
-                function setModelSrc() {
-                    var mv = document.getElementById('tableroViewer');
-                    if (!mv) return;
-                    // Construye URL absoluta desde la raíz del sitio
-                    var base = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
-                    mv.setAttribute('src', base + 'assets/models/tablero.glb');
-                    // Fallback: si falla después de 8s, oculta el widget
+    <!-- Script: asigna src al modelo 3D en sección contacto -->
+    <script>
+        (function() {
+            function setModelSrc() {
+                var base = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
+                var glb = base + 'assets/models/tablero.glb';
+                var mv = document.getElementById('tableroViewerContact');
+                if (mv) {
+                    mv.setAttribute('src', glb);
                     mv.addEventListener('error', function() {
-                        console.warn('[HLN] tablero.glb no encontrado en:', mv.src);
-                        document.getElementById('model3dFloat').style.display = 'none';
+                        var wrap = document.querySelector('.contacto-model3d');
+                        if (wrap) wrap.style.display = 'none';
                     });
                 }
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', setModelSrc);
-                } else {
-                    setModelSrc();
-                }
-            })();
-        </script>
-    </div>
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', setModelSrc);
+            } else {
+                setModelSrc();
+            }
+        })();
+    </script>
 
     <!-- =============================================
          BOTÓN FLOTANTE WHATSAPP
