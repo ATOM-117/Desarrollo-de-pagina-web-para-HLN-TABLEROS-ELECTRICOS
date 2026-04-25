@@ -1158,7 +1158,7 @@ body {
 
 .infinite-carousel {
     overflow: hidden;
-    padding: 4rem 0;
+    padding: 5rem 0;
     background: #fafafa;
 }
 
@@ -1180,7 +1180,7 @@ body {
 }
 
 .carousel-group img {
-    height: clamp(200px, 30vw, 290px);
+    height: clamp(300px, 40vw, 460px);
     width: auto;
     border-radius: var(--border-radius-lg);
     box-shadow: 0 12px 30px rgba(0,0,0,.18);
