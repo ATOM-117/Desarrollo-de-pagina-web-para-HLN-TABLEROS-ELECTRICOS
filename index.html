@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="HLN Desarrollo e Ingeniería de Proyectos S.A.C. — Especialistas en diseño, fabricación y armado de tableros eléctricos, automatización industrial, transformadores y bandejas portacables para el sector industrial, comercial y residencial en Perú. Más de 10 años de experiencia. Partner autorizado Legrand.">
     <title>HLN Ingeniería - Tableros Eléctricos y Soluciones Industriales</title>
-    <meta name="description" content="HLN Desarrollo e Ingeniería de Proyectos S.A.C. Especialistas en tableros eléctricos, automatización industrial, transformadores y soluciones eléctricas en Perú. Más de 10 años de experiencia.">
     <meta name="keywords" content="tableros eléctricos Perú, automatización industrial, ingeniería eléctrica, transformadores, bandejas portacables, HLN ingeniería">
     <meta name="author" content="HLN Ingeniería">
     <link rel="icon" type="image/png" href="assets/images/HLN LOGO B&W TRANSPARENTE.png">
     <link rel="stylesheet" href="assets/css/styles.css">
+    <!-- model-viewer: Web Component para modelos 3D GLB/GLTF -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
     <!-- Forzar inicio en el top de la página, sin importar hash en la URL -->
     <script>if (history.scrollRestoration) history.scrollRestoration = 'manual';</script>
     <!-- Open Graph (Facebook, WhatsApp, LinkedIn, etc.) -->
@@ -610,50 +611,63 @@
     </footer>
 
     <!-- =============================================
-         WIDGET FLOTANTE — FOTO PLC
-         Imagen 960×1280 (ratio 3:4, retrato).
-         Al clic: modal con la foto ampliada.
+         WIDGET FLOTANTE — MODELO 3D TABLERO
+         model-viewer Web Component.
+         Reemplaza el panel PLC anterior.
     ============================================= -->
-    <div class="panel-float" id="panelFloat" aria-label="Ver proyecto PLC HLN">
-
-        <button class="panel-float__btn" id="panelFloatBtn"
-                aria-expanded="false"
-                aria-controls="panelModal"
-                title="Ver proyecto de automatización PLC">
-            <div class="panel-float__thumb" aria-hidden="true">
-                <svg class="panel-float__play" width="18" height="18"
-                     viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
-                     aria-hidden="true">
-                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-            </div>
-            <span class="panel-float__label">Programación<br> de PLC</span>
-        </button>
-
-        <div class="panel-modal" id="panelModal"
-             role="dialog"
-             aria-label="Proyecto PLC HLN Ingeniería"
-             aria-modal="true">
-            <div class="panel-modal__inner">
-                <button class="panel-modal__close" id="panelModalClose"
-                        aria-label="Cerrar">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                         stroke="white" stroke-width="2.5" aria-hidden="true">
-                        <line x1="18" y1="6" x2="6" y2="18"/>
-                        <line x1="6"  y1="6" x2="18" y2="18"/>
-                    </svg>
-                </button>
-                <div class="panel-modal__header">
-                    <span class="panel-modal__tag">HLN Ingeniería</span>
-                    <p class="panel-modal__title">Programación PLC en campo</p>
-                </div>
-                <img class="panel-modal__img"
-                     src="assets/images/plc_proyecto.png"
-                     alt="Programación PLC en campo — tablero con variadores y laptop ASUS"
-                     loading="lazy">
-            </div>
+    <div class="model3d-float" id="model3dFloat" aria-label="Modelo 3D Tablero Eléctrico HLN">
+        <div class="model3d-float__label">
+            <span class="model3d-float__tag">3D</span>
+            <span class="model3d-float__text">Tablero<br>Eléctrico</span>
         </div>
+        <model-viewer
+            id="tableroViewer"
+            src=""
+            alt="Modelo 3D de tablero eléctrico HLN Ingeniería"
+            auto-rotate
+            auto-rotate-delay="500"
+            rotation-per-second="15deg"
+            camera-controls
+            touch-action="pan-y"
+            environment-image="neutral"
+            shadow-intensity="1.5"
+            shadow-softness="0.6"
+            exposure="1.2"
+            camera-orbit="0deg 80deg 105%"
+            field-of-view="30deg"
+            loading="eager"
+            reveal="auto"
+            class="model3d-float__viewer"
+            aria-label="Modelo 3D interactivo del tablero eléctrico">
+            <!-- Spinner visible mientras carga el .glb -->
+            <div slot="poster" class="model3d-loading">
+                <div class="model3d-loading__spinner"></div>
+                <span class="model3d-loading__text">Cargando 3D…</span>
+            </div>
+        </model-viewer>
 
+        <!-- Script: asigna src con ruta absoluta para evitar problemas en GitHub Pages -->
+        <script>
+            (function() {
+                function setModelSrc() {
+                    var mv = document.getElementById('tableroViewer');
+                    if (!mv) return;
+                    // Construye URL absoluta desde la raíz del sitio
+                    var base = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
+                    mv.setAttribute('src', base + 'assets/models/tablero.glb');
+                    // Fallback: si falla después de 8s, oculta el widget
+                    mv.addEventListener('error', function() {
+                        console.warn('[HLN] tablero.glb no encontrado en:', mv.src);
+                        document.getElementById('model3dFloat').style.display = 'none';
+                    });
+                }
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', setModelSrc);
+                } else {
+                    setModelSrc();
+                }
+            })();
+        </script>
     </div>
 
     <!-- =============================================
@@ -676,30 +690,21 @@
          GSAP + ScrollTrigger — SIN defer.
          Deben estar en el scope global ANTES de que
          scroll-scenes.js (que sí tiene defer) ejecute.
-         Cargándolos síncronos aquí se garantiza el orden
-         tanto en local como en GitHub Pages / CDN con latencia.
     -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-<!-- UI: tabs, carruseles, formulario -->
-<script src="assets/js/main.js?v=1.0.2" defer></script>
+    <!-- UI: tabs, carruseles, formulario -->
+    <script src="assets/js/main.js?v=1.0.3" defer></script>
 
-<!-- Motor de animaciones GSAP -->
-<script src="assets/js/scroll-scenes.js?v=1.0.2" defer></script>
+    <!-- Motor de animaciones GSAP — se auto-inicializa en window.load -->
+    <script src="assets/js/SCROLL-SCENES.js?v=1.0.3" defer></script>
 
-<!-- Scroll siempre al top al cargar -->
-<script>
-    if (history.scrollRestoration) history.scrollRestoration = 'manual';
-    window.addEventListener('load', function() { window.scrollTo(0, 0); });
-</script>
+    <!-- Scroll siempre al top al cargar -->
+    <script>
+        if (history.scrollRestoration) history.scrollRestoration = 'manual';
+        window.addEventListener('load', function() { window.scrollTo(0, 0); });
+    </script>
 
 </body>
-<!-- GSAP primero -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-
-<!-- Luego tus scripts -->
-<script src="assets/js/SCROLL-SCENES.js?v=1.0.1" defer></script>
-<script src="assets/js/main.js?v=1.0.1" defer></script>
 </html>

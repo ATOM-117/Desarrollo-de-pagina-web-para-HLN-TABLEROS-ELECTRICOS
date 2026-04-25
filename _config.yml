@@ -1,0 +1,7 @@
+# GitHub Pages — Jekyll config
+# Permite que archivos .glb, .gltf, .hdr sean servidos correctamente
+include:
+  - assets/models
+
+# MIME types para archivos 3D
+defaults: []

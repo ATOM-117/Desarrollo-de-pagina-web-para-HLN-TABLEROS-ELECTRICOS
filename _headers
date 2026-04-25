@@ -1,0 +1,10 @@
+/*
+  X-Content-Type-Options: nosniff
+
+/assets/models/*.glb
+  Content-Type: model/gltf-binary
+  Access-Control-Allow-Origin: *
+
+/assets/models/*.gltf
+  Content-Type: model/gltf+json
+  Access-Control-Allow-Origin: *
