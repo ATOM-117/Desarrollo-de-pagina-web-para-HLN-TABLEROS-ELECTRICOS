@@ -1560,9 +1560,10 @@ body {
 
 .contacto-wrapper {
     display: grid;
-    grid-template-columns: 1fr 220px 1fr;
+    grid-template-columns: 1fr 260px 1fr;
     gap: var(--spacing-xl);
     align-items: center;
+    min-height: 380px;
 }
 
 .contacto-info h2 {
@@ -1591,6 +1592,18 @@ body {
 .info-item p {
     color: rgba(255,255,255,.85);
     font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+/* Teléfono y links dentro de info: blanco, sin subrayado azul */
+.contacto-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.contacto-link:hover {
+    color: #fff !important;
+    text-decoration: none;
 }
 
 /* ============================================
@@ -2360,8 +2373,8 @@ body {
 }
 
 .contacto-model3d model-viewer {
-    width: 220px;
-    height: 300px;
+    width: 260px;
+    height: 340px;
     --poster-color: transparent;
     --progress-bar-color: transparent;
     background: transparent !important;
