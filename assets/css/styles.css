@@ -2366,31 +2366,31 @@ body {
     display: none;
 }
 
-/* model-viewer: circular, mismo tamaño que el botón WhatsApp */
+/* model-viewer: pequeño, sin fondo, solo el modelo girando */
 .model3d-float__viewer {
-    width: 64px;
-    height: 64px;
-    background: transparent;
-    border-radius: 50%;
-    overflow: hidden;
+    width: 90px;
+    height: 110px;
+    /* Variables internas de model-viewer para quitar fondo */
+    --poster-color: transparent;
+    --progress-bar-color: transparent;
+    --progress-mask: transparent;
+    background: transparent !important;
+    border-radius: 0;
+    overflow: visible;
     display: block;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.6));
     animation: model3dFloat 3.5s ease-in-out infinite;
-    cursor: grab;
 }
 
-.model3d-float__viewer:active {
-    cursor: grabbing;
-}
-
-/* Ocultar botón AR interno */
-.model3d-float__viewer::part(default-ar-button) {
+/* Ocultar botón AR y barra de progreso internos */
+.model3d-float__viewer::part(default-ar-button),
+.model3d-float__viewer::part(default-progress-bar) {
     display: none;
 }
 
 /* Canvas: fondo transparente */
 .model3d-float__viewer::part(canvas) {
-    background: transparent;
+    background: transparent !important;
 }
 
 /* Animación float vertical suave */
