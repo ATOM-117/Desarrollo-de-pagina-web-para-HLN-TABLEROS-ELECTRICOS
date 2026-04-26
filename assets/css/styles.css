@@ -1600,16 +1600,6 @@ body {
 }
 
 /* Canvas decorativos laterales */
-.contacto-circuit {
-    position: absolute;
-    top: 0;
-    width: 22%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 0;
-}
-.contacto-circuit--left  { left: 0; }
-.contacto-circuit--right { right: 0; }
 
 /* Líneas decorativas + etiqueta superior */
 .contacto-hero__tag {
