@@ -1,809 +1,2592 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="HLN Desarrollo e Ingeniería de Proyectos S.A.C. — Especialistas en diseño, fabricación y armado de tableros eléctricos, automatización industrial, transformadores y bandejas portacables para el sector industrial, comercial y residencial en Perú. Más de 10 años de experiencia. Partner autorizado Legrand.">
-    <title>HLN Ingeniería - Tableros Eléctricos y Soluciones Industriales</title>
-    <meta name="keywords" content="tableros eléctricos Perú, automatización industrial, ingeniería eléctrica, transformadores, bandejas portacables, HLN ingeniería">
-    <meta name="author" content="HLN Ingeniería">
-    <link rel="icon" type="image/png" href="assets/images/HLN LOGO B&W TRANSPARENTE.png">
-    <link rel="stylesheet" href="assets/css/styles.css?v=2.0">
-    <!-- model-viewer: Web Component para modelos 3D GLB/GLTF -->
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
-    <!-- Forzar inicio en el top de la página, sin importar hash en la URL -->
-    <script>if (history.scrollRestoration) history.scrollRestoration = 'manual';</script>
-    <!-- Open Graph (Facebook, WhatsApp, LinkedIn, etc.) -->
-<meta property="og:title" content="HLN Ingeniería - Tableros Eléctricos y Soluciones Industriales">
-<meta property="og:description" content="Especialistas en diseño, fabricación y armado de tableros eléctricos, automatización industrial y transformadores en Perú.">
-<meta property="og:image" content="https://hln.com.pe/assets/images/previ.jpg">
-<meta property="og:url" content="https://hln.com.pe">
-<meta property="og:type" content="website">
+/* ============================================
+   VARIABLES Y ESTILOS GLOBALES
+   ============================================ */
 
-<!-- Twitter (también lo usan varias apps) -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="HLN Ingeniería">
-<meta name="twitter:description" content="Soluciones eléctricas industriales con más de 10 años de experiencia.">
-<meta name="twitter:image" content="https://TU-USUARIO.github.io/TU-REPO/assets/images/previ.jpg">
-</head>
-<body>
+:root {
+    /* Colores */
+    --primary:         #001a33;
+    --primary-light:   #003d66;
+    --primary-lighter: #006699;
+    --secondary:       #0099cc;
+    --accent:          #ff6b35;
+    --success:         #16a34a;
+    --danger:          #dc2626;
+    --dark:            #1f2937;
+    --light:           #f3f4f6;
+    --gray:            #6b7280;
+    --white:           #ffffff;
 
-    <!-- =============================================
-         NAVEGACIÓN
-         Sticky, siempre visible, fuera del flujo
-         de scroll de las secciones.
-    ============================================= -->
-    <nav class="navbar" id="navbar">
-        <div class="container">
-            <div class="navbar-brand">
-                <img src="assets/images/HLN LOGO TRANSPARENTE.png" alt="HLN Ingeniería Logo" class="navbar-logo">
-            </div>
-            <ul class="nav-links">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#nosotros">Nosotros</a></li>
-                <li><a href="#proyectos">Proyectos</a></li>
-                <li><a href="#proveedores">Proveedores</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-            <div class="partner-badge">
-                <img src="assets/images/providers/Legrand-Partner-Program.jpg" alt="Legrand Partner Program" class="partner-logo">
-            </div>
-            <div class="hamburger" aria-label="Abrir menú" role="button" tabindex="0">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+    /* Tipografía */
+    --font-primary:    'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-size-base:  16px;
+    --line-height:     1.6;
 
-    <!-- =============================================
-         HERO / INICIO
-         Arquitectura: .section > .scene > .sticky-container
-         .scene da la altura que controla cuánto
-         tiempo dura el pin del sticky-container.
-         Aquí la scene = 100vh (sin pin extra aún).
-    ============================================= -->
-    <section id="inicio" class="section section--hero" data-scroll-section>
-        <div class="scene scene--hero">
-            <div class="sticky-container">
-                <div class="hero"
-                     style="background-image: url('assets/images/tableros-hero.jpg');">
-                    <div class="hero-overlay"></div>
-                    <div class="container hero-container">
-                        <div class="hero-content">
-                            <h2 class="fade-in-up">Líderes en Soluciones de Ingeniería Eléctrica y Comunicaciones</h2>
-                            <p class="fade-in-up" data-delay="0.2">HLN Desarrollo e Ingeniería de Proyectos S.A.C. Más de 10 años brindando innovación y seguridad en tableros eléctricos, transformadores y bandejas portacables.</p>
-                            <div class="hero-buttons">
-                                <a href="#proyectos" class="cta-button primary fade-in-up" data-delay="0.4">Ver Proyectos</a>
-                                <a href="#contacto" class="cta-button secondary fade-in-up" data-delay="0.6">Contáctenos</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    /* Spacing */
+    --spacing-xs:  0.5rem;
+    --spacing-sm:  1rem;
+    --spacing-md:  1.5rem;
+    --spacing-lg:  2rem;
+    --spacing-xl:  3rem;
+    --spacing-2xl: 4rem;
 
-    <!-- =============================================
-         QUIÉNES SOMOS
-         Sección de altura mínima 100vh.
-         El contenido interno se centrará
-         verticalmente por defecto.
-    ============================================= -->
-    <section id="quienes-somos" class="section section--about" data-scroll-section>
-        <div class="scene">
-            <div class="sticky-container">
-                <div class="quienes-somos">
-                    <div class="container">
-                        <div class="quienes-grid">
-                            <div class="quienes-content fade-in-left">
-                                <h2 class="section-title">¿Quiénes Somos?</h2>
-                                <p>En HLN, somos una empresa con más de 10 años de experiencia en el sector eléctrico, especializada en el diseño y armado de tableros eléctricos, transformadores y bandejas portacables para el sector industrial, comercial y residencial.</p>
-                                <p>Nos distinguimos por ofrecer eficiencia y cumplimiento de los más altos estándares de ingeniería, ofreciendo soluciones seguras, confiables y adaptadas a cada necesidad. Nuestro conocimiento en tecnología nos permite optimizar la distribución y gestión de la energía eléctrica con calidad y precisión.</p>
-                                <div class="quienes-features">
-                                    <div class="feature-item">
-                                        <span class="feature-icon">✓</span>
-                                        <span>10+ años de experiencia</span>
-                                    </div>
-                                    <div class="feature-item">
-                                        <span class="feature-icon">✓</span>
-                                        <span>+100 proyectos completados</span>
-                                    </div>
-                                    <div class="feature-item">
-                                        <span class="feature-icon">✓</span>
-                                        <span>Capacitación de personal constante</span>
-                                    </div>
-                                    <div class="feature-item">
-                                        <span class="feature-icon">✓</span>
-                                        <span>Partner Autorizado de LEGRAND</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="quienes-image fade-in-right">
-                                <img src="assets/images/equipo.jpeg" alt="Equipo HLN Ingeniería">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    /* Bordes */
+    --border-radius:    8px;
+    --border-radius-lg: 12px;
 
-    <!-- =============================================
-         CARRUSEL INFINITO DE IMÁGENES
-         Sección compacta (no 100vh):
-         los carruseles horizontales no necesitan
-         altura de viewport, fluyen naturalmente.
-    ============================================= -->
-    <section class="section section--carousel section--compact" data-scroll-section>
-        <div class="scene scene--compact">
-            <div class="infinite-carousel">
-                <div class="carousel-track">
-                    <div class="carousel-group" id="carouselBase">
-                        <img src="assets/images/carru7.jpg"   alt="Trabajo HLN 1">
-                        <img src="assets/images/carru6.jpeg"  alt="Trabajo HLN 2">
-                        <img src="assets/images/carru5.jpeg"  alt="Trabajo HLN 3">
-                        <img src="assets/images/carru2.jpeg"  alt="Trabajo HLN 4">
-                        <img src="assets/images/carru3.jpeg"  alt="Trabajo HLN 5">
-                        <img src="assets/images/carru4.jpeg"  alt="Trabajo HLN 6">
-                        <img src="assets/images/carru8.jpeg"  alt="Trabajo HLN 7">
-                        <img src="assets/images/carru13.jpeg" alt="Trabajo HLN 8">
-                        <img src="assets/images/carru10.jpeg" alt="Trabajo HLN 9">
-                        <img src="assets/images/carru11.jpeg" alt="Trabajo HLN 10">
-                        <img src="assets/images/carru12.jpeg" alt="Trabajo HLN 11">
-                        <img src="assets/images/carru14.jpeg" alt="Trabajo HLN 12">
-                        <img src="assets/images/carru15.jpeg" alt="Trabajo HLN 13">
-                        <img src="assets/images/carru16.jpg"  alt="Trabajo HLN 14">
-                        <img src="assets/images/carru17.jpeg" alt="Trabajo HLN 15">
-                        <img src="assets/images/carru18.jpeg" alt="Trabajo HLN 16">
-                    </div>
-                    <!-- Duplicado para loop infinito -->
-                    <div class="carousel-group" aria-hidden="true">
-                        <img src="assets/images/carru7.jpg"   alt="">
-                        <img src="assets/images/carru6.jpeg"  alt="">
-                        <img src="assets/images/carru5.jpeg"  alt="">
-                        <img src="assets/images/carru2.jpeg"  alt="">
-                        <img src="assets/images/carru3.jpeg"  alt="">
-                        <img src="assets/images/carru4.jpeg"  alt="">
-                        <img src="assets/images/carru8.jpeg"  alt="">
-                        <img src="assets/images/carru13.jpeg" alt="">
-                        <img src="assets/images/carru10.jpeg" alt="">
-                        <img src="assets/images/carru11.jpeg" alt="">
-                        <img src="assets/images/carru12.jpeg" alt="">
-                        <img src="assets/images/carru14.jpeg" alt="">
-                        <img src="assets/images/carru15.jpeg" alt="">
-                        <img src="assets/images/carru16.jpg"  alt="">
-                        <img src="assets/images/carru17.jpeg" alt="">
-                        <img src="assets/images/carru18.jpeg" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    /* Sombras */
+    --shadow-sm: 0 1px 2px 0 rgba(0,0,0,.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.15);
 
-    <!-- =============================================
-         NOSOTROS — STATS
-         100vh mínimo para que el contenido
-         tenga espacio de respiración.
-    ============================================= -->
-    <section id="nosotros" class="section section--stats" data-scroll-section>
-        <div class="scene">
-            <div class="sticky-container">
-                <div class="por-que-elegir">
-                    <div class="container">
-                        <h2 class="section-title fade-in">¿Por qué elegirnos para su próximo proyecto?</h2>
-                        <div class="stats-grid">
-                            <div class="stat-card fade-in-up" data-delay="0">
-                                <div class="stat-number" data-target="10">0</div>
-                                <div class="stat-label">Años de experiencia</div>
-                                <p>Entregando calidad y garantía durante años</p>
-                            </div>
-                            <div class="stat-card fade-in-up" data-delay="0.15">
-                                <div class="stat-number" data-target="100">0</div>
-                                <div class="stat-label">Proyectos completados</div>
-                                <p>Más de 100 proyectos exitosos entregados con calidad y cuidado</p>
-                            </div>
-                            <div class="stat-card fade-in-up" data-delay="0.3">
-                                <div class="stat-number" data-target="25">0</div>
-                                <div class="stat-label">Personal Calificado</div>
-                                <p>Nuestro equipo de expertos garantiza resultados de máxima calidad.</p>
-                            </div>
-                            <div class="stat-card fade-in-up" data-delay="0.45">
-                                <div class="stat-number" data-target="100" data-suffix="%">0%</div>
-                                <div class="stat-label">Satisfacción del cliente</div>
-                                <p>Todos nuestros clientes están satisfechos con nuestro trabajo y servicio.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    /* Transición global */
+    --transition: all 0.3s ease;
 
-    <!-- =============================================
-         VIDEOS
-         Sección compacta con fondo oscuro.
-    ============================================= -->
-    <section class="section section--videos section--compact" data-scroll-section>
-        <div class="scene scene--compact">
-            <div class="video-strip">
-                <div class="container">
-                    <h2 class="section-title light fade-in">Nuestro trabajo en acción</h2>
-                    <div class="video-carousel-wrapper">
-                        <div class="video-grid" id="videoCarousel">
-                            <video muted playsinline autoplay class="video-slide"></video>
-                            <video muted playsinline autoplay class="video-slide"></video>
-                            <video muted playsinline autoplay class="video-slide"></video>
-                        </div>
-                        <button class="carousel-btn prev" id="videoPrev" aria-label="Video anterior">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" aria-hidden="true">
-                                <polyline points="15 18 9 12 15 6"></polyline>
-                            </svg>
-                        </button>
-                        <button class="carousel-btn next" id="videoNext" aria-label="Siguiente video">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" aria-hidden="true">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    /* Viewport height dinámico (seteado por JS) */
+    --dvh: 1vh;
 
-    <!-- =============================================
-         PROVEEDORES
-    ============================================= -->
-    <section id="proveedores" class="section section--providers section--compact" data-scroll-section>
-        <div class="scene scene--compact">
-            <div class="proveedores">
-                <div class="container">
-                    <h2 class="section-title fade-in">¿Con qué marcas trabajamos?</h2>
-                    <p class="section-description fade-in-up">En HLN, nos preocupamos por trabajar con la mejor calidad en tus proyectos, es por ello que también trabajamos con los mejores:</p>
-                    <div class="providers-carousel fade-in-up" aria-label="Carrusel de proveedores">
-                        <div class="providers-track">
-                            <div class="provider-item"><img src="assets/images/providers/logo1.png" alt="Legrand"></div>
-                            <div class="provider-item"><img src="assets/images/providers/logo2.png" alt="ABB"></div>
-                            <div class="provider-item"><img src="assets/images/providers/logo3.png" alt="Schneider Electric"></div>
-                            <div class="provider-item"><img src="assets/images/providers/logo4.png" alt="Siemens"></div>
-                            <div class="provider-item"><img src="assets/images/providers/logo5.png" alt="Rittal"></div>
-                            <div class="provider-item"><img src="assets/images/providers/logo6.png" alt="WEG"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    /* ── Scroll Architecture ──────────────────────
+       Variables que controlan la duración del pin
+       en cada sección. Valor = múltiplo de 100vh.
+       Ejemplo: --scene-duration: 200vh significa
+       que el sticky-container está anclado durante
+       el equivalente a 2 vueltas de pantalla.
+       En esta fase no se usan aún; están listas
+       para cuando se activen las animaciones.
+    ──────────────────────────────────────────── */
+    --scene-duration:       100vh;   /* sección estándar */
+    --scene-duration-hero:  100vh;   /* hero */
+    --scene-duration-pin:   200vh;   /* secciones con pin largo (futuro) */
 
-    <!-- =============================================
-         CLIENTES
-    ============================================= -->
-    <section id="clientes" class="section section--clients section--compact" data-scroll-section>
-        <div class="scene scene--compact">
-            <div class="clientes">
-                <div class="container">
-                    <h3 class="fade-in">Utilizados por las principales empresas</h3>
-                    <div class="clients-carousel fade-in-up" aria-label="Carrusel de clientes">
-                        <div class="clients-track">
-                            <div class="client-item"><img src="assets/images/clients/logo2.png"  alt="Abril Grupo Inmobiliario"></div>
-                            <div class="client-item"><img src="assets/images/clients/logo1.png"  alt="Grupo APM"></div>
-                            <div class="client-item"><img src="assets/images/clients/logo3.png"  alt="Ingeniería y Construcción Monte Grande"></div>
-                            <div class="client-item"><img src="assets/images/clients/logo4.png"  alt="Aruma"></div>
-                            <div class="client-item"><img src="assets/images/clients/logo5.png"  alt="A y A Inmobiliaria"></div>
-                            <div class="client-item"><img src="assets/images/clients/logo6.png"  alt="Banco Central del Perú"></div>
-                            <div class="client-item"><img src="assets/images/clients/logo7.png"  alt="Eleo Arquitectura y Construcción"></div>
-                            <div class="client-item"><img src="assets/images/clients/logo8.png"  alt="Engie"></div>
-                            <div class="client-item"><img src="assets/images/clients/logo9.png"  alt="Faber Castell"></div>
-                            <div class="client-item"><img src="assets/images/clients/logo10.png" alt="Grupo Lay"></div>
-                            <div class="client-item"><img src="assets/images/clients/logo11.png" alt="Constructora Inarco Perú"></div>
-                            <div class="client-item"><img src="assets/images/clients/logo12.png" alt="Interbank"></div>
-                            <div class="client-item"><img src="assets/images/clients/logo13.png" alt="Pedregal The Fruit Company"></div>
-                            <div class="client-item"><img src="assets/images/clients/logo14.png" alt="Imagina"></div>
-                            <div class="client-item"><img src="assets/images/clients/logo15.png" alt="Grupo T y C"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    /* Profundidad de perspectiva 3D (futuro) */
+    --perspective: 1000px;
 
-    <!-- =============================================
-         PROYECTOS — TABS
-         100vh mínimo, contenido interactivo.
-    ============================================= -->
-    <section id="proyectos" class="section section--projects" data-scroll-section>
-        <div class="scene">
-            <div class="sticky-container">
-                <div class="proyectos">
-                    <div class="container">
-                        <h2 class="section-title fade-in">Desarrollo de Tableros Eléctricos</h2>
-                        <div class="proyecto-tabs fade-in-up">
-                            <button class="tab-button active" data-tab="planos">Planos Mecánicos</button>
-                            <button class="tab-button" data-tab="proceso">Proceso</button>
-                            <button class="tab-button" data-tab="resultado">Resultado Final</button>
-                        </div>
-                        <div class="proyecto-detail" id="proyecto-detail" style="display:none;">
-                            <div class="detail-inner">
-                                <div class="detail-image" id="detail-image">
-                                    <img id="detail-image-img" src="" alt="Imagen del proyecto">
-                                </div>
-                                <div class="detail-text">
-                                    <h3 id="detail-title"></h3>
-                                    <p id="detail-desc"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    /* Easing personalizado tipo Apple */
+    --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out:    cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+}
 
-    <!-- =============================================
-         EQUIPOS ELÉCTRICOS — TABS
-         100vh mínimo.
-    ============================================= -->
-    <section id="equipos" class="section section--equipment" data-scroll-section>
-        <div class="scene">
-            <div class="sticky-container">
-                <div class="equipos">
-                    <div class="container">
-                        <h2 class="section-title fade-in">Equipos Eléctricos</h2>
-                        <div class="equipo-tabs fade-in-up">
-                            <button class="tab-button active" data-tab="domestico">Autoportante</button>
-                            <button class="tab-button" data-tab="adosado">Adosado</button>
-                            <button class="tab-button" data-tab="autosoportado">Autosoportado</button>
-                            <button class="tab-button" data-tab="empotrables">Empotrables</button>
-                            <button class="tab-button" data-tab="transformadores">Transformadores</button>
-                        </div>
-                        <div class="equipo-detail" id="equipo-detail" style="display:none;">
-                            <div class="detail-inner">
-                                <div class="detail-image" id="equipo-detail-image">
-                                    <img id="equipo-detail-image-img" src="" alt="Imagen del equipo">
-                                </div>
-                                <div class="detail-text">
-                                    <h3 id="equipo-detail-title"></h3>
-                                    <p id="equipo-detail-desc"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+/* ============================================
+   RESET
+   ============================================ */
 
-    <!-- =============================================
-         TABLERO ELÉCTRICO — 3 FASES
-         Layout:
-           ┌──────────────────────────────────┐
-           │  "Así fabricamos nuestros..."    │ ← título fijo arriba
-           ├──────────────────────────────────┤
-           │  [imagen 16:9]   ┌─────────────┐ │
-           │   centrada       │  card texto  │ │ ← card flotante derecha
-           │                  └─────────────┘ │
-           └──────────────────────────────────┘
-    ============================================= -->
-    <section id="tablero" class="section section--tablero" data-scroll-section
-             aria-label="Proceso de construcción del tablero eléctrico HLN">
-        <div class="scene scene--tablero">
-            <div class="sticky-container">
-                <div class="tablero-scene">
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-                    <!-- Título superior fijo -->
-                    <header class="tbl-header">
-                        <span class="tbl-header__tag">Ingeniería de precisión</span>
-                        <h2 class="tbl-header__title">Así fabricamos nuestros tableros</h2>
-                    </header>
+html {
+    /* scroll-behavior: smooth está desactivado intencionalmente.
+       GSAP ScrollTrigger y scroll-behavior:smooth son incompatibles:
+       smooth interfiere con el scrubbing causando saltos.
+       El smooth scroll para links internos lo hace main.js con
+       scrollIntoView({ behavior: 'smooth' }) de forma selectiva. */
+    scroll-behavior: auto;
+    overflow-x: hidden;
+}
 
-                    <!-- DESKTOP: imagen + card al costado (igual que antes) -->
-                    <div class="tbl-body">
-                        <div class="tbl-stage">
-                            <img class="tbl-img tbl-img--1" src="assets/images/vista1.png" alt="Gabinete exterior del tablero HLN">
-                            <img class="tbl-img tbl-img--2" src="assets/images/vista2.png" alt="Mandil interior con IG DRX 50A">
-                            <img class="tbl-img tbl-img--3" src="assets/images/vista3.png" alt="Interior del tablero con barras de cobre">
-                        </div>
-                        <div class="tbl-card">
-                            <div class="tbl-msg tbl-msg--1">
-                                <div class="tbl-msg__num">01 / 03</div>
-                                <h3 class="tbl-msg__title">Gabinete de acero</h3>
-                                <p class="tbl-msg__body">Estructura en chapa de acero galvanizado de 2mm con tratamiento anticorrosión. Marco y puerta con junta de goma, protección IP54. Certificación IEC 61439.</p>
-                                <ul class="tbl-msg__list">
-                                    <li>Acero galvanizado 2mm</li>
-                                    <li>Anticorrosión + IP54</li>
-                                    <li>IEC 61439</li>
-                                </ul>
-                            </div>
-                            <div class="tbl-msg tbl-msg--2">
-                                <div class="tbl-msg__num">02 / 03</div>
-                                <h3 class="tbl-msg__title">Mandil y señalética</h3>
-                                <p class="tbl-msg__body">Mandil de aluminio anodizado con rótulos grabados en láser. Equipamiento de calidad y lámparas LED montados con torque calibrado.</p>
-                                <ul class="tbl-msg__list">
-                                    <li>Aluminio anodizado láser</li>
-                                    <li>Garantía </li>
-                                    <li>Torque calibrado</li>
-                                </ul>
-                            </div>
-                            <div class="tbl-msg tbl-msg--3">
-                                <div class="tbl-msg__num">03 / 03</div>
-                                <h3 class="tbl-msg__title">Interruptores y barras</h3>
-                                <p class="tbl-msg__body">Interruptores termomagnéticos torqueados según ficha técnica. Barras de cobre electrolítico por fase. Canaleta 40×80mm y marquillado completo.</p>
-                                <ul class="tbl-msg__list">
-                                    <li>Torque por ficha técnica</li>
-                                    <li>Barras cobre electrolítico</li>
-                                    <li>Canaleta 40×80mm</li>
-                                </ul>
-                            </div>
-                            <div class="tbl-progress"><div class="tbl-progress__fill"></div></div>
-                        </div>
-                    </div>
+body {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height);
+    color: var(--dark);
+    background-color: var(--white);
+    overflow-x: hidden;
+}
 
-                    <!-- MÓVIL: carrusel horizontal deslizable (3 tarjetas) -->
-                    <div class="tbl-mobile-carousel" aria-label="Proceso de fabricación">
-                        <div class="tbl-mobile-track" id="tblMobileTrack">
+/* ============================================
+   ARQUITECTURA SCROLL
+   ─────────────────────────────────────────────
+   Jerarquía de clases:
 
-                            <div class="tbl-mobile-slide">
-                                <img src="assets/images/vista1.png" alt="Gabinete exterior">
-                                <div class="tbl-mobile-info">
-                                    <span class="tbl-mobile-num">01 / 03</span>
-                                    <h3>Gabinete de acero</h3>
-                                    <p>Acero galvanizado 2mm, anticorrosión, IP54. Certificación IEC 61439.</p>
-                                    <ul>
-                                        <li>Acero galvanizado 2mm</li>
-                                        <li>Anticorrosión + IP44/IP54/IP65</li>
-                                        <li>IEC 61439</li>
-                                    </ul>
-                                </div>
-                            </div>
+   .section              → contenedor principal de cada
+                           bloque de la página.
+                           position: relative para que
+                           los sticky children se anclen
+                           dentro de él.
 
-                            <div class="tbl-mobile-slide">
-                                <img src="assets/images/vista2.png" alt="Mandil interior">
-                                <div class="tbl-mobile-info">
-                                    <span class="tbl-mobile-num">02 / 03</span>
-                                    <h3>Mandil y señalética normada</h3>
-                                    <p>Aluminio anodizado láser. con recubrimiento interno de cinta de neopreno</p>
-                                    <ul>
-                                        <li>Aluminio anodizado láser</li>
-                                        <li>Equipamiento de calidad</li>
-                                        <li>Torque calibrado</li>
-                                    </ul>
-                                </div>
-                            </div>
+   .scene                → define la altura total que
+                           controla la duración del scroll
+                           dentro de la sección. Por defecto
+                           min-height: 100vh. Las secciones
+                           con animaciones largas tendrán
+                           height: var(--scene-duration-pin).
 
-                            <div class="tbl-mobile-slide">
-                                <img src="assets/images/vista3.png" alt="Interior con barras">
-                                <div class="tbl-mobile-info">
-                                    <span class="tbl-mobile-num">03 / 03</span>
-                                    <h3>Interruptores y barras de la marca que se requiera</h3>
-                                    <p>Breakers torqueados. Barras cobre electrolítico. Placa portaplano.</p>
-                                    <ul>
-                                        <li>Torque por ficha técnica</li>
-                                        <li>Barras cobre de 99%</li>
-                                        <li>Aterramiento completo</li>
-                                    </ul>
-                                </div>
-                            </div>
+   .sticky-container     → el panel visual que se ancla
+                           (position: sticky; top: 0).
+                           Ocupa exactamente 100vh para que
+                           llene la pantalla mientras el
+                           usuario hace scroll por la .scene.
 
-                        </div>
+   Modificadores de .section:
+     --hero        hero principal
+     --about       quiénes somos
+     --stats       estadísticas
+     --videos      bloque de videos
+     --providers   proveedores
+     --clients     clientes
+     --projects    proyectos/tabs
+     --equipment   equipos/tabs
+     --contact     contacto
 
-                        <!-- Botones de navegación -->
-                        <button class="tbl-mobile-btn tbl-mobile-btn--prev" id="tblPrev" aria-label="Fase anterior">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-                        </button>
-                        <button class="tbl-mobile-btn tbl-mobile-btn--next" id="tblNext" aria-label="Siguiente fase">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-                        </button>
+   Modificadores de .scene:
+     --compact     secciones que NO necesitan 100vh
+                   (carruseles, videos): fluyen con
+                   su altura natural de contenido.
 
-                        <!-- Dots de posición -->
-                        <div class="tbl-mobile-dots">
-                            <span class="tbl-mobile-dot tbl-mobile-dot--active"></span>
-                            <span class="tbl-mobile-dot"></span>
-                            <span class="tbl-mobile-dot"></span>
-                        </div>
-                    </div>
+   NOTA: en esta fase (preparación) los sticky-container
+   NO están activos como sticky — solo tienen el CSS base.
+   Se activarán sección por sección al agregar animaciones.
+   ============================================ */
 
-                    <div class="tbl-hint">
-                        <span>Scroll para ver el proceso</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-                    </div>
+/* ── .section ─────────────────────────────── */
 
-                </div>
-            </div>
-        </div>
-    </section>
+.section {
+    position: relative;   /* ancla a hijos sticky */
+    width: 100%;
+}
 
-    <!-- =============================================
-         CONTACTO
-         100vh mínimo con mapa incluido.
-    ============================================= -->
-    <section id="contacto" class="section section--contact" data-scroll-section>
-        <div class="scene">
-            <div class="sticky-container">
-                <div class="contacto">
-                    <div class="container">
-                        <div class="contacto-wrapper">
-                            <div class="contacto-hero fade-in">
-                                <!-- Canvas decorativos laterales -->
-                                <canvas class="contacto-circuit contacto-circuit--left"  id="circuitLeft"></canvas>
-                                <canvas class="contacto-circuit contacto-circuit--right" id="circuitRight"></canvas>
+/* ── .scene ───────────────────────────────── */
 
-                                <div class="contacto-hero__tag">
-                                    <span class="contacto-hero__line"></span>
-                                    <span class="contacto-hero__label">Estamos para ayudarte</span>
-                                    <span class="contacto-hero__line"></span>
-                                </div>
-                                <h2 class="contacto-titulo">Contáctanos para más información</h2>
-                                <p class="contacto-hero__sub">Estamos listos para ayudarle con sus proyectos de ingeniería eléctrica.</p>
-                            </div>
+.scene {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;    /* duración de scroll por defecto */
+    display: flex;
+    flex-direction: column;
+}
 
-                            <!-- Columna central: modelo 3D -->
-                            <div class="contacto-model3d">
-                                <model-viewer
-                                    id="tableroViewerContact"
-                                    src=""
-                                    alt="Modelo 3D tablero eléctrico HLN"
-                                    auto-rotate
-                                    auto-rotate-delay="500"
-                                    rotation-per-second="20deg"
-                                    camera-controls
-                                    touch-action="none"
-                                    environment-image="neutral"
-                                    shadow-intensity="1.2"
-                                    shadow-softness="0.5"
-                                    exposure="1.3"
-                                    camera-orbit="0deg 85deg 120%"
-                                    field-of-view="25deg"
-                                    loading="lazy"
-                                    reveal="auto"
-                                    style="--poster-color: transparent; background: transparent;"
-                                    aria-label="Modelo 3D interactivo del tablero eléctrico">
-                                </model-viewer>
-                            </div>
+/* Secciones compactas: siguen la altura de su contenido */
+.scene--compact {
+    min-height: unset;
+    height: auto;
+}
 
-                            <div class="contacto-info fade-in-left">
-                                <div class="info-item">
-                                    <strong>📍 Dirección:</strong>
-                                    <p>Lamas 407, La Victoria - Perú</p>
-                                </div>
-                                <div class="info-item">
-                                    <strong>📞 Teléfono:</strong>
-                                    <p>
-                                        <a href="https://wa.me/51915236931"
-                                           target="_blank"
-                                           rel="noopener noreferrer"
-                                           class="contacto-link">
-                                            +51 915 236 931
-                                        </a>
-                                    </p>
-                                </div>
-                                <div class="info-item">
-                                    <strong>📧 Email:</strong>
-                                    <p>Administracion@hln.com.pe</p>
-                                </div>
-                            </div>
+/* Scene del hero tiene exactamente la altura del viewport */
+.scene--hero {
+    min-height: 100vh;
+    height: 100vh;
+}
 
-                            <form id="contactForm" class="contacto-form fade-in-right" novalidate>
-                                <div class="form-group">
-                                    <input type="text" id="nombre" name="nombre"
-                                           placeholder="Nombre" required autocomplete="name">
-                                    <span class="error-message" id="nombre-error" role="alert"></span>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" id="email" name="email"
-                                           placeholder="Correo" required autocomplete="email">
-                                    <span class="error-message" id="email-error" role="alert"></span>
-                                </div>
-                                <div class="form-group">
-                                    <textarea id="mensaje" name="mensaje"
-                                              placeholder="Mensaje" rows="4" required></textarea>
-                                    <span class="error-message" id="mensaje-error" role="alert"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label>
-                                        <input type="checkbox" id="terminos" name="terminos" required>
-                                        Acepto términos y política de privacidad
-                                    </label>
-                                    <span class="error-message" id="terminos-error" role="alert"></span>
-                                </div>
-                                <button type="submit" class="submit-button">Enviar</button>
-                                <div id="form-message" class="form-message" role="status" aria-live="polite"></div>
-                            </form>
-                        </div>
-                    </div>
+/* ── .sticky-container ────────────────────── */
 
-                    <!-- Mapa fuera del grid de contacto para ocupar ancho completo -->
-                    <div class="container">
-                        <div class="mapa-container">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.5429287659303!2d-77.0063652!3d-12.0759447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8c0c0c0c0c1%3A0x0!2sLamas%20407%2C%20La%20Victoria%2C%20Lima%2C%20Per%C3%BA!5e0!3m2!1ses!2s!4v1707396000000"
-                                width="100%" height="300"
-                                style="border:0;"
-                                allowfullscreen=""
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"
-                                title="Ubicación HLN Ingeniería">
-                            </iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+/*
+   Base: se comporta como un bloque normal (no sticky aún).
+   Cuando se activen animaciones, se añadirá:
+     position: sticky;
+     top: 0;
+     height: 100vh;
+   por sección específica mediante el modificador
+   .section--[name] .sticky-container.
+   Así controlamos qué secciones están "pinadas"
+   sin afectar las demás.
+*/
+.sticky-container {
+    position: relative;   /* normal en esta fase */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
 
-    <!-- =============================================
-         FOOTER
-         Fuera del sistema de secciones scroll,
-         fluye naturalmente al final.
-    ============================================= -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 - HLN Departamento de Ingeniería. Todos los derechos reservados.
-                <a href="#inicio" class="rocket-btn" aria-label="Volver al inicio" title="Volver al inicio">
-                    <img src="assets/images/rocket.png" alt="Volver al inicio">
-                </a>
-            </p>
-            <div class="footer-links">
-                <a href="#privacidad">Privacidad</a>
-                <a href="#terminos">Términos</a>
-                <a href="#cookies">Cookies</a>
-            </div>
-        </div>
-    </footer>
+/*
+   Placeholder para activación futura de sticky pin.
+   Descomentar por sección cuando se añadan animaciones:
 
-    <!-- Script: asigna src al modelo 3D en sección contacto -->
-    <script>
-        (function() {
-            function setModelSrc() {
-                var base = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
-                var glb = base + 'assets/models/tablero.glb';
-                var mv = document.getElementById('tableroViewerContact');
-                if (mv) {
-                    mv.setAttribute('src', glb);
-                    mv.addEventListener('error', function() {
-                        var wrap = document.querySelector('.contacto-model3d');
-                        if (wrap) wrap.style.display = 'none';
-                    });
-                }
-            }
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', setModelSrc);
-            } else {
-                setModelSrc();
-            }
-        })();
-    </script>
+   .section--hero .sticky-container,
+   .section--about .sticky-container {
+       position: sticky;
+       top: 0;
+       height: 100vh;
+       overflow: hidden;
+   }
+*/
 
-    <!-- =============================================
-         BOTÓN FLOTANTE WHATSAPP
-    ============================================= -->
-    <div class="whatsapp-float" id="whatsappFloat">
-        <a href="https://wa.me/51915236931?text=Hola%2C%20me%20comunico%20con%20HLN%20Ingenier%C3%ADa.%20Estoy%20interesado%20en%20conocer%20sus%20servicios%20de%20tableros%20el%C3%A9ctricos%20e%20ingenier%C3%ADa%20de%20proyectos.%20%C2%BFPodr%C3%ADan%20brindarme%20informaci%C3%B3n%20para%20una%20posible%20licitaci%C3%B3n%20o%20cotizaci%C3%B3n%3F"
-           target="_blank"
-           rel="noopener noreferrer"
-           aria-label="Contactar por WhatsApp">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
-                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M20.52 3.48A11.93 11.93 0 0012 0C5.37 0 .02 5.35 0 12c.01 2.12.55 4.2 1.58 6.03L0 24l6.23-1.62A11.95 11.95 0 0012 24c6.63 0 12-5.37 12-12 0-3.2-1.25-6.2-3.48-8.52z" fill="#25D366"/>
-                <path d="M17.96 14.17c-.32-.16-1.88-.93-2.17-1.04-.29-.11-.5-.16-.71.16-.21.32-.81 1.04-.99 1.25-.18.21-.36.24-.68.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.9-1.78-2.22-.18-.32-.02-.49.14-.65.14-.14.32-.36.48-.54.16-.18.21-.32.32-.53.11-.21.05-.41-.02-.57-.07-.16-.71-1.7-.98-2.33-.26-.61-.53-.53-.71-.54l-.61-.01c-.21 0-.55.08-.84.41-.29.32-1.1 1.07-1.1 2.6 0 1.53 1.13 3.02 1.29 3.23.16.21 2.23 3.4 5.4 4.77 3.17 1.36 3.17.91 3.74.85.57-.06 1.88-.77 2.15-1.51.27-.74.27-1.38.19-1.51-.08-.13-.29-.21-.61-.37z" fill="#fff"/>
-            </svg>
-        </a>
-    </div>
+/* ── Hero: pin activo ─────────────────────────
+   GSAP controla el pin dinámicamente, pero estas
+   reglas garantizan que el sticky-container ocupe
+   exactamente el viewport en la sección hero y que
+   overflow:hidden evite que el contenido animado
+   sea visible fuera de los límites del panel.
+*/
+.section--hero .sticky-container {
+    height: 100vh;
+    overflow: hidden;
+}
 
-    <!--
-         GSAP + ScrollTrigger — SIN defer.
-         Deben estar en el scope global ANTES de que
-         scroll-scenes.js (que sí tiene defer) ejecute.
-    -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+/*
+   Cuando GSAP aplica el pin, añade la clase
+   .gsap-pin-spacer al wrapper que crea automáticamente.
+   Este ajuste evita que ese spacer tenga margin
+   o padding inesperado que desplace el layout.
+*/
+.gsap-pin-spacer {
+    padding: 0 !important;
+    margin: 0 !important;
+}
 
-    <!-- UI: tabs, carruseles, formulario -->
-    <script src="assets/js/main.js?v=1.0.3" defer></script>
+/* ── Utilidades de scroll futuras ─────────── */
 
-    <!-- Motor de animaciones GSAP — se auto-inicializa en window.load -->
-    <script src="assets/js/SCROLL-SCENES.js?v=1.0.3" defer></script>
+/*
+   .scroll-layer: para apilar capas que se moverán
+   a diferentes velocidades (parallax, 3D).
+   No activo aún — sin efecto visual.
+*/
+.scroll-layer {
+    position: absolute;
+    inset: 0;
+    will-change: transform;  /* hint al compositor */
+}
 
-    <!-- Scroll siempre al top al cargar -->
-    <script>
-        if (history.scrollRestoration) history.scrollRestoration = 'manual';
-        window.addEventListener('load', function() { window.scrollTo(0, 0); });
-    </script>
+/*
+   .scroll-pin: versión explícita del sticky pin.
+   Se aplicará dinámicamente desde JS a las secciones
+   que estén en modo "scroll scrubbing".
+*/
+.scroll-pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+}
 
+/* ── Contexto 3D global (preparación) ─────── */
 
-    <!-- Animación circuitos — decoración lateral sección contacto -->
-    <style>
-    .circuit-line {
-        stroke: #00aaff;
-        stroke-width: 1.5;
-        fill: none;
-        opacity: 0.2;
-        stroke-dasharray: 200;
-        stroke-dashoffset: 200;
-        animation: circuitDraw 6s linear infinite;
+/*
+   .scene--3d activa el contexto de perspectiva
+   para hijos que usarán transform3d.
+   No activo en ninguna sección aún.
+*/
+.scene--3d {
+    perspective: var(--perspective);
+    perspective-origin: 50% 50%;
+}
+
+/* ── data-delay: retrasos de animación ─────── */
+/*
+   Se lee desde JS para aplicar transition-delay
+   proporcional al atributo data-delay del elemento.
+   El CSS base no hace nada; el JS lo procesa en
+   initScrollAnimations().
+*/
+
+/* ============================================
+   SISTEMA DE ANIMACIONES (único, basado en
+   IntersectionObserver + clase .show)
+   ============================================ */
+
+/*
+   Por defecto los elementos son invisibles.
+   El JS agrega .show cuando entran en el viewport.
+   Cada variante define el estado inicial (from)
+   y la transición al estado visible (to via .show).
+*/
+
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Estado visible — aplicado por JS al entrar en viewport */
+.fade-in.show,
+.fade-in-up.show,
+.fade-in-left.show,
+.fade-in-right.show {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* ============================================
+   ANIMACIONES INDEPENDIENTES (no scroll-driven)
+   ============================================ */
+
+/* Carrusel de imágenes */
+@keyframes scrollCarousel {
+    from { transform: translateX(0); }
+    to   { transform: translateX(var(--move)); }
+}
+
+/* Carrusel de clientes */
+@keyframes scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(-1 * var(--scroll-distance))); }
+}
+
+/* Carrusel de proveedores */
+@keyframes scroll-providers {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(-1 * var(--providers-distance))); }
+}
+
+/* Animaciones de aparición de tabs (no dependen de scroll) */
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* Clases de animación usadas por tabs JS */
+.animate-left {
+    animation: slideInLeft 0.4s ease forwards;
+}
+
+.animate-right {
+    animation: slideInRight 0.4s ease forwards;
+}
+
+.animate-wow {
+    animation: scaleIn 0.35s ease forwards;
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Fade para slider de imagen (quiénes somos) y videos */
+.fade-out {
+    opacity: 0;
+    transform: scale(0.98);
+}
+
+/* ============================================
+   UTILIDADES
+   ============================================ */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.section-title {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+    line-height: 1.3;
+}
+
+.section-subtitle {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.section-description {
+    font-size: 1.1rem;
+    color: var(--gray);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+/* ============================================
+   NAVEGACIÓN
+   ============================================ */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--white);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-md) 0;
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.navbar-brand {
+    flex: 0 0 auto;
+}
+
+.navbar-logo {
+    height: 48px;
+    width: auto;
+    margin-right: 18px;
+    vertical-align: middle;
+    transform: scale(1.1);
+    transform-origin: left center;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: var(--spacing-lg);
+    margin-left: auto;
+    margin-right: 1.5rem;
+}
+
+.nav-links a {
+    position: relative;
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.5rem 0;
+    transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    transition: width 0.35s ease;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.partner-badge {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: 1rem;
+}
+
+.partner-logo {
+    height: 40px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.partner-logo:hover {
+    transform: scale(1.08);
+    box-shadow: var(--shadow-md);
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--dark);
+    border-radius: 2px;
+    transition: var(--transition);
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+
+/*
+   El hero vive dentro de .scene--hero > .sticky-container.
+   min-height: 100vh garantiza que llene el viewport.
+   Cuando se active sticky en futuras animaciones,
+   height: 100vh se añadirá vía .section--hero .sticky-container.
+*/
+.hero {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-2xl) var(--spacing-md);
+    color: var(--white);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 26, 51, 0.4);
+    z-index: 1;
+}
+
+.hero-container {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    margin-left: 0;
+    text-align: left;
+    width: 100%;
+}
+
+.hero-content h2 {
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.2;
+    text-shadow: 0 4px 8px rgba(0,0,0,.8);
+    color: var(--white);
+}
+
+.hero-content p {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    margin-bottom: var(--spacing-lg);
+    text-shadow: 0 3px 6px rgba(0,0,0,.8);
+    color: var(--white);
+    line-height: 1.5;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: var(--transition);
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+.cta-button.primary {
+    background-color: var(--secondary);
+    color: var(--white);
+}
+
+.cta-button.primary:hover {
+    background-color: transparent;
+    border-color: var(--white);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,153,204,.3);
+}
+
+.cta-button.secondary {
+    background-color: transparent;
+    color: var(--white);
+    border-color: var(--white);
+}
+
+.cta-button.secondary:hover {
+    background-color: var(--white);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   TABLERO ELÉCTRICO — LAYOUT FINAL
+   ─────────────────────────────────────────────
+   Layout desktop:
+
+   ┌─────────────────────────────────────────┐  100vh
+   │         .tbl-header  (título arriba)    │  ~12vh
+   ├──────────────────────────┬──────────────┤
+   │                          │              │
+   │      .tbl-stage          │  .tbl-card   │  ~78vh
+   │   (imagen centrada)      │  (flotante)  │
+   │                          │              │
+   ├──────────────────────────┴──────────────┤
+   │      .tbl-progress + .tbl-hint          │  ~10vh
+   └─────────────────────────────────────────┘
+
+   .tbl-body usa CSS Grid: imagen ocupa ~65% del ancho,
+   card ocupa ~32%, separados por gap 3%.
+   ============================================ */
+
+/* ── Sticky + scene ──────────────────────── */
+
+.section--tablero .sticky-container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.scene--tablero {
+    min-height: 100vh;
+    height: 100vh; /* JS sobreescribe a 300vh */
+}
+
+/* ── Viewport ─────────────────────────────── */
+
+.tablero-scene {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #06101e;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+}
+
+/* Grilla técnica sutil de fondo */
+.tablero-scene::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0,153,204,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,153,204,.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── Título arriba ───────────────────────── */
+
+.tbl-header {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: clamp(1.4rem, 2.8vh, 2.2rem) 2rem clamp(0.8rem, 1.5vh, 1.2rem);
+    flex-shrink: 0;
+}
+
+.tbl-header__tag {
+    display: block;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+    font-family: 'Courier New', monospace;
+}
+
+.tbl-header__title {
+    font-size: clamp(1.8rem, 3.8vw, 3rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.15;
+}
+
+/* ── Zona central: imagen + card ─────────── */
+
+.tbl-body {
+    position: relative;
+    z-index: 5;
+    flex: 1;
+    display: grid;
+    /* imagen ~65%, gap 3%, card ~32% */
+    grid-template-columns: 1fr clamp(200px, 26vw, 320px);
+    gap: clamp(1rem, 2.5vw, 2.5rem);
+    align-items: center;
+    justify-items: center;
+    padding: 0 clamp(1.5rem, 3.5vw, 3.5rem);
+    /* pequeño margen inferior para que no choque con la barra */
+    padding-bottom: clamp(1rem, 2.5vh, 2rem);
+}
+
+/* ── Stage de imágenes ───────────────────── */
+
+.tbl-stage {
+    position: relative;
+    width: 100%;
+    /* Ratio 16:9 — se adapta al espacio disponible */
+    aspect-ratio: 16 / 9;
+    max-height: calc(100vh - 18vh - 6rem); /* vh disponible menos header y padding */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tbl-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 5px;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+    filter: drop-shadow(0 10px 36px rgba(0,0,0,.72));
+}
+
+.tbl-img--1 { opacity: 1; z-index: 3; }
+.tbl-img--2 { opacity: 0; z-index: 2; }
+.tbl-img--3 { opacity: 0; z-index: 1; }
+
+/* ── Card flotante ───────────────────────── */
+
+.tbl-card {
+    position: relative;
+    width: 100%;
+    align-self: center;
+    background: rgba(4, 18, 38, 0.82);
+    border: 1px solid rgba(0,153,204,.22);
+    border-left: 3px solid var(--secondary);
+    border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0;
+    padding: clamp(1.2rem, 2.5vw, 1.8rem);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 8px 40px rgba(0,0,0,.45);
+    /* altura máxima para no salirse del viewport */
+    max-height: calc(100vh - 18vh - 4rem);
+    overflow: hidden;
+}
+
+/* ── Mensajes dentro del card ────────────── */
+
+/* Todos apilados en el mismo espacio, GSAP alterna opacidad */
+.tbl-msg {
+    position: absolute;
+    inset: clamp(1.2rem, 2.5vw, 1.8rem);
+    opacity: 0;
+    transform: translateY(14px);
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+/* El primero visible desde el inicio */
+.tbl-msg--1 {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Espaciador para que el card tenga altura basada en el contenido del primer mensaje */
+.tbl-card::before {
+    content: '';
+    display: block;
+    /* Altura mínima del card = aprox 3 elementos */
+    min-height: clamp(180px, 30vh, 280px);
+}
+
+.tbl-msg__num {
+    font-size: clamp(0.58rem, 0.9vw, 0.7rem);
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    font-family: 'Courier New', monospace;
+}
+
+.tbl-msg__title {
+    font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.25;
+}
+
+.tbl-msg__body {
+    font-size: clamp(0.7rem, 1.05vw, 0.82rem);
+    color: rgba(175,210,230,.82);
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.tbl-msg__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.tbl-msg__list li {
+    font-size: clamp(0.62rem, 0.95vw, 0.74rem);
+    color: rgba(130,185,215,.82);
+    font-weight: 600;
+    padding-left: 1rem;
+    position: relative;
+    letter-spacing: 0.03em;
+}
+
+.tbl-msg__list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--secondary);
+}
+
+/* ── Barra de progreso (en la parte baja del card) ── */
+
+.tbl-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(0,153,204,.12);
+    border-radius: 0 0 var(--border-radius-lg) 0;
+    overflow: hidden;
+}
+
+.tbl-progress__fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--secondary), #00d4ff);
+}
+
+/* ── Scroll hint (inferior izquierda) ────── */
+
+.tbl-hint {
+    position: absolute;
+    bottom: clamp(0.7rem, 1.5vh, 1.2rem);
+    left: clamp(1.5rem, 3.5vw, 3.5rem);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: rgba(100,155,195,.5);
+    font-size: clamp(0.55rem, 0.85vw, 0.68rem);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    pointer-events: none;
+}
+
+.tbl-hint svg {
+    animation: tbl-bounce 1.5s ease-in-out infinite;
+}
+
+@keyframes tbl-bounce {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(3px); }
+}
+
+/* ── Responsive — tableta ────────────────── */
+
+@media (max-width: 900px) {
+    .tbl-body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        padding: 0 1.2rem 1rem;
+        gap: 1rem;
     }
-    .circuit-dot {
-        fill: #00aaff;
-        opacity: 0.4;
-        animation: circuitPulse 2s infinite alternate;
+
+    .tbl-stage {
+        max-height: 42vh;
     }
-    @keyframes circuitDraw {
-        0%   { stroke-dashoffset: 200; opacity: 0; }
-        50%  { opacity: 0.4; }
-        100% { stroke-dashoffset: 0; opacity: 0.2; }
+
+    .tbl-card {
+        max-height: none;
+        position: relative;
     }
-    @keyframes circuitPulse {
-        0%   { opacity: 0.2; }
-        100% { opacity: 0.7; }
+
+    /* NO cambiamos position de tbl-msg aquí — GSAP lo necesita absolute en desktop.
+       Solo ajustamos el card para que acepte altura auto. */
+}
+
+/* ── Responsive — móvil ──────────────────── */
+
+@media (max-width: 600px) {
+    .tbl-header__title {
+        font-size: 1.2rem;
     }
-    </style>
-    <script>
-    (function() {
-        // Genera SVG de circuito para cada canvas lateral
-        function buildCircuitSVG(containerId, mirror) {
-            var el = document.getElementById(containerId);
-            if (!el) return;
 
-            var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svg.setAttribute('width',   '100%');
-            svg.setAttribute('height',  '100%');
-            // viewBox ajustado: origen en esquina exterior, todo contenido dentro del lateral
-            svg.setAttribute('viewBox', '0 0 200 160');
-            svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-            svg.style.cssText = 'width:100%;height:100%;display:block;';
+    .tbl-msg__body {
+        display: none;
+    }
 
-            // Paths que arrancan desde el borde exterior (x≈0) y NO superan x=180
-            var paths = [
-                'M0 40  H60  V20  H120',
-                'M60 20  V70  H130 V110',
-                'M0 90  H50  V130 H110',
-                'M110 130 V60  H170',
-                'M130 110 H180 V50',
-            ];
-            var dots = [
-                [0,  40],  [60,  20], [120, 20],
-                [60, 70],  [130, 70], [110,130],
-                [170, 60]
-            ];
-            var delays = [0, 1.0, 2.0, 0.5, 1.5];
+    .tbl-stage {
+        max-height: 36vh;
+    }
+}
 
-            paths.forEach(function(d, i) {
-                var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                path.setAttribute('d', d);
-                path.setAttribute('class', 'circuit-line');
-                path.style.animationDelay = delays[i] + 's';
-                svg.appendChild(path);
-            });
+/* ============================================
+   TABLERO MÓVIL — CARRUSEL HORIZONTAL
+   Oculto en desktop, visible solo en móvil.
+   ============================================ */
 
-            dots.forEach(function(pos, i) {
-                var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                circle.setAttribute('cx', pos[0]);
-                circle.setAttribute('cy', pos[1]);
-                circle.setAttribute('r',  '3');
-                circle.setAttribute('class', 'circuit-dot');
-                circle.style.animationDelay = (i * 0.25) + 's';
-                svg.appendChild(circle);
-            });
+.tbl-mobile-carousel {
+    display: none; /* oculto en desktop */
+    position: relative;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 0.75rem; /* reducido de 2rem */
+    overflow: hidden;
+}
 
-            // Lado izquierdo: anclado a la izquierda; lado derecho: espejado
-            var side = mirror ? 'right:0;' : 'left:0;';
-            var flip = mirror ? 'transform:scaleX(-1);transform-origin:center;' : '';
-            el.style.cssText = 'position:absolute;top:0;' + side + 'width:20%;height:100%;pointer-events:none;z-index:0;overflow:hidden;' + flip;
-            el.appendChild(svg);
-        }
+.tbl-mobile-track {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    will-change: transform;
+}
 
-        window.addEventListener('load', function() {
-            // Reemplazar canvas por divs con SVG
-            ['circuitLeft', 'circuitRight'].forEach(function(id) {
-                var old = document.getElementById(id);
-                if (!old) return;
-                var div = document.createElement('div');
-                div.id = id;
-                old.parentNode.replaceChild(div, old);
-            });
-            buildCircuitSVG('circuitLeft',  false);
-            buildCircuitSVG('circuitRight', true);
-        });
-    })();
-    </script>
-</body>
-</html>
+.tbl-mobile-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.tbl-mobile-slide img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+}
+
+.tbl-mobile-info {
+    background: rgba(4, 18, 38, 0.92);
+    border-left: 3px solid var(--secondary);
+    padding: 0.7rem 1rem; /* reducido de 1rem 1.2rem */
+    color: var(--white);
+}
+
+.tbl-mobile-num {
+    display: block;
+    font-size: 0.58rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    font-family: 'Courier New', monospace;
+    margin-bottom: 0.25rem;
+}
+
+.tbl-mobile-info h3 {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+}
+
+.tbl-mobile-info p {
+    font-size: 0.76rem;
+    color: rgba(180,210,230,.82);
+    line-height: 1.45;
+    margin-bottom: 0.35rem;
+}
+
+.tbl-mobile-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+}
+
+.tbl-mobile-info li {
+    font-size: 0.72rem;
+    color: rgba(130,185,215,.85);
+    font-weight: 600;
+    padding-left: 0.9rem;
+    position: relative;
+    letter-spacing: 0.02em;
+}
+.tbl-mobile-info li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--secondary);
+}
+
+/* Botones prev/next */
+.tbl-mobile-btn {
+    position: absolute;
+    top: calc((100vw * 9/16) / 2); /* centrado en la imagen */
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.55);
+    border: 1px solid rgba(255,255,255,.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 150ms ease;
+    z-index: 5;
+}
+.tbl-mobile-btn:hover { background: rgba(0,0,0,.8); }
+.tbl-mobile-btn--prev { left: 8px; }
+.tbl-mobile-btn--next { right: 8px; }
+
+/* Dots */
+.tbl-mobile-dots {
+    display: flex;
+    gap: 5px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+.tbl-mobile-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.25);
+    transition: background 200ms ease, transform 200ms ease;
+}
+.tbl-mobile-dot--active {
+    background: var(--secondary);
+    transform: scale(1.3);
+}
+
+/* ============================================
+   QUIÉNES SOMOS
+   ============================================ */
+
+/*
+   Quiénes somos: ocupa al menos el 100vh heredado
+   de su .scene. El padding vertical hace que el
+   contenido respire si el contenido es menor.
+*/
+.quienes-somos {
+    padding: var(--spacing-2xl) 0;
+    background: var(--white);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.quienes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+    grid-auto-rows: auto;
+}
+
+.quienes-content h2 {
+    text-align: left;
+    margin-bottom: var(--spacing-lg);
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+}
+
+.quienes-content p {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    color: var(--gray);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-lg);
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+}
+
+.quienes-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 500;
+    color: var(--dark);
+    font-size: clamp(0.85rem, 2vw, 1rem);
+}
+
+.feature-icon {
+    color: var(--secondary);
+    font-size: 1.2rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.quienes-image {
+    height: 480px;
+    max-height: 480px;
+    overflow: hidden;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+}
+
+.quienes-image img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: var(--border-radius-lg);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* ============================================
+   CARRUSEL INFINITO DE IMÁGENES
+   ============================================ */
+
+.infinite-carousel {
+    overflow: hidden;
+    padding: 5rem 0;
+    background: #fafafa;
+}
+
+.carousel-track {
+    display: flex;
+    width: max-content;
+    animation: scrollCarousel 35s linear infinite;
+    will-change: transform;
+}
+
+.carousel-track:hover {
+    animation-play-state: paused;
+}
+
+.carousel-group {
+    display: flex;
+    gap: clamp(1rem, 2vw, 2rem);
+    padding-right: clamp(1rem, 2vw, 2rem);
+}
+
+.carousel-group img {
+    height: clamp(240px, 34vw, 360px);
+    width: auto;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 12px 30px rgba(0,0,0,.18);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.carousel-group img:hover {
+    transform: scale(1.05);
+}
+
+/* ============================================
+   POR QUÉ ELEGIRNOS — STATS
+   ============================================ */
+
+.por-que-elegir {
+    padding: var(--spacing-2xl) 0;
+    background-color: var(--light);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    background: var(--white);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    border-top: 4px solid var(--secondary);
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-number {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: var(--spacing-sm);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+}
+
+.stat-label {
+    font-size: 0.95rem;
+    color: var(--dark);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.4;
+}
+
+.stat-card p {
+    color: var(--gray);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+/* ============================================
+   BLOQUE DE VIDEOS
+   ============================================ */
+
+.video-strip {
+    background: linear-gradient(135deg, #001a33, #00345f);
+    padding: clamp(2rem, 5vw, 5rem) 0;
+}
+
+.video-strip .section-title.light {
+    color: var(--white);
+    text-align: center;
+    margin-bottom: clamp(1.5rem, 4vw, 3rem);
+}
+
+.video-carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+    gap: clamp(1rem, 3vw, 2rem);
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.video-grid video {
+    width: 100%;
+    aspect-ratio: 22 / 8;
+    object-fit: cover;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    background: black;
+    display: block;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.video-grid video.fade-out {
+    opacity: 0;
+    transform: scale(0.98);
+}
+
+/* Botones de navegación — ocultos en desktop */
+.carousel-btn {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(0,0,0,.5);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.carousel-btn:hover {
+    background: rgba(0,0,0,.8);
+}
+
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
+
+/* ============================================
+   PROVEEDORES — CARRUSEL INFINITO
+   ============================================ */
+
+.proveedores {
+    padding: var(--spacing-2xl) 0;
+}
+
+.providers-carousel {
+    overflow: hidden;
+    margin-top: var(--spacing-md);
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.providers-track {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    animation: scroll-providers var(--providers-duration, 18s) linear infinite;
+    will-change: transform;
+}
+
+.providers-track:hover {
+    animation-play-state: paused;
+}
+
+.provider-item {
+    flex: 0 0 auto;
+    min-width: 240px;
+    padding: 0.75rem 1rem;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    white-space: nowrap;
+}
+
+.provider-item img {
+    width: 220px;
+    height: 110px;
+    display: block;
+    object-fit: contain;
+}
+
+/* ============================================
+   CLIENTES — CARRUSEL INFINITO
+   ============================================ */
+
+.clientes {
+    background: var(--primary);
+    padding: var(--spacing-2xl) 0;
+    color: var(--white);
+}
+
+.clientes h3 {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    font-size: 1.5rem;
+}
+
+.clients-carousel {
+    overflow: hidden;
+    margin-top: var(--spacing-md);
+}
+
+.clients-track {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    animation: scroll var(--scroll-duration, 12s) linear infinite;
+    will-change: transform;
+}
+
+.clients-track:hover {
+    animation-play-state: paused;
+}
+
+.client-item {
+    flex: 0 0 auto;
+    min-width: 240px;
+    padding: 0.75rem 1rem;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    color: var(--primary);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.client-item img {
+    width: 220px;
+    height: 110px;
+    display: block;
+    object-fit: contain;
+    background: transparent;
+}
+
+/* ============================================
+   PROYECTOS — TABS
+   ============================================ */
+
+.proyectos {
+    padding: var(--spacing-2xl) 0;
+    background: var(--white);
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.proyecto-tabs,
+.equipo-tabs {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-2xl);
+    flex-wrap: wrap;
+}
+
+.tab-button {
+    padding: 10px 24px;
+    border: 2px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.tab-button.active,
+.tab-button:hover {
+    background: var(--primary);
+    color: var(--white);
+}
+
+/* Detalle de proyecto / equipo */
+.proyecto-detail,
+.equipo-detail {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-lg);
+    background: transparent;
+}
+
+.detail-inner {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-lg);
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.detail-inner.reverse {
+    flex-direction: row-reverse;
+}
+
+.detail-image {
+    flex: 1;
+    height: clamp(220px, 50vw, 320px);
+    border-radius: var(--border-radius-lg);
+    background: linear-gradient(135deg, #001a33, #003d66);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+.detail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.detail-text {
+    flex: 1;
+    padding: var(--spacing-lg);
+}
+
+.detail-text h3 {
+    font-size: clamp(1.4rem, 4vw, 1.75rem);
+    color: var(--primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.detail-text p {
+    color: var(--dark);
+    line-height: 1.7;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    text-align: justify;
+}
+
+/* Tarjetas de proyecto con imagen de fondo */
+.proyecto-image-card {
+    width: 100%;
+    height: 220px;
+    border-radius: var(--border-radius-lg);
+    background-size: cover;
+    background-position: center;
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-md);
+}
+
+/* ============================================
+   EQUIPOS ELÉCTRICOS
+   ============================================ */
+
+.equipos {
+    padding: var(--spacing-2xl) 0;
+    background: var(--light);
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* ============================================
+   CONTACTO
+   ============================================ */
+
+.contacto {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: var(--white);
+    padding: var(--spacing-2xl) 0;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.contacto-wrapper {
+    display: grid;
+    grid-template-columns: 1.4fr 180px 1fr;
+    gap: var(--spacing-xl);
+    align-items: center;
+    position: relative;
+}
+
+/* Desktop: forzar posición de columnas correcta */
+.contacto-titulo  { grid-column: 1 / -1; }
+.contacto-model3d { grid-column: 2; grid-row: 2; }
+.contacto-info    { grid-column: 1; grid-row: 2; }
+.contacto-form    { grid-column: 3; grid-row: 2; }
+
+.contacto-hero {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--spacing-lg) 0 var(--spacing-md);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Canvas decorativos laterales */
+
+/* Canvas decorativos de circuito — laterales del hero contacto */
+.contacto-circuit {
+    position: absolute;
+    top: 0;
+    width: 20%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+.contacto-circuit--left  { left: 0; }
+.contacto-circuit--right { right: 0; }
+
+.circuit-line {
+    stroke: #00aaff;
+    stroke-width: 1.5;
+    fill: none;
+    opacity: 0.2;
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: circuitDraw 6s linear infinite;
+}
+.circuit-dot {
+    fill: #00aaff;
+    opacity: 0.4;
+    animation: circuitPulse 2s infinite alternate;
+}
+@keyframes circuitDraw {
+    0%   { stroke-dashoffset: 200; opacity: 0; }
+    50%  { opacity: 0.4; }
+    100% { stroke-dashoffset: 0;   opacity: 0.2; }
+}
+@keyframes circuitPulse {
+    0%   { opacity: 0.2; }
+    100% { opacity: 0.7; }
+}
+
+
+.contacto-hero__tag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    position: relative;
+    z-index: 1;
+}
+
+.contacto-hero__line {
+    display: block;
+    width: clamp(40px, 6vw, 80px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+}
+
+.contacto-hero__label {
+    font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+    font-weight: 800;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    font-family: 'Courier New', monospace;
+}
+
+.contacto-titulo {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: var(--spacing-sm);
+    animation: titleGlow 3s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+}
+
+.contacto-hero__sub {
+    font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+    color: rgba(255,255,255,.65);
+    text-align: center;
+    margin: 0 auto;
+    max-width: 560px;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 0 0 0px transparent;
+        opacity: 1;
+    }
+    50% {
+        text-shadow: 0 0 18px rgba(100, 180, 255, 0.5),
+                     0 2px 8px rgba(0, 102, 204, 0.3);
+        opacity: 0.92;
+    }
+}
+
+.contacto-info h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: var(--spacing-md);
+    color: var(--white);
+}
+
+.contacto-info p {
+    color: rgba(255,255,255,.9);
+    margin-bottom: var(--spacing-lg);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.info-item {
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-item strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--secondary);
+    font-size: clamp(0.95rem, 2vw, 1rem);
+}
+
+.info-item p {
+    color: rgba(255,255,255,.85);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+/* Teléfono y links dentro de info: blanco, sin subrayado azul */
+.contacto-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.contacto-link:hover {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+/* ============================================
+   FORMULARIO
+   ============================================ */
+
+.contacto-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: var(--spacing-sm);
+    border: 2px solid rgba(255,255,255,.2);
+    border-radius: var(--border-radius);
+    font-family: var(--font-primary);
+    font-size: clamp(0.9rem, 2vw, 0.95rem);
+    background-color: rgba(255,255,255,.1);
+    color: var(--white);
+    transition: var(--transition);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255,255,255,.6);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    background-color: rgba(255,255,255,.15);
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px rgba(0,153,204,.2);
+}
+
+.form-group label {
+    color: rgba(255,255,255,.9);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    font-size: clamp(0.9rem, 2vw, 0.95rem);
+}
+
+.form-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.error-message {
+    color: #fca5a5;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
+.form-group.error input,
+.form-group.error textarea {
+    border-color: var(--danger);
+    background-color: rgba(220,38,38,.1);
+}
+
+.submit-button {
+    padding: 12px var(--spacing-lg);
+    background-color: var(--secondary);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: var(--spacing-md);
+}
+
+.submit-button:hover:not(:disabled) {
+    background-color: #0078aa;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,153,204,.4);
+}
+
+.submit-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.form-message {
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 600;
+    display: none;
+}
+
+.form-message.success {
+    display: block;
+    background-color: rgba(22,163,74,.2);
+    color: #86efac;
+    border: 1px solid #22c55e;
+}
+
+.form-message.error {
+    display: block;
+    background-color: rgba(220,38,38,.2);
+    color: #fca5a5;
+    border: 1px solid #ef4444;
+}
+
+/* ============================================
+   MAPA
+   ============================================ */
+
+.mapa-container {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg) 0;
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.mapa-container iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    border-radius: var(--border-radius-lg);
+}
+
+/* ============================================
+   WHATSAPP FLOTANTE
+   ============================================ */
+
+.whatsapp-float {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 2000;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    box-shadow: 0 6px 18px rgba(0,0,0,.18);
+    background: linear-gradient(180deg, #25D366, #128C7E);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 200ms ease, box-shadow 200ms ease, opacity 200ms ease;
+    opacity: 0.98;
+}
+
+.whatsapp-float a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    text-decoration: none;
+}
+
+.whatsapp-float svg {
+    display: block;
+}
+
+.whatsapp-float:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 28px rgba(0,0,0,.22);
+}
+
+/* ============================================
+   WIDGET FLOTANTE — PANEL ELÉCTRICO
+   ─────────────────────────────────────────────
+   Posición: fixed, esquina inferior izquierda.
+   WhatsApp está en la derecha → sin colisión.
+   ============================================ */
+
+.panel-float {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 1999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.panel-float__btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    border: 1.5px solid rgba(0,153,204,.35);
+    border-radius: 40px;
+    padding: 8px 14px 8px 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(0,0,0,.3);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+    animation: pf-appear 0.5s 1.2s ease both;
+}
+
+@keyframes pf-appear {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.panel-float__btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+
+.panel-float__thumb {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0,153,204,.25);
+    border: 1.5px solid rgba(0,153,204,.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    animation: pf-pulse 3s 2s ease-in-out infinite;
+}
+
+@keyframes pf-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,153,204,.4); }
+    50%       { box-shadow: 0 0 0 7px rgba(0,153,204,0); }
+}
+
+.panel-float__play {
+    display: block;
+    margin-left: 2px;
+}
+
+.panel-float__label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: rgba(255,255,255,.88);
+    line-height: 1.25;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    pointer-events: none;
+}
+
+/* ── Modal ───────────────────────────────── */
+
+.panel-modal {
+    position: fixed;
+    left: 20px;
+    bottom: 80px;
+    z-index: 1998;
+    width: clamp(260px, 30vw, 380px);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #06101e;
+    border: 1px solid rgba(0,153,204,.25);
+    box-shadow: 0 20px 60px rgba(0,0,0,.55);
+    transform-origin: bottom left;
+    display: none; /* JS controla apertura */
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.panel-modal.is-open {
+    display: block; /* asegura que el display inline del JS no sea necesario */
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+}
+
+.panel-modal__inner {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.panel-modal__close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.55);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 150ms ease;
+}
+
+.panel-modal__close:hover {
+    background: rgba(0,0,0,.8);
+}
+
+.panel-modal__header {
+    padding: 0.75rem 2.5rem 0.5rem 1rem;
+    background: linear-gradient(to bottom, rgba(0,26,51,.95), rgba(0,26,51,0));
+    position: relative;
+    z-index: 2;
+}
+
+.panel-modal__tag {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    margin-bottom: 0.15rem;
+}
+
+.panel-modal__title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--white);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.panel-modal__img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    background: #000;
+}
+
+/* ============================================
+   BOTÓN FLOTANTE WHATSAPP
+   ============================================ */
+
+
+.footer {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: var(--spacing-lg) 0;
+    text-align: center;
+    border-top: 3px solid var(--secondary);
+}
+
+.footer-links {
+    margin-top: var(--spacing-md);
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+}
+
+.footer-links a {
+    color: rgba(255,255,255,.8);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--secondary);
+}
+
+/* ============================================
+   BOTÓN COHETE — VOLVER AL INICIO
+   ============================================ */
+
+.rocket-btn {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-left: 8px;
+    text-decoration: none;
+    position: relative;
+    top: -1px;
+}
+
+.rocket-btn img {
+    width: 2.5em;
+    height: 2.5em;
+    object-fit: contain;
+    filter: brightness(0) invert(1) opacity(0.7); /* blanco para que combine con el footer */
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                filter 0.3s ease;
+}
+
+.rocket-btn:hover img {
+    filter: brightness(0) invert(1) opacity(1);
+    animation: rocketLaunch 0.6s ease forwards;
+}
+
+@keyframes rocketLaunch {
+    0%   { transform: translateY(0)    scale(1);    }
+    30%  { transform: translateY(2px)  scale(0.95); }
+    60%  { transform: translateY(-8px) scale(1.2);  }
+    100% { transform: translateY(-5px) scale(1.1);  }
+}
+
+/* ============================================
+   RESPONSIVE — TABLET (max 1023px)
+   ============================================ */
+
+@media (max-width: 1023px) {
+    .hero {
+        min-height: auto;
+        padding: var(--spacing-xl) var(--spacing-md);
+        justify-content: center;
+    }
+
+    .hero-container {
+        text-align: center;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+
+    .navbar .container {
+        padding: var(--spacing-md);
+        gap: 0.75rem;
+    }
+
+    .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ============================================
+   RESPONSIVE — TABLET (max 900px)
+   ============================================ */
+
+@media (max-width: 900px) {
+    .quienes-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .quienes-content h2 {
+        text-align: center;
+        font-size: clamp(1.5rem, 5vw, 2rem);
+    }
+
+    .quienes-features {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-inner {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+    .detail-image {
+        width: 100%;
+        height: 240px;
+    }
+
+    .detail-text {
+        width: 100%;
+        padding: var(--spacing-md);
+    }
+
+    .proyecto-image-card {
+        height: 180px;
+    }
+
+    .provider-item {
+        min-width: 160px;
+        height: 100px;
+        padding: 0.4rem 0.5rem;
+    }
+
+    .provider-item img {
+        width: 140px;
+        height: 70px;
+    }
+
+    .client-item {
+        min-width: 160px;
+        height: 100px;
+        padding: 0.4rem 0.5rem;
+    }
+
+    .client-item img {
+        width: 140px;
+        height: 70px;
+    }
+
+    /* Activar carrusel de video en móvil */
+    .video-grid {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 var(--spacing-md);
+    }
+
+    .video-slide {
+        display: none !important;
+        width: 100% !important;
+        max-width: 400px;
+        margin: 0 auto;
+        aspect-ratio: 9 / 16 !important;
+    }
+
+    .video-slide.active {
+        display: block !important;
+    }
+
+    .carousel-btn {
+        display: flex;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — TABLET (max 768px)
+   ============================================ */
+
+@media (max-width: 768px) {
+    /* Navbar */
+    .hamburger { display: flex; }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: var(--white);
+        flex-direction: column;
+        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+        width: 100%;
+        box-shadow: var(--shadow-lg);
+        z-index: 999;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .nav-links.active { display: flex; }
+
+    /* Hero */
+    .section--hero .sticky-container { height: auto; overflow: visible; }
+    .scene--hero   { height: auto; min-height: 100svh; }
+    .hero          { min-height: 100svh; padding: 5rem 1.2rem 3rem; background-position: right center; }
+    .hero-container { text-align: center; margin: 0 auto; max-width: 100%; }
+    .hero-content h2  { font-size: clamp(1.4rem, 5.5vw, 2rem); }
+    .hero-content p   { font-size: clamp(0.88rem, 3.5vw, 1rem); }
+    .hero-buttons     { flex-direction: column; align-items: center; }
+    .cta-button       { width: 100%; text-align: center; padding: 12px var(--spacing-lg); }
+    /* En móvil GSAP no corre → forzar visibilidad de elementos del hero */
+    .section--hero .hero-content h2,
+    .section--hero .hero-content p,
+    .section--hero .hero-buttons { opacity: 1; transform: none; }
+
+    /* Tablero: ocultar desktop en móvil, mostrar carrusel.
+       CRÍTICO: colapsar heights para que no haya espacio vacío azul */
+    .section--tablero .sticky-container { height: auto; overflow: visible; }
+    .scene--tablero   { height: auto !important; min-height: unset; }
+    .tablero-scene    { height: auto; min-height: unset; padding-bottom: 0.5rem; }
+    .tbl-body         { display: none; }
+    .tbl-mobile-carousel { display: flex; }
+    .tbl-hint { display: none; }
+
+    /* Quiénes somos */
+    .quienes-somos { min-height: unset; padding: 3rem 0; }
+    .quienes-grid  { grid-template-columns: 1fr; gap: var(--spacing-lg); }
+    .quienes-content { padding: 0 var(--spacing-md); }
+    .quienes-content h2 { text-align: center; }
+    .quienes-features   { grid-template-columns: 1fr 1fr; }
+
+    /* Stats */
+    .por-que-elegir { min-height: unset; padding: 3rem 0; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: var(--spacing-md); }
+
+    /* Proyectos / Equipos */
+    .proyectos { min-height: unset; padding: 3rem 0; }
+    .equipos   { min-height: unset; padding: 3rem 0; }
+    .proyecto-tabs, .equipo-tabs { gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+    .tab-button  { padding: 8px 14px; font-size: 0.82rem; }
+    .detail-inner { flex-direction: column; }
+    .detail-inner.reverse { flex-direction: column; } /* imagen arriba siempre en móvil */
+    .detail-image { width: 100%; height: 200px; }
+    .detail-text  { width: 100%; padding: var(--spacing-md); }
+
+    /* Contacto */
+    .contacto { min-height: unset; padding: 3rem 0; }
+    .contacto-wrapper { grid-template-columns: 1fr; gap: var(--spacing-lg); }
+    .contacto-wrapper { display: flex; flex-direction: column; padding: 0 var(--spacing-md); }
+    .contacto-titulo  { grid-column: unset; }
+    .contacto-model3d { grid-column: unset; grid-row: unset; align-self: center; margin: var(--spacing-md) 0; }
+    .contacto-model3d model-viewer { min-height: 260px; max-height: 320px; width: 220px; }
+    .contacto-info    { grid-column: unset; grid-row: unset; }
+    .contacto-form    { grid-column: unset; grid-row: unset; }
+
+    /* Tipografías */
+    .section-title { font-size: clamp(1.5rem, 4vw, 2rem); margin-bottom: var(--spacing-lg); }
+    .navbar-logo   { height: 40px; }
+    .partner-logo  { height: 32px; }
+
+    /* Otros */
+    .footer-links  { flex-direction: column; gap: var(--spacing-sm); }
+    .mapa-container iframe { height: 250px; }
+    .infinite-carousel { padding: 1.5rem 0; }
+}
+
+/* ============================================
+   RESPONSIVE — MOBILE (max 600px)
+   ============================================ */
+
+@media (max-width: 600px) {
+    .navbar-logo {
+        height: 36px;
+        margin-right: 12px;
+    }
+
+    .provider-item,
+    .client-item {
+        min-width: 120px;
+        height: 80px;
+        padding: 0.35rem 0.4rem;
+    }
+
+    .provider-item img,
+    .client-item img {
+        width: 100px;
+        height: 48px;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — MOBILE (max 480px)
+   ============================================ */
+
+@media (max-width: 480px) {
+    :root {
+        --spacing-2xl: 2rem;
+        --spacing-xl:  1.5rem;
+        --spacing-lg:  1rem;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+
+    .navbar {
+        padding-bottom: 0.5rem;
+    }
+
+    .navbar .container {
+        padding: var(--spacing-sm);
+        gap: 0.5rem;
+    }
+
+    .navbar-logo {
+        height: 32px;
+        margin-right: 8px;
+    }
+
+    .partner-badge {
+        margin-right: 0;
+        margin-left: auto;
+    }
+
+    .partner-logo {
+        height: 28px;
+    }
+
+    .hamburger {
+        margin-left: var(--spacing-sm);
+    }
+
+    .nav-links {
+        top: 60px;
+        gap: var(--spacing-sm);
+    }
+
+    .hero {
+        padding: var(--spacing-lg) 0;
+    }
+
+    .hero-content h2 {
+        font-size: 1.3rem;
+        line-height: 1.2;
+    }
+
+    .hero-content p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-number {
+        font-size: 2.8rem;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+    }
+
+    .detail-image {
+        height: 200px;
+    }
+
+    .tab-button {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    .proyecto-tabs,
+    .equipo-tabs {
+        gap: var(--spacing-sm);
+    }
+
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        right: 15px;
+        bottom: 15px;
+    }
+
+    .mapa-container iframe {
+        height: 200px;
+    }
+
+    .footer {
+        padding: var(--spacing-md) 0;
+    }
+
+    .footer-links {
+        gap: var(--spacing-sm);
+    }
+}
+
+/* ============================================
+   RESPONSIVE — MOBILE PEQUEÑO (max 360px)
+   ============================================ */
+
+@media (max-width: 360px) {
+    .navbar-logo {
+        height: 28px;
+    }
+
+    .partner-logo {
+        display: none;
+    }
+
+    .hero-content h2 {
+        font-size: 1.1rem;
+    }
+
+    .section-title {
+        font-size: 1.1rem;
+    }
+
+    .stat-number {
+        font-size: 1.8rem;
+    }
+
+    .whatsapp-float {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — DESKTOP GRANDE (min 1200px)
+   ============================================ */
+
+@media (min-width: 1200px) {
+    .video-strip {
+        padding: clamp(3rem, 4vw, 6rem) 0;
+    }
+
+    .video-grid {
+        grid-template-columns: repeat(3, minmax(320px, 1fr));
+        gap: clamp(2rem, 3vw, 3rem);
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+
+    .video-grid video {
+        height: 550px;
+        object-fit: cover;
+    }
+}
+
+/* ============================================
+   MODELO 3D — DENTRO DE COLUMNA IZQUIERDA
+   Aparece centrado debajo de los datos de contacto.
+   ============================================ */
+
+.contacto-model3d {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch; /* ocupa toda la altura del grid */
+}
+
+.contacto-model3d model-viewer {
+    width: 180px;
+    height: 100%;
+    min-height: 300px;
+    max-height: 420px;
+    --poster-color: transparent;
+    --progress-bar-color: transparent;
+    background: transparent !important;
+    display: block;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
+    animation: model3dFloat 3.5s ease-in-out infinite;
+    cursor: grab;
+}
+
+.contacto-model3d model-viewer:active {
+    cursor: grabbing;
+    animation-play-state: paused;
+}
+
+.contacto-model3d model-viewer::part(default-ar-button),
+.contacto-model3d model-viewer::part(default-progress-bar) {
+    display: none;
+}
+
+.contacto-model3d model-viewer::part(canvas) {
+    background: transparent !important;
+}
+
+@keyframes model3dFloat {
+    0%,  100% { transform: translateY(0px);  }
+    50%        { transform: translateY(-10px); }
+}
+
+/* Móvil: colapsa a 1 columna, modelo centrado */
+@media (max-width: 767px) {
+    .contacto-model3d {
+    }
+    .contacto-model3d model-viewer {
+        width: 160px;
+        height: 210px;
+    }
+}

@@ -523,9 +523,37 @@
                     <div class="container">
                         <div class="contacto-wrapper">
                             <div class="contacto-hero fade-in">
-                                <!-- Canvas decorativos laterales -->
-                                <canvas class="contacto-circuit contacto-circuit--left"  id="circuitLeft"></canvas>
-                                <canvas class="contacto-circuit contacto-circuit--right" id="circuitRight"></canvas>
+                                <!-- SVG decorativos laterales -->
+                                <div class="contacto-circuit contacto-circuit--left">
+                                    <svg width="100%" height="100%" viewBox="0 0 200 160" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                                        <path class="circuit-line" style="animation-delay:0s"   d="M0 40  H60  V20  H120"/>
+                                        <path class="circuit-line" style="animation-delay:1s"   d="M60 20  V70  H130 V110"/>
+                                        <path class="circuit-line" style="animation-delay:2s"   d="M0 90  H50  V130 H110"/>
+                                        <path class="circuit-line" style="animation-delay:0.5s" d="M110 130 V60  H170"/>
+                                        <path class="circuit-line" style="animation-delay:1.5s" d="M130 110 H190 V50"/>
+                                        <circle class="circuit-dot" cx="60"  cy="20"  r="3" style="animation-delay:0s"/>
+                                        <circle class="circuit-dot" cx="120" cy="20"  r="3" style="animation-delay:0.3s"/>
+                                        <circle class="circuit-dot" cx="60"  cy="70"  r="3" style="animation-delay:0.6s"/>
+                                        <circle class="circuit-dot" cx="130" cy="70"  r="3" style="animation-delay:0.9s"/>
+                                        <circle class="circuit-dot" cx="110" cy="130" r="3" style="animation-delay:1.2s"/>
+                                        <circle class="circuit-dot" cx="170" cy="60"  r="3" style="animation-delay:1.5s"/>
+                                    </svg>
+                                </div>
+                                <div class="contacto-circuit contacto-circuit--right">
+                                    <svg width="100%" height="100%" viewBox="0 0 200 160" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1)">
+                                        <path class="circuit-line" style="animation-delay:0.3s" d="M0 40  H60  V20  H120"/>
+                                        <path class="circuit-line" style="animation-delay:1.3s" d="M60 20  V70  H130 V110"/>
+                                        <path class="circuit-line" style="animation-delay:2.3s" d="M0 90  H50  V130 H110"/>
+                                        <path class="circuit-line" style="animation-delay:0.8s" d="M110 130 V60  H170"/>
+                                        <path class="circuit-line" style="animation-delay:1.8s" d="M130 110 H190 V50"/>
+                                        <circle class="circuit-dot" cx="60"  cy="20"  r="3" style="animation-delay:0.3s"/>
+                                        <circle class="circuit-dot" cx="120" cy="20"  r="3" style="animation-delay:0.6s"/>
+                                        <circle class="circuit-dot" cx="60"  cy="70"  r="3" style="animation-delay:0.9s"/>
+                                        <circle class="circuit-dot" cx="130" cy="70"  r="3" style="animation-delay:1.2s"/>
+                                        <circle class="circuit-dot" cx="110" cy="130" r="3" style="animation-delay:1.5s"/>
+                                        <circle class="circuit-dot" cx="170" cy="60"  r="3" style="animation-delay:1.8s"/>
+                                    </svg>
+                                </div>
 
                                 <div class="contacto-hero__tag">
                                     <span class="contacto-hero__line"></span>
@@ -710,95 +738,6 @@
     </script>
 
 
-    <!-- Animación circuitos — decoración lateral sección contacto -->
-    <style>
-    .circuit-line {
-        stroke: #00aaff;
-        stroke-width: 1.5;
-        fill: none;
-        opacity: 0.2;
-        stroke-dasharray: 200;
-        stroke-dashoffset: 200;
-        animation: circuitDraw 6s linear infinite;
-    }
-    .circuit-dot {
-        fill: #00aaff;
-        opacity: 0.4;
-        animation: circuitPulse 2s infinite alternate;
-    }
-    @keyframes circuitDraw {
-        0%   { stroke-dashoffset: 200; opacity: 0; }
-        50%  { opacity: 0.4; }
-        100% { stroke-dashoffset: 0; opacity: 0.2; }
-    }
-    @keyframes circuitPulse {
-        0%   { opacity: 0.2; }
-        100% { opacity: 0.7; }
-    }
-    </style>
-    <script>
-    (function() {
-        // Genera SVG de circuito para cada canvas lateral
-        function buildCircuitSVG(containerId, mirror) {
-            var el = document.getElementById(containerId);
-            if (!el) return;
 
-            var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svg.setAttribute('width',   '100%');
-            svg.setAttribute('height',  '100%');
-            svg.setAttribute('viewBox', '0 0 300 200');
-            svg.style.display = 'block';
-            if (mirror) svg.setAttribute('transform', 'scale(-1,1)');
-            svg.style.cssText = 'width:100%;height:100%;display:block;' + (mirror ? 'transform:scaleX(-1);' : '');
-
-            var paths = [
-                'M10 100 H80  V60  H160',
-                'M160 60  V20  H240',
-                'M80  100 V140 H190',
-                'M190 140 H270 V80',
-                'M160 60  H230 V110 H290',
-            ];
-            var dots = [
-                [80,  100], [160, 60],  [240, 20],
-                [190, 140], [270, 80],  [230, 110]
-            ];
-            var delays = [0, 1.2, 2.4, 0.6, 1.8];
-
-            paths.forEach(function(d, i) {
-                var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                path.setAttribute('d', d);
-                path.setAttribute('class', 'circuit-line');
-                path.style.animationDelay = delays[i] + 's';
-                svg.appendChild(path);
-            });
-
-            dots.forEach(function(pos, i) {
-                var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                circle.setAttribute('cx', pos[0]);
-                circle.setAttribute('cy', pos[1]);
-                circle.setAttribute('r',  '3');
-                circle.setAttribute('class', 'circuit-dot');
-                circle.style.animationDelay = (i * 0.3) + 's';
-                svg.appendChild(circle);
-            });
-
-            el.style.cssText = 'position:absolute;top:0;width:22%;height:100%;pointer-events:none;z-index:0;overflow:hidden;';
-            el.appendChild(svg);
-        }
-
-        window.addEventListener('load', function() {
-            // Reemplazar canvas por divs con SVG
-            ['circuitLeft', 'circuitRight'].forEach(function(id) {
-                var old = document.getElementById(id);
-                if (!old) return;
-                var div = document.createElement('div');
-                div.id = id;
-                old.parentNode.replaceChild(div, old);
-            });
-            buildCircuitSVG('circuitLeft',  false);
-            buildCircuitSVG('circuitRight', true);
-        });
-    })();
-    </script>
 </body>
 </html>
