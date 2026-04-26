@@ -2548,8 +2548,10 @@ body {
     .contacto-wrapper { grid-template-columns: 1fr; gap: var(--spacing-lg); }
     .contacto-wrapper { display: flex; flex-direction: column; padding: 0 var(--spacing-md); }
     .contacto-titulo  { grid-column: unset; }
-    .contacto-model3d { grid-column: unset; grid-row: unset; align-self: center; margin: var(--spacing-md) 0; }
-    .contacto-model3d model-viewer { min-height: 260px; max-height: 320px; width: 220px; }
+    .contacto-model3d { grid-column: unset; grid-row: unset; align-self: center; margin: var(--spacing-sm) 0; }
+    .contacto-model3d model-viewer { min-height: 320px; max-height: 380px; width: 260px; margin-top: -20px; }
+    .model3d-bg { display: none; }
+    .model3d-stage { padding-top: 0; min-height: unset; }
     .contacto-info    { grid-column: unset; grid-row: unset; }
     .contacto-form    { grid-column: unset; grid-row: unset; }
 
@@ -2945,10 +2947,11 @@ body {
 
 /* Móvil: colapsa a 1 columna, modelo centrado */
 @media (max-width: 767px) {
-    .contacto-model3d {
-    }
     .contacto-model3d model-viewer {
-        width: 160px;
-        height: 210px;
+        width: 260px;
+        min-height: 320px;
+        max-height: 380px;
     }
+    .model3d-bg { display: none; }
+}
 }
