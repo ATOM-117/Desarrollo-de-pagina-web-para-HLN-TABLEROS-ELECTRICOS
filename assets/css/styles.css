@@ -1579,7 +1579,7 @@ body {
 
 .contacto-wrapper {
     display: grid;
-    grid-template-columns: 1.2fr 260px 1fr;
+    grid-template-columns: 1.1fr 340px 1fr;
     gap: var(--spacing-xl);
     align-items: start;
     position: relative;
@@ -2733,17 +2733,17 @@ body {
 }
 
 .contacto-model3d model-viewer {
-    width: 240px;
+    width: 300px;
     height: 100%;
-    min-height: 360px;
-    max-height: 460px;
+    min-height: 420px;
+    max-height: 520px;
     --poster-color: transparent;
     --progress-bar-color: transparent;
     background: transparent !important;
     display: block;
     position: relative;
     z-index: 2;
-    filter: drop-shadow(0 12px 32px rgba(0,0,0,0.6));
+    filter: drop-shadow(0 16px 40px rgba(0,0,0,0.65));
     animation: model3dFloat 3.5s ease-in-out infinite;
     cursor: grab;
 }
@@ -2768,8 +2768,8 @@ body {
     bottom: -4px;
     left: 50%;
     transform: translateX(-50%);
-    width: 280px;
-    height: 80px;
+    width: 340px;
+    height: 90px;
     z-index: 1;
 }
 
@@ -2780,23 +2780,23 @@ body {
     border-radius: 50%;
 }
 .model3d-platform__ring--1 {
-    width: 260px;
-    height: 52px;
+    width: 320px;
+    height: 64px;
     bottom: 10px;
     border: 1.5px solid rgba(0,180,255,0.55);
     animation: platformPulse 2.5s ease-in-out infinite;
 }
 .model3d-platform__ring--2 {
-    width: 190px;
-    height: 38px;
+    width: 240px;
+    height: 46px;
     bottom: 16px;
     border: 1px solid rgba(0,220,255,0.4);
     animation: platformPulse 2.5s ease-in-out infinite 0.5s;
 }
 .model3d-platform__ring--3 {
-    width: 120px;
-    height: 24px;
-    bottom: 22px;
+    width: 150px;
+    height: 28px;
+    bottom: 24px;
     border: 1px solid rgba(0,255,255,0.3);
     animation: platformPulse 2.5s ease-in-out infinite 1s;
 }
@@ -2807,8 +2807,8 @@ body {
     bottom: 8px;
     left: 50%;
     transform: translateX(-50%);
-    width: 220px;
-    height: 10px;
+    width: 280px;
+    height: 12px;
     background: linear-gradient(90deg, transparent, rgba(0,153,204,0.35) 30%, rgba(0,204,255,0.5) 50%, rgba(0,153,204,0.35) 70%, transparent);
     border-radius: 50%;
     filter: blur(2px);
@@ -2819,10 +2819,10 @@ body {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 280px;
-    height: 40px;
+    width: 340px;
+    height: 48px;
     background: radial-gradient(ellipse at center, rgba(0,153,204,0.5) 0%, rgba(0,100,180,0.2) 50%, transparent 75%);
-    filter: blur(10px);
+    filter: blur(12px);
     animation: platformPulse 2.5s ease-in-out infinite 0.3s;
 }
 
