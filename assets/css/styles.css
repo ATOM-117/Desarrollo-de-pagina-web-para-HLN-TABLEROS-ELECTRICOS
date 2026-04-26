@@ -1837,7 +1837,7 @@ body {
 
 .form-group--icon input,
 .form-group--icon textarea {
-    padding-left: 42px;
+    padding-left: 42px !important;
 }
 
 .form-group input,
