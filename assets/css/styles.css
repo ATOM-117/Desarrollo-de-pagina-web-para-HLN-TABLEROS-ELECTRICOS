@@ -1823,6 +1823,11 @@ body {
     align-items: center;
     pointer-events: none;
     z-index: 1;
+    transition: color 0.2s;
+}
+
+.form-group--icon:focus-within .form-icon {
+    color: var(--secondary);
 }
 
 .form-icon--textarea {

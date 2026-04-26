@@ -631,27 +631,27 @@
 
                             <form id="contactForm" class="contacto-form fade-in-right" novalidate>
                                 <div class="form-group form-group--icon">
+                                    <input type="text" id="nombre" name="nombre"
+                                           placeholder="Nombre" required autocomplete="name">
                                     <span class="form-icon" aria-hidden="true">
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                                     </span>
-                                    <input type="text" id="nombre" name="nombre"
-                                           placeholder="Nombre" required autocomplete="name">
                                     <span class="error-message" id="nombre-error" role="alert"></span>
                                 </div>
                                 <div class="form-group form-group--icon">
+                                    <input type="email" id="email" name="email"
+                                           placeholder="Correo" required autocomplete="email">
                                     <span class="form-icon" aria-hidden="true">
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                                     </span>
-                                    <input type="email" id="email" name="email"
-                                           placeholder="Correo" required autocomplete="email">
                                     <span class="error-message" id="email-error" role="alert"></span>
                                 </div>
                                 <div class="form-group form-group--icon form-group--textarea">
+                                    <textarea id="mensaje" name="mensaje"
+                                              placeholder="Mensaje" rows="4" required></textarea>
                                     <span class="form-icon form-icon--textarea" aria-hidden="true">
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
                                     </span>
-                                    <textarea id="mensaje" name="mensaje"
-                                              placeholder="Mensaje" rows="4" required></textarea>
                                     <span class="error-message" id="mensaje-error" role="alert"></span>
                                 </div>
                                 <div class="form-group form-group--checkbox">
