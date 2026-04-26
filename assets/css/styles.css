@@ -2699,6 +2699,39 @@ body {
     width: 100%;
 }
 
+/* Fondo de circuitos SVG */
+.model3d-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+.model3d-bg__svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Líneas de circuito del fondo del modelo */
+.mc-line {
+    stroke: #00aaff;
+    stroke-width: 1.2;
+    fill: none;
+    opacity: 0;
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    animation: circuitDraw 5s linear infinite;
+}
+.mc-dot {
+    fill: #00ccff;
+    opacity: 0;
+    animation: mcDotPulse 2s ease-in-out infinite alternate;
+}
+@keyframes mcDotPulse {
+    0%   { opacity: 0.2; r: 2.5px; }
+    100% { opacity: 0.8; r: 3.5px; }
+}
+
 .contacto-model3d model-viewer {
     width: 240px;
     height: 100%;
@@ -2732,11 +2765,11 @@ body {
 /* Plataforma con anillos y glow */
 .model3d-platform {
     position: absolute;
-    bottom: 0;
+    bottom: -4px;
     left: 50%;
     transform: translateX(-50%);
-    width: 260px;
-    height: 70px;
+    width: 280px;
+    height: 80px;
     z-index: 1;
 }
 
@@ -2745,20 +2778,40 @@ body {
     left: 50%;
     transform: translateX(-50%);
     border-radius: 50%;
-    border: 1.5px solid rgba(0,153,204,0.5);
 }
 .model3d-platform__ring--1 {
-    width: 240px;
-    height: 44px;
-    bottom: 14px;
+    width: 260px;
+    height: 52px;
+    bottom: 10px;
+    border: 1.5px solid rgba(0,180,255,0.55);
     animation: platformPulse 2.5s ease-in-out infinite;
 }
 .model3d-platform__ring--2 {
-    width: 170px;
-    height: 30px;
-    bottom: 20px;
-    border-color: rgba(0,200,255,0.35);
-    animation: platformPulse 2.5s ease-in-out infinite 0.6s;
+    width: 190px;
+    height: 38px;
+    bottom: 16px;
+    border: 1px solid rgba(0,220,255,0.4);
+    animation: platformPulse 2.5s ease-in-out infinite 0.5s;
+}
+.model3d-platform__ring--3 {
+    width: 120px;
+    height: 24px;
+    bottom: 22px;
+    border: 1px solid rgba(0,255,255,0.3);
+    animation: platformPulse 2.5s ease-in-out infinite 1s;
+}
+
+/* Base sólida plana */
+.model3d-platform__base {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    height: 10px;
+    background: linear-gradient(90deg, transparent, rgba(0,153,204,0.35) 30%, rgba(0,204,255,0.5) 50%, rgba(0,153,204,0.35) 70%, transparent);
+    border-radius: 50%;
+    filter: blur(2px);
 }
 
 .model3d-platform__glow {
@@ -2766,16 +2819,16 @@ body {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 260px;
-    height: 36px;
-    background: radial-gradient(ellipse at center, rgba(0,153,204,0.5) 0%, transparent 70%);
-    filter: blur(8px);
+    width: 280px;
+    height: 40px;
+    background: radial-gradient(ellipse at center, rgba(0,153,204,0.5) 0%, rgba(0,100,180,0.2) 50%, transparent 75%);
+    filter: blur(10px);
     animation: platformPulse 2.5s ease-in-out infinite 0.3s;
 }
 
 @keyframes platformPulse {
-    0%, 100% { opacity: 0.6; }
-    50%       { opacity: 1;   }
+    0%, 100% { opacity: 0.55; }
+    50%       { opacity: 1;    }
 }
 
 @keyframes model3dFloat {

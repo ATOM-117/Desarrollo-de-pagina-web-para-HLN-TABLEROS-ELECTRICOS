@@ -567,6 +567,31 @@
                             <!-- Columna central: modelo 3D -->
                             <div class="contacto-model3d">
                                 <div class="model3d-stage">
+                                    <!-- Fondo circuitos -->
+                                    <div class="model3d-bg">
+                                        <svg class="model3d-bg__svg" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                                            <!-- Circuitos lado izquierdo -->
+                                            <path class="mc-line" style="animation-delay:0s"    d="M20 200 H70 V140 H120 V100"/>
+                                            <path class="mc-line" style="animation-delay:0.8s"  d="M20 260 H60 V300 H110"/>
+                                            <path class="mc-line" style="animation-delay:1.6s"  d="M70 140 V80  H130"/>
+                                            <path class="mc-line" style="animation-delay:2.4s"  d="M60 300 V350 H100 V380"/>
+                                            <!-- Circuitos lado derecho -->
+                                            <path class="mc-line" style="animation-delay:0.4s"  d="M280 200 H230 V140 H180 V100"/>
+                                            <path class="mc-line" style="animation-delay:1.2s"  d="M280 260 H240 V300 H190"/>
+                                            <path class="mc-line" style="animation-delay:2.0s"  d="M230 140 V80  H170"/>
+                                            <path class="mc-line" style="animation-delay:2.8s"  d="M240 300 V350 H200 V380"/>
+                                            <!-- Nodos -->
+                                            <circle class="mc-dot" cx="70"  cy="140" r="3" style="animation-delay:0s"/>
+                                            <circle class="mc-dot" cx="120" cy="100" r="3" style="animation-delay:0.3s"/>
+                                            <circle class="mc-dot" cx="60"  cy="300" r="3" style="animation-delay:0.6s"/>
+                                            <circle class="mc-dot" cx="110" cy="300" r="3" style="animation-delay:0.9s"/>
+                                            <circle class="mc-dot" cx="230" cy="140" r="3" style="animation-delay:0.2s"/>
+                                            <circle class="mc-dot" cx="180" cy="100" r="3" style="animation-delay:0.5s"/>
+                                            <circle class="mc-dot" cx="240" cy="300" r="3" style="animation-delay:0.8s"/>
+                                            <circle class="mc-dot" cx="190" cy="300" r="3" style="animation-delay:1.1s"/>
+                                        </svg>
+                                    </div>
+
                                     <model-viewer
                                         id="tableroViewerContact"
                                         src=""
@@ -587,10 +612,13 @@
                                         style="--poster-color: transparent; background: transparent;"
                                         aria-label="Modelo 3D interactivo del tablero eléctrico">
                                     </model-viewer>
-                                    <!-- Plataforma glow -->
+
+                                    <!-- Plataforma glow mejorada -->
                                     <div class="model3d-platform">
                                         <div class="model3d-platform__ring model3d-platform__ring--1"></div>
                                         <div class="model3d-platform__ring model3d-platform__ring--2"></div>
+                                        <div class="model3d-platform__ring model3d-platform__ring--3"></div>
+                                        <div class="model3d-platform__base"></div>
                                         <div class="model3d-platform__glow"></div>
                                     </div>
                                 </div>
